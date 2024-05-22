@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h1>User List</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+<!--            <th>Dob</th>-->
+            <th>Gender</th>
+            <th>Role</th>
+<!--            <th>Status</th>-->
+<!--            <th>Name of User create</th>-->
+            <th>Created at date</th>
+<!--            <th>Name of User modified</th>-->
+            <th>Modified at date</th>
+            <th>Password</th>
+            <!-- Add more table headers for other fields -->
+        </tr>
+        </thead>
+        <!-- Iterate through the list of UserResponse objects -->
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.getId()}"></td>
+                <td th:text="${user.getName()}"></td>
+                <td th:text="${user.getEmail()}"></td>
+                <td th:text="${user.getPhone()}"></td>
+<!--                <td th:text="${user.getDob()}"></td>-->
+                <td th:text="${user.getGender()}"></td>
+<!--                <td th:text="${user.getRoleResponse().getRole()}"></td>-->
+<!--                <td th:text="${user.status}"></td>-->
+<!--                <td th:text="${user.getCreatedBy()?.getName() ?: 'null'}"></td>-->
+                <td th:text="${user.getCreatedDate()}"></td>
+<!--                <td th:text="${user.getCreatedBy()?.getName() ?: 'null'}"></td>-->
+                <td th:text="${user.getModifiedDate()}"></td>
+                <td th:text="${user.getPassword()}"></td>
+                <!-- Add more table cells for other fields -->
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

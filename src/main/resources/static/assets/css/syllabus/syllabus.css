@@ -1,0 +1,19 @@
+.inactive-status {
+    background-color: red;
+}
+
+.active-status {
+    background-color: green;
+}
+
+.draft-status {
+    background-color: blue;
+}
+
+/* Các thuộc tính CSS chung cho tất cả trạng thái */
+.status {
+    text-align: center;
+    border-radius: 20px;
+    color: #fff;
+    font-weight: bold;
+}
