@@ -901,3 +901,66 @@ iconify-icon.video-icon {
 iconify-icon.video-icon:hover {
     font-size: 35px;
 }
+
+/*//CSS*/
+.search-container {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgb(45 41 41 / 50%);
+    padding: 5px;
+    width: 800px;
+    height: 50%;
+}
+
+.search-input {
+    border: none;
+    padding: 10px;
+    width: 95%;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-button {
+    border: none;
+    background-color: #ff9800; /* Màu vàng cam */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    /*margin-left: 410px;*/
+    height: 50%;
+}
+
+.search-button:hover {
+    background-color: #e68900; /* Màu vàng cam đậm hơn khi hover */
+}
+
+
+.form-group {
+    margin-bottom: 1rem;
+}
+.form-control:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #495057;
+}
+.password-input-wrapper {
+    position: relative;
+}
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.login_form .form-group .creat_account {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    text-align: left;
+}

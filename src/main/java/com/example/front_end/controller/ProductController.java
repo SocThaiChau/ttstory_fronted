@@ -8,14 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
-    public class TestController {
+@RequestMapping("/product")
+public class ProductController {
     public static String errorMassage;
     @Autowired
     private JwtFilter jwtFilter;
-
-    @GetMapping("/home")
-    public String getHome(Model model){
+    @GetMapping
+    public String product(Model model){
         if (errorMassage != null){
             System.out.println(errorMassage);
             model.addAttribute("errorMessage", errorMassage);
@@ -28,6 +27,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
             model.addAttribute("name", name);
             model.addAttribute("role", role);
         }
-        return "home";
+        return "product";
+    }
+
+    @GetMapping("/detail")
+    public String productDetail(Model model){
+        if (errorMassage != null){
+            System.out.println(errorMassage);
+            model.addAttribute("errorMessage", errorMassage);
+            errorMassage = null;
+        }
+        if (jwtFilter.getAccessToken() != null){
+            String name = jwtFilter.getAuthenticaResponse().getName();
+            String role = jwtFilter.getAuthenticaResponse().getRole().getRoles();
+
+            model.addAttribute("name", name);
+            model.addAttribute("role", role);
+        }
+        return "product_detail";
     }
 }

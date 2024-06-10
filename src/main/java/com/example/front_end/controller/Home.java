@@ -13,11 +13,7 @@ public class Home {
     @Autowired
     private JwtFilter jwtFilter;
     @GetMapping
-    public String login(Model model){
-
-        if (jwtFilter.getAccessToken() == null){
-            return "ui_login";
-        }
+    public String login(){
         return "redirect:/home";
     }
 }

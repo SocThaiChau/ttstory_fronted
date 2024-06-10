@@ -233,6 +233,197 @@
         }
 
     </style>
+
+    <style>
+
+        .product-detail-container {
+            display: flex;
+            justify-content: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-images, .product-info {
+            flex: 1;
+            margin: 10px;
+        }
+
+        .product-images {
+            text-align: left;
+        }
+
+        .product-images .main-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .thumbnail-images {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .thumbnail-images img {
+            width: 30%;
+            height: auto;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .thumbnail-images img:hover {
+            transform: scale(1.1);
+        }
+
+        .likes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 18px;
+            color: #f00;
+        }
+
+        .likes i {
+            margin-right: 5px;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info .product-name {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .product-rating .stars {
+            color: #f39c12;
+        }
+
+        .product-rating span {
+            margin-left: 10px;
+            color: #777;
+        }
+
+        .sold {
+            margin-bottom: 20px;
+        }
+
+        .product-options {
+            margin-bottom: 20px;
+        }
+
+        .product-options label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .color-buttons, .size-buttons {
+            display: flex;
+        }
+
+        .color-buttons button, .size-buttons button {
+            width: 100px;
+            height: 30px;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border: 1px solid #777;
+            background: white;
+            color: black;
+        }
+
+        .size-buttons button {
+            width: 100px;
+            height: 30px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .color-buttons button:hover, .size-buttons button:hover {
+            transform: scale(1.1);
+        }
+
+        .quantity {
+            margin-bottom: 20px;
+        }
+
+        .quantity label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-controls .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background-color: #ddd;
+            cursor: pointer;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .quantity-controls #quantity-input {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #ddd;
+            margin: 0 5px;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .product-actions .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .product-actions .add-to-cart {
+            background-color: #4CAF50;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .product-actions .add-to-cart:hover {
+            background-color: #45a049;
+        }
+
+        .product-actions .buy-now {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .product-actions .buy-now:hover {
+            background-color: #e67e22;
+        }
+
+    </style>
 </head>
 <body style="background: #f4f4f4">
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
@@ -423,413 +614,63 @@
         /*padding: 0px 80px;*/
       "
 >
-    <div class="slider">
-        <div class="slides">
-            <!-- Các hình ảnh -->
-            <div class="slide"><img src="https://cf.shopee.vn/file/vn-50009109-3b4844af326ff3b9c1e1793d0dbda9f3_xxhdpi" alt="Image 1"></div>
-            <div class="slide"><img src="https://cf.shopee.vn/file/vn-50009109-d71f2ac0b2a136f28a0ad57341796b1b_xxhdpi" alt="Image 2"></div>
-            <div class="slide"><img src="https://cf.shopee.vn/file/vn-50009109-38e578753b9b6e8bfbde72acc97e23d5_xxhdpi" alt="Image 3"></div>
-            <div class="slide"><img src="https://cf.shopee.vn/file/vn-50009109-d71f2ac0b2a136f28a0ad57341796b1b_xxhdpi" alt="Image 4"></div>
-        </div>
-        <!-- Nút điều hướng -->
-        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-        <button class="next" onclick="moveSlide(1)">&#10095;</button>
-    </div>
-
-    <div style="background: white; border-radius: 10px; padding: 10px; margin-top: 10px;">
-        <h2 class="category-title">DANH MỤC</h2>
-        <div class="product-category">
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/apm3299-xxm-7.jpg?v=1690163862957" alt="Áo Polo">
-                <h3>Áo Polo</h3>
+    <div class="product-detail-container">
+        <div class="product-images">
+            <div class="main-image">
+                <img src="/images/ao_trang_nam.jpg" alt="Main Product Image">
             </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/gut7050-tra-qsm6037-tan-5.jpg?v=1710487363020" alt="Áo Thun">
-                <h3>Áo Thun</h3>
+            <div class="thumbnail-images">
+                <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd69-lvytecdr0mzq35" alt="Thumbnail 1">
+                <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd4q-lvytecfoxsau0b" alt="Thumbnail 2">
+                <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd6p-lvytechmuxsv6b_tn" alt="Thumbnail 3">
             </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/smm4073-xnh-4-5f31f3af-196e-474f-80eb-ce0b4617d518.jpg?v=1690163848063" alt="Áo Sơ Mi">
-                <h3>Áo Sơ Mi</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/akm4027-cam-1.jpg?v=1690163864163" alt="Áo Khoác">
-                <h3>Áo Khoác</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/quan-jeans-nam-qjm6067-xah-1.jpg?v=1690163441093" alt="Quần Jeans">
-                <h3>Quần Jeans</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/qam3191-tit-5.jpg?v=1704250636197" alt="Quần Âu">
-                <h3>Quần Âu</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/quan-kaki-nam-jogger-yody-qkm6027-den-6.jpg?v=1697254421893" alt="Quần Kaki">
-                <h3>Quần Kaki</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/apm3299-xxm-7.jpg?v=1690163862957" alt="Áo Polo">
-                <h3>Áo Polo</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/gut7050-tra-qsm6037-tan-5.jpg?v=1710487363020" alt="Áo Thun">
-                <h3>Áo Thun</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/smm4073-xnh-4-5f31f3af-196e-474f-80eb-ce0b4617d518.jpg?v=1690163848063" alt="Áo Sơ Mi">
-                <h3>Áo Sơ Mi</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/akm4027-cam-1.jpg?v=1690163864163" alt="Áo Khoác">
-                <h3>Áo Khoác</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/quan-jeans-nam-qjm6067-xah-1.jpg?v=1690163441093" alt="Quần Jeans">
-                <h3>Quần Jeans</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/qam3191-tit-5.jpg?v=1704250636197" alt="Quần Âu">
-                <h3>Quần Âu</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/quan-kaki-nam-jogger-yody-qkm6027-den-6.jpg?v=1697254421893" alt="Quần Kaki">
-                <h3>Quần Kaki</h3>
+            <div class="likes">
+                <i class="fa fa-heart"></i> <span>120</span>
             </div>
         </div>
-    </div>
-
-    <div style="background: white; border-radius: 10px; padding: 10px; margin-top: 10px;">
-        <h2 class="category-title" style="width: auto; background: #FA5330; padding: inherit; border-radius: 5px; color: yellow; text-align: center;">SẢN PHẨM BÁN CHẠY</h2>
-        <div id="product-container" class="product-grid">
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
+        <div class="product-info">
+            <h1 class="product-name">Áo thun nam</h1>
+            <div class="product-rating">
+                <div class="stars">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
                 </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
+                <span>(120 đánh giá)</span>
+            </div>
+            <p class="sold">Đã bán: 300</p>
+            <div class="product-options">
+                <div style=" margin-bottom: 30px;" class="colors">
+                    <label>Màu sắc:</label>
+                    <div class="color-buttons">
+                        <button>Trắng</button>
+                        <button>Đen</button>
+                        <button>Xanh</button>
+                    </div>
+                </div>
+                <div class="sizes">
+                    <label>Kích cỡ:</label>
+                    <div class="size-buttons">
+                        <button>S</button>
+                        <button>M</button>
+                        <button>L</button>
+                    </div>
                 </div>
             </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
+            <div class="quantity">
+                <label>Số lượng:</label>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="decrementQuantity()">-</button>
+                    <input type="text" id="quantity-input" value="1">
+                    <button class="quantity-btn" onclick="incrementQuantity()">+</button>
                 </div>
             </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
+            <div class="product-actions">
+                <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                <button class="btn buy-now">Mua ngay</button>
             </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div style="background: white; border-radius: 10px; padding: 10px; margin-top: 10px;">
-        <h2 class="category-title" style="width: auto; background: #0A68FF; padding: inherit; border-radius: 5px; color: white; text-align: center;">HÀNG MỚI NHẤT</h2>
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price"><sup>₫</sup>172.000</p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-
-
         </div>
     </div>
 
@@ -1010,6 +851,21 @@
 ></div>
 <!--End: Footer-->
 
+<script>
+    function incrementQuantity() {
+        const quantityInput = document.getElementById('quantity-input');
+        let quantity = parseInt(quantityInput.value);
+        quantityInput.value = quantity + 1;
+    }
+
+    function decrementQuantity() {
+        const quantityInput = document.getElementById('quantity-input');
+        let quantity = parseInt(quantityInput.value);
+        if (quantity > 1) {
+            quantityInput.value = quantity - 1;
+        }
+    }
+</script>
 <script>
     let currentIndex = 0;
     const slides = document.querySelectorAll(".slide");

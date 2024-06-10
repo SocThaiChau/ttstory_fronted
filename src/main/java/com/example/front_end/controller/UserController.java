@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.front_end.config.JwtFilter;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -36,35 +38,16 @@ public class UserController {
         return "user";
     }
 
-    @GetMapping("/login")
-    public String login(Model model){
-        if (jwtFilter.getAccessToken() == null){
-            if(message != null){
-                model.addAttribute("message", message);
-            }
-            if(errorMessage != null){
-                model.addAttribute("errorMessage", errorMessage);
-            }
-            message = null;
-            errorMessage = null;
-            return "ui_login";
-        }
-        return "redirect:/home";
-    }
-
     @GetMapping("/updatePassword")
     public String updatePassword(Model model){
-        if (jwtFilter.getAccessToken() == null){
-            if(message != null){
-                model.addAttribute("message", message);
-            }
-            if(errorMessage != null){
-                model.addAttribute("errorMessage", errorMessage);
-            }
-            message = null;
-            errorMessage = null;
-            return "ui_login";
+        if(message != null){
+            model.addAttribute("message", message);
         }
+        if(errorMessage != null){
+            model.addAttribute("errorMessage", errorMessage);
+        }
+        message = null;
+        errorMessage = null;
         return "ui_updatePassword";
     }
 
@@ -72,22 +55,11 @@ public class UserController {
     public String authenticate (@RequestParam("username") String username,
                                 @RequestParam("password") String password,
                                 Model model){
-        if (jwtFilter.getAccessToken() != null){
-            if(message != null){
-                model.addAttribute("message", message);
-            }
-            if(errorMessage != null){
-                model.addAttribute("errorMessage", errorMessage);
-            }
-            message = null;
-            errorMessage = null;
-            return "redirect:/";
-        }
         String accessToken =  userService.authenticate(username, password);
         if(accessToken.equals("")){
             errorMessage = "Xác thực không thành công";
             model.addAttribute("errorMessage", errorMessage);
-            return "redirect:/login";
+            return "redirect:/home";
         }
 
         String check =  userService.checkPassword();
@@ -96,6 +68,8 @@ public class UserController {
             return "redirect:/updatePassword";
         }
 
+        String name = jwtFilter.getAuthenticaResponse().getName();
+        model.addAttribute("name", name);
         model.addAttribute("accessToken", accessToken);
         return "redirect:/home";
     }
@@ -103,32 +77,19 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(){
         userService.logout();
-        return "redirect:/login";
+        return "redirect:/home";
     }
 
     @GetMapping("/forgotPassword")
-    public String forgotPassword(Model model){
-        if (jwtFilter.getAccessToken() == null){
-            if(message != null){
-                model.addAttribute("message", message);
-            }
-            if(errorMessage != null){
-                model.addAttribute("errorMessage", errorMessage);
-            }
-            message = null;
-            errorMessage = null;
-            return "ui_forgotPass";
-        }
-        message = null;
-        errorMessage = null;
-        return "redirect:/home";
+    public String forgotPassword(){
+        return "ui_forgotPass";
     }
 
     @PostMapping("/forgotPassword")
     public String processForgotPassword(@RequestParam("email") String email, Model model){
-        System.out.println("email: " + email);
+
         message = userService.forgotPassword(email);
-        System.out.println("message: " + message);
+
         if(message.equals("")){
             message = null;
             errorMessage = "Gửi email không thành công";
@@ -142,21 +103,17 @@ public class UserController {
                                 @RequestParam("email") String email,
                                 Model model){
 
-
-        if (jwtFilter.getAccessToken() == null){
-            if(message != null){
-                model.addAttribute("message", message);
-            }
-            if(errorMessage != null){
-                model.addAttribute("errorMessage", errorMessage);
-            }
-            message = null;
-            errorMessage = null;
-            model.addAttribute("token", token);
-            model.addAttribute("email", email);
-            return "ui_resetPassword";
+        if(message != null){
+            model.addAttribute("message", message);
         }
-        return "redirect:/home";
+        if(errorMessage != null){
+            model.addAttribute("errorMessage", errorMessage);
+        }
+        message = null;
+        errorMessage = null;
+        model.addAttribute("token", token);
+        model.addAttribute("email", email);
+        return "ui_resetPassword";
     }
 
     @PostMapping("/resetPassword")
@@ -186,7 +143,7 @@ public class UserController {
 
             errorMessage = "Mật khẩu không khớp";
         }
-        return "redirect:/login";
+        return "redirect:/home";
     }
 
     @PostMapping("/updatePassword")
@@ -203,29 +160,75 @@ public class UserController {
             message = null;
             errorMessage = "Thay đổi mật khẩu không thành công";
             model.addAttribute("errorMessage", errorMessage);
-            return "redirect:/login";
         }
         return "redirect:/home";
     }
 
-    @GetMapping("/register")
-    public String register(){
-        return "ui_register";
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestParam("newPassword") String password,
+                                 @RequestParam("repeatNewPassword") String repeatPasword,
+                                 Model model){
+        if (!password.equals(repeatPasword)){
+            model.addAttribute("message", "Mật khẩu không khớp.");
+            model.addAttribute("messageType", "error");
+            return "redirect:/profile";
+        }
+        if( !inputService.isValidPassword(password)){
+            String mes = "Mật khẩu yêu cầu: chữ số, chữ hoa, chữ thường và ký tự đặc biệt.\nVí dụ: Abc123@def";
+            model.addAttribute("message", mes);
+            model.addAttribute("messageType", "error");
+            return "redirect:/profile";
+        }
+
+        message = userService.updatepasword(password);
+        if(message.equals("")){
+            message = null;
+            model.addAttribute("message", "Đổi mật khẩu thất bại.");
+            model.addAttribute("messageType", "error");
+        }
+        else {
+            model.addAttribute("message", "Đổi mật khẩu thành công.");
+            model.addAttribute("messageType", "success");
+        }
+        return "redirect:/profile";
     }
 
     @PostMapping("/register")
     public String addUser(@ModelAttribute UserRequestUI userRequestUI, Model model){
 
-        System.out.println("userRequestUI: " + userRequestUI);
-
-        System.out.println("dob: " + userRequestUI.getDob());
         String result =  userService.createUser(userRequestUI);
         System.out.println("result: " + result);
         if (result == null){
             errorMessage = "Đăng ký thất bại";
             model.addAttribute("errorMessage", errorMessage);
-            return "redirect:/register";
+            return "redirect:/home";
+
         }
-        return "redirect:/login";
+        return "redirect:/home";
+    }
+
+    @GetMapping("/profile")
+    public String profile(Model model){
+        if (jwtFilter.getAccessToken() != null){
+            String name = jwtFilter.getAuthenticaResponse().getName();
+            String email = jwtFilter.getAuthenticaResponse().getUserResponse().getEmail();
+            String phoneNumber = jwtFilter.getAuthenticaResponse().getUserResponse().getPhoneNumber();
+            String address = jwtFilter.getAuthenticaResponse().getUserResponse().getAddress();
+            String gender = jwtFilter.getAuthenticaResponse().getUserResponse().getGender();
+            Date dobirth = jwtFilter.getAuthenticaResponse().getDob();
+            String role = jwtFilter.getAuthenticaResponse().getRole().getRoles();
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String dob = formatter.format(dobirth);
+            model.addAttribute("name", name);
+            model.addAttribute("email", email);
+            model.addAttribute("phoneNumber", phoneNumber);
+            model.addAttribute("address", address);
+            model.addAttribute("gender", gender);
+            model.addAttribute("dob", dob);
+            model.addAttribute("role", role);
+            return "ui_profile";
+        }
+        return "redirect:/home";
     }
 }

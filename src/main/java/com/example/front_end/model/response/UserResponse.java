@@ -18,10 +18,10 @@ public class UserResponse implements Serializable {
     private Long id;
     private String name;
     private String email;
-    private String phone;
-//    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    private Date dob;
+    private String phoneNumber;
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date dob;
 
     private String gender;
     private RoleResponse roleResponse;
@@ -39,5 +39,6 @@ public class UserResponse implements Serializable {
     private Date modifiedDate;
 
     private String password;
+    private String address;
 
 }
