@@ -1,6 +1,8 @@
 package com.example.front_end.controller;
 
 import com.example.front_end.config.JwtFilter;
+import com.example.front_end.model.response.UserResponse;
+import com.example.front_end.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
     @Autowired
     private JwtFilter jwtFilter;
 
+    @Autowired
+    private UserService userService;
     @GetMapping("/home")
     public String getHome(Model model){
         if (errorMassage != null){
@@ -22,11 +26,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
             errorMassage = null;
         }
         if (jwtFilter.getAccessToken() != null){
-            String name = jwtFilter.getAuthenticaResponse().getName();
-            String role = jwtFilter.getAuthenticaResponse().getRole().getRoles();
 
-            model.addAttribute("name", name);
-            model.addAttribute("role", role);
+            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+            UserResponse userResponse = userService.findUserById(id);
+            model.addAttribute("user", userResponse);
+
+            model.addAttribute("name", userResponse.getName());
+            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
         }
         return "home";
     }

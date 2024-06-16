@@ -23,5 +23,6 @@ public class UserRequestUI {
     private String address;
     private String phoneNumber;
     private String gender;
+    private String avatarUrl;
 
 }

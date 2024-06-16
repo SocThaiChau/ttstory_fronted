@@ -48,7 +48,8 @@
     <link th:href="@{/assets/css/vendor.css}" rel="stylesheet" />
 
     <link th:href="@{/assets/css/home.css}" rel="stylesheet" />
-    <link th:href="@{/assets/css/product.css}" rel="stylesheet" />
+<!--    <link th:href="@{/assets/css/product.css}" rel="stylesheet" />-->
+    <link th:href="@{/assets/css/product_detail.css}" rel="stylesheet" />
 
     <link
             rel="stylesheet"
@@ -234,196 +235,7 @@
 
     </style>
 
-    <style>
 
-        .product-detail-container {
-            display: flex;
-            justify-content: center;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .product-images, .product-info {
-            flex: 1;
-            margin: 10px;
-        }
-
-        .product-images {
-            text-align: left;
-        }
-
-        .product-images .main-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        .thumbnail-images {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-
-        .thumbnail-images img {
-            width: 30%;
-            height: auto;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .thumbnail-images img:hover {
-            transform: scale(1.1);
-        }
-
-        .likes {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-            font-size: 18px;
-            color: #f00;
-        }
-
-        .likes i {
-            margin-right: 5px;
-        }
-
-        .product-info {
-            padding: 20px;
-        }
-
-        .product-info .product-name {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .product-rating {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .product-rating .stars {
-            color: #f39c12;
-        }
-
-        .product-rating span {
-            margin-left: 10px;
-            color: #777;
-        }
-
-        .sold {
-            margin-bottom: 20px;
-        }
-
-        .product-options {
-            margin-bottom: 20px;
-        }
-
-        .product-options label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .color-buttons, .size-buttons {
-            display: flex;
-        }
-
-        .color-buttons button, .size-buttons button {
-            width: 100px;
-            height: 30px;
-            margin-right: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.3s;
-            border: 1px solid #777;
-            background: white;
-            color: black;
-        }
-
-        .size-buttons button {
-            width: 100px;
-            height: 30px;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .color-buttons button:hover, .size-buttons button:hover {
-            transform: scale(1.1);
-        }
-
-        .quantity {
-            margin-bottom: 20px;
-        }
-
-        .quantity label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-        }
-
-        .quantity-controls .quantity-btn {
-            width: 30px;
-            height: 30px;
-            border: none;
-            background-color: #ddd;
-            cursor: pointer;
-            font-size: 18px;
-            text-align: center;
-        }
-
-        .quantity-controls #quantity-input {
-            width: 50px;
-            height: 30px;
-            text-align: center;
-            border: 1px solid #ddd;
-            margin: 0 5px;
-        }
-
-        .product-actions {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .product-actions .btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .product-actions .add-to-cart {
-            background-color: #4CAF50;
-            color: white;
-            margin-right: 10px;
-        }
-
-        .product-actions .add-to-cart:hover {
-            background-color: #45a049;
-        }
-
-        .product-actions .buy-now {
-            background-color: #f39c12;
-            color: white;
-        }
-
-        .product-actions .buy-now:hover {
-            background-color: #e67e22;
-        }
-
-    </style>
 </head>
 <body style="background: #f4f4f4">
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
@@ -617,45 +429,44 @@
     <div class="product-detail-container">
         <div class="product-images">
             <div class="main-image">
-                <img src="/images/ao_trang_nam.jpg" alt="Main Product Image">
+                <img id="main-product-image" src="/images/ao_trang_nam.jpg" alt="Main Product Image">
             </div>
             <div class="thumbnail-images">
-                <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd69-lvytecdr0mzq35" alt="Thumbnail 1">
-                <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd4q-lvytecfoxsau0b" alt="Thumbnail 2">
-                <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd6p-lvytechmuxsv6b_tn" alt="Thumbnail 3">
-            </div>
-            <div class="likes">
-                <i class="fa fa-heart"></i> <span>120</span>
+                <img src="/images/ao_trang_nam.jpg" alt="Thumbnail 1" onclick="changeMainImage(this)">
+                <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd69-lvytecdr0mzq35" alt="Thumbnail 2" onclick="changeMainImage(this)">
+                <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd4q-lvytecfoxsau0b" alt="Thumbnail 3" onclick="changeMainImage(this)">
             </div>
         </div>
         <div class="product-info">
-            <h1 class="product-name">Áo thun nam</h1>
+            <h1 class="product-name" th:text="${product.name}"></h1>
             <div class="product-rating">
-                <div class="stars">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                </div>
-                <span>(120 đánh giá)</span>
+                <span th:each="i : ${#numbers.sequence(1, product.getRating())}">
+                    <i class="fa fa-star"  style="color: gold;"></i>
+                </span>
+                <span th:each="i : ${#numbers.sequence(1, 5 - product.getRating())}">
+                    <i class="fa fa-star"  style="color: lightgray;" th:if="${i + product.getRating() <= 5}"></i>
+                </span>
+                <span th:text="'(' + ${product.getNumberOfRating()} + ' đánh giá)'"></span>
             </div>
-            <p class="sold">Đã bán: 300</p>
+            <div class="likes">
+                <i class="fa fa-heart"></i> <span th:text=" 'Đã thích (' + ${product.getFavoriteCount()} + ')'"></span>
+            </div>
+            <p class="sold" th:text="'Đã bán: ' + ${product.getSold()}"></p>
             <div class="product-options">
                 <div style=" margin-bottom: 30px;" class="colors">
                     <label>Màu sắc:</label>
                     <div class="color-buttons">
-                        <button>Trắng</button>
-                        <button>Đen</button>
-                        <button>Xanh</button>
+                        <button onclick="selectColor(this)">Trắng</button>
+                        <button onclick="selectColor(this)">Đen</button>
+                        <button onclick="selectColor(this)">Xanh</button>
                     </div>
                 </div>
                 <div class="sizes">
                     <label>Kích cỡ:</label>
                     <div class="size-buttons">
-                        <button>S</button>
-                        <button>M</button>
-                        <button>L</button>
+                        <button onclick="selectSize(this)">S</button>
+                        <button onclick="selectSize(this)">M</button>
+                        <button onclick="selectSize(this)">L</button>
                     </div>
                 </div>
             </div>
@@ -674,6 +485,54 @@
         </div>
     </div>
 
+    <!-- Mô tả sản phẩm -->
+    <div style="
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 10px; "
+         class="product-description">
+        <h2>Mô tả sản phẩm</h2>
+        <p th:text="${product.getDescription()}"></p>
+    </div>
+
+    <!-- Đánh giá sản phẩm -->
+    <div style="
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;"
+         class="product-reviews">
+        <h2>Đánh giá sản phẩm</h2>
+        <div class="review">
+            <div class="reviewer-info">
+                <i class="fa fa-user"></i> <span>Nguyễn Văn A</span>
+                <div class="stars">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-alt"></i>
+                </div>
+            </div>
+            <p class="review-text">Áo rất đẹp, chất liệu mát mẻ. Mình rất hài lòng!</p>
+        </div>
+        <div class="review">
+            <div class="reviewer-info">
+                <i class="fa fa-user"></i> <span>Trần Thị B</span>
+                <div class="stars">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+            <p class="review-text">Sản phẩm tốt, giao hàng nhanh. Sẽ ủng hộ shop lâu dài.</p>
+        </div>
+    </div>
     <!--Start: Content-->
     <!--End: Content-->
     <div class="overlay" id="formOverlay">
@@ -852,6 +711,10 @@
 <!--End: Footer-->
 
 <script>
+    function changeMainImage(element) {
+        var mainImage = document.getElementById('main-product-image');
+        mainImage.src = element.src;
+    }
     function incrementQuantity() {
         const quantityInput = document.getElementById('quantity-input');
         let quantity = parseInt(quantityInput.value);
@@ -864,6 +727,22 @@
         if (quantity > 1) {
             quantityInput.value = quantity - 1;
         }
+    }
+
+    function selectColor(button) {
+        var colorButtons = document.querySelectorAll('.color-buttons button');
+        colorButtons.forEach(function(btn) {
+            btn.classList.remove('selected');
+        });
+        button.classList.add('selected');
+    }
+
+    function selectSize(button) {
+        var sizeButtons = document.querySelectorAll('.size-buttons button');
+        sizeButtons.forEach(function(btn) {
+            btn.classList.remove('selected');
+        });
+        button.classList.add('selected');
     }
 </script>
 <script>

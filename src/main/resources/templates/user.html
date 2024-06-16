@@ -9,43 +9,85 @@
 <body>
 <div>
     <h1>User List</h1>
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>User ID</th>-->
+<!--            <th>Name</th>-->
+<!--            <th>Email</th>-->
+<!--            <th>Phone</th>-->
+<!--&lt;!&ndash;            <th>Dob</th>&ndash;&gt;-->
+<!--            <th>Gender</th>-->
+<!--            <th>Role</th>-->
+<!--&lt;!&ndash;            <th>Status</th>&ndash;&gt;-->
+<!--&lt;!&ndash;            <th>Name of User create</th>&ndash;&gt;-->
+<!--            <th>Created at date</th>-->
+<!--&lt;!&ndash;            <th>Name of User modified</th>&ndash;&gt;-->
+<!--            <th>Modified at date</th>-->
+<!--            <th>Password</th>-->
+<!--            &lt;!&ndash; Add more table headers for other fields &ndash;&gt;-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        &lt;!&ndash; Iterate through the list of UserResponse objects &ndash;&gt;-->
+<!--        <tbody>-->
+<!--            <tr th:each="user : ${users}">-->
+<!--                <td th:text="${user.getId()}"></td>-->
+<!--                <td th:text="${user.getName()}"></td>-->
+<!--                <td th:text="${user.getEmail()}"></td>-->
+<!--                <td th:text="${user.getPhone()}"></td>-->
+<!--&lt;!&ndash;                <td th:text="${user.getDob()}"></td>&ndash;&gt;-->
+<!--                <td th:text="${user.getGender()}"></td>-->
+<!--&lt;!&ndash;                <td th:text="${user.getRoleResponse().getRole()}"></td>&ndash;&gt;-->
+<!--&lt;!&ndash;                <td th:text="${user.status}"></td>&ndash;&gt;-->
+<!--&lt;!&ndash;                <td th:text="${user.getCreatedBy()?.getName() ?: 'null'}"></td>&ndash;&gt;-->
+<!--                <td th:text="${user.getCreatedDate()}"></td>-->
+<!--&lt;!&ndash;                <td th:text="${user.getCreatedBy()?.getName() ?: 'null'}"></td>&ndash;&gt;-->
+<!--                <td th:text="${user.getModifiedDate()}"></td>-->
+<!--                <td th:text="${user.getPassword()}"></td>-->
+<!--                &lt;!&ndash; Add more table cells for other fields &ndash;&gt;-->
+<!--            </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+
+    <h1>Product List</h1>
     <table>
         <thead>
         <tr>
-            <th>User ID</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-<!--            <th>Dob</th>-->
-            <th>Gender</th>
-            <th>Role</th>
-<!--            <th>Status</th>-->
-<!--            <th>Name of User create</th>-->
-            <th>Created at date</th>
-<!--            <th>Name of User modified</th>-->
-            <th>Modified at date</th>
-            <th>Password</th>
+            <th>Price</th>
+            <th>Sold</th>
+            <th>promotionalPrice</th>
+            <!--            <th>Dob</th>-->
+            <th>Rating</th>
+            <th>Description</th>
+            <!--            <th>Status</th>-->
+            <!--            <th>Name of User create</th>-->
+<!--            <th>Created at date</th>-->
+            <!--            <th>Name of User modified</th>-->
+<!--            <th>Modified at date</th>-->
+<!--            <th>Password</th>-->
             <!-- Add more table headers for other fields -->
         </tr>
         </thead>
         <!-- Iterate through the list of UserResponse objects -->
         <tbody>
-            <tr th:each="user : ${users}">
-                <td th:text="${user.getId()}"></td>
-                <td th:text="${user.getName()}"></td>
-                <td th:text="${user.getEmail()}"></td>
-                <td th:text="${user.getPhone()}"></td>
-<!--                <td th:text="${user.getDob()}"></td>-->
-                <td th:text="${user.getGender()}"></td>
-<!--                <td th:text="${user.getRoleResponse().getRole()}"></td>-->
-<!--                <td th:text="${user.status}"></td>-->
-<!--                <td th:text="${user.getCreatedBy()?.getName() ?: 'null'}"></td>-->
-                <td th:text="${user.getCreatedDate()}"></td>
-<!--                <td th:text="${user.getCreatedBy()?.getName() ?: 'null'}"></td>-->
-                <td th:text="${user.getModifiedDate()}"></td>
-                <td th:text="${user.getPassword()}"></td>
-                <!-- Add more table cells for other fields -->
-            </tr>
+        <tr th:each="products : ${product}">
+            <td th:text="${products.getName()}"></td>
+            <td th:text="${products.getPrice()}"></td>
+            <td th:text="${products.getSold()}"></td>
+            <td th:text="${products.getPromotionalPrice()}"></td>
+            <!--                <td th:text="${user.getDob()}"></td>-->
+            <td th:text="${products.getRating()}"></td>
+            <!--                <td th:text="${user.getRoleResponse().getRole()}"></td>-->
+            <!--                <td th:text="${user.status}"></td>-->
+            <!--                <td th:text="${user.getCreatedBy()?.getName() ?: 'null'}"></td>-->
+            <td th:text="${products.getDescription()}"></td>
+            <!--                <td th:text="${user.getCreatedBy()?.getName() ?: 'null'}"></td>-->
+<!--            <td th:text="${user.getModifiedDate()}"></td>-->
+<!--            <td th:text="${user.getPassword()}"></td>-->
+            <!-- Add more table cells for other fields -->
+        </tr>
         </tbody>
     </table>
 </div>

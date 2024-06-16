@@ -1,20 +1,24 @@
 package com.example.front_end.service;
 
+import com.cloudinary.Cloudinary;
 import com.example.front_end.config.JwtFilter;
+import com.example.front_end.exception.UserException;
 import com.example.front_end.model.UI.UserRequestUI;
 import com.example.front_end.model.request.AuthenticationRequest;
 import com.example.front_end.model.request.UserRequest;
-import com.example.front_end.model.response.AuthenticaResponse;
-import com.example.front_end.model.response.SuccessMessage;
-import com.example.front_end.model.response.UserResponse;
-import lombok.Data;
+import com.example.front_end.model.response.*;
+import jdk.jshell.spi.ExecutionControl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,9 +41,22 @@ public class UserService {
     private String checkPassword = "http://localhost:8080/users/checkPassword";
     private String updatePassword = "http://localhost:8080/users/updatePassword";
     private String createUser = "http://localhost:8080/admin/users/create";
+    private String allProduct = "http://localhost:8080/users/home";
+    private String productDetail = "http://localhost:8080/users/product/";
+
+    private String updateUser = "http://localhost:8080/users/profile";
+
+    private String findUserById = "http://localhost:8080/users/getUser/";
 
     @Autowired
     private JwtFilter jwtFilter;
+
+    private final Cloudinary cloudinary;
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
+    public UserService(Cloudinary cloudinary) {
+        this.cloudinary = cloudinary;
+    }
 
 
     public List<UserResponse> findAll() {
@@ -268,4 +285,144 @@ public class UserService {
         }
         return null;
     }
+
+    public List<ProductResponse> findAllProduct() {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(allProduct);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            ResponseEntity<ProducListResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    null, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            ProducListResponse  productListResponse  = responseEntity.getBody();
+            if (productListResponse  != null) {
+                return productListResponse.getData();
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public ProductResponse findProductById(Long id) {
+        try {
+            Map<String, String> params = new HashMap<>();
+            String api = productDetail + id;
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(api);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            ResponseEntity<ProductResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    null, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            ProductResponse productResponse  = responseEntity.getBody();
+            if (productResponse  != null) {
+                return productResponse.getData();
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public String updateUser(UserRequest userRequestUI, Integer id, MultipartFile avatarUrlFile) {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(updateUser);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken); // Replace with your actual token
+
+
+            UserRequest userRequest = new UserRequest();
+
+            if (userRequestUI.getAvatarUrl() != null && !userRequestUI.getAvatarUrl().isEmpty()) {
+                try {
+                    Map<String, Object> uploadResult = upload(avatarUrlFile);
+                    String avatarUrl = (String) uploadResult.get("url");
+                    userRequest.setAvatarUrl(avatarUrl);
+                } catch (RuntimeException e) {
+                    throw new UserException("Image upload failed: " + e.getMessage());
+                }
+            }
+            userRequest.setName(userRequestUI.getName());
+            userRequest.setGender(userRequestUI.getGender());
+            userRequest.setDob(userRequestUI.getDob());
+            userRequest.setPhoneNumber(userRequestUI.getPhoneNumber());
+            userRequest.setAddress(userRequestUI.getAddress());
+
+            HttpEntity<?> entity = new HttpEntity<>(userRequest, headers);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.PUT,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            String userResponse = responseEntity.getBody();
+            if (userResponse != null) {
+                return userResponse;
+            }
+        } catch (Exception ex) {
+            return "";
+        }
+        return "";
+    }
+
+    public Map<String, Object> upload(MultipartFile file) {
+        try {
+            return this.cloudinary.uploader().upload(file.getBytes(), Map.of());
+        } catch (IOException io) {
+            throw new RuntimeException("Image upload failed", io);
+        }
+    }
+
+    public UserResponse findUserById(Long id) {
+        try {
+            Map<String, String> params = new HashMap<>();
+//            String api = productDetail + id;
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(findUserById + id);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            ResponseEntity<UserResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    null, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            UserResponse userResponse  = responseEntity.getBody();
+
+            if (userResponse  != null) {
+                return userResponse;
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
 }

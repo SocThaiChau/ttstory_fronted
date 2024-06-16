@@ -24,7 +24,8 @@ public class UserResponse implements Serializable {
     private Date dob;
 
     private String gender;
-    private RoleResponse roleResponse;
+    private RoleResponse userRoleResponse;
+    private RoleResponse role;
 //    private boolean status;
 //    private UserResponse createdBy;
 
@@ -40,5 +41,6 @@ public class UserResponse implements Serializable {
 
     private String password;
     private String address;
+    private String avatarUrl;
 
 }

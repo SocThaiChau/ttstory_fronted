@@ -1,19 +1,26 @@
 package com.example.front_end.controller;
 
 import com.example.front_end.model.UI.UserRequestUI;
+import com.example.front_end.model.request.UserRequest;
 import com.example.front_end.model.response.AuthenticaResponse;
 import com.example.front_end.model.response.UserResponse;
 import com.example.front_end.service.InputService;
 import com.example.front_end.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.front_end.config.JwtFilter;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping
@@ -197,7 +204,6 @@ public class UserController {
     public String addUser(@ModelAttribute UserRequestUI userRequestUI, Model model){
 
         String result =  userService.createUser(userRequestUI);
-        System.out.println("result: " + result);
         if (result == null){
             errorMessage = "Đăng ký thất bại";
             model.addAttribute("errorMessage", errorMessage);
@@ -210,25 +216,47 @@ public class UserController {
     @GetMapping("/profile")
     public String profile(Model model){
         if (jwtFilter.getAccessToken() != null){
-            String name = jwtFilter.getAuthenticaResponse().getName();
-            String email = jwtFilter.getAuthenticaResponse().getUserResponse().getEmail();
-            String phoneNumber = jwtFilter.getAuthenticaResponse().getUserResponse().getPhoneNumber();
-            String address = jwtFilter.getAuthenticaResponse().getUserResponse().getAddress();
-            String gender = jwtFilter.getAuthenticaResponse().getUserResponse().getGender();
-            Date dobirth = jwtFilter.getAuthenticaResponse().getDob();
-            String role = jwtFilter.getAuthenticaResponse().getRole().getRoles();
+            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+            UserResponse userResponse = userService.findUserById(id);
+            model.addAttribute("user", userResponse);
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String dob = formatter.format(dobirth);
-            model.addAttribute("name", name);
-            model.addAttribute("email", email);
-            model.addAttribute("phoneNumber", phoneNumber);
-            model.addAttribute("address", address);
-            model.addAttribute("gender", gender);
+            String dob = formatter.format(userResponse.getDob());
+
+            model.addAttribute("name", userResponse.getName());
+            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
             model.addAttribute("dob", dob);
-            model.addAttribute("role", role);
-            return "ui_profile";
+            return "ui_info";
         }
         return "redirect:/home";
     }
+
+    @PostMapping("/updateUser")
+    public String updateUser(
+            @RequestParam("id") Integer id,
+            @RequestParam("name") String name,
+            @RequestParam("gender") String gender,
+            @RequestParam("dob") String dob,
+            @RequestParam("phoneNumber") String phoneNumber,
+            @RequestParam("address") String address,
+            @RequestParam("avatarUrl") MultipartFile avatarUrlFile) throws ParseException {
+
+        UserRequest userRequestUI = new UserRequest();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = dateFormat.parse(dob);
+
+        userRequestUI.setName(name);
+        userRequestUI.setGender(gender);
+        userRequestUI.setDob(date);
+        userRequestUI.setPhoneNumber(phoneNumber);
+        userRequestUI.setAddress(address);
+        userRequestUI.setAvatarUrl(avatarUrlFile.getOriginalFilename());
+
+        String result = userService.updateUser(userRequestUI, id,avatarUrlFile);
+        System.out.println("result: " + result);
+
+        return "redirect:/profile";
+    }
+
 }

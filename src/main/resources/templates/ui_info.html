@@ -440,8 +440,8 @@
                         </li>
 
                         <li class="nav-item dropdown">
-<!--                            <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="pagess"-->
-<!--                               data-bs-toggle="dropdown" aria-expanded="false">Product</a>-->
+                            <!--                            <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="pagess"-->
+                            <!--                               data-bs-toggle="dropdown" aria-expanded="false">Product</a>-->
                             <a href="/product" class="nav-link mx-2">Product</a>
                         </li>
 
@@ -490,24 +490,19 @@
     <!--Start: Content-->
     <div class="sidebar">
         <div>
-            <img th:src="${avatarUrl}" style="border-radius: 50%; height: 70px; width: 70px;">
-            <span th:if="${name}" style="padding: 0px 0px 0px 10px;display: inline;color: black; font-weight: bold;" th:text="${name}"></span>
+            <img th:src="${user.getAvatarUrl()}" style="border-radius: 50%; height: 70px; width: 70px;">
+            <span th:if="${user.getName()}" style="padding: 0px 0px 0px 10px;display: inline;color: black; font-weight: bold;" th:text="${user.getName()}"></span>
 
         </div>
         <ul>
-            <li id="personal-info" onclick="toggleSubmenu('personal-info-menu', this)">Tài Khoản Của Tôi</li>
+            <li id="personal-info">Tài Khoản Của Tôi</li>
             <ul id="personal-info-menu" class="submenu" style="display:block;">
-                <li id="info-first" class="active" onclick="showContent('personal-detail', this, 'personal-info-menu')">Thông Tin Cá Nhân</li>
-                <li id="update-info-menu" onclick="showContent('updatePasword-info', this, 'personal-info-menu')">Đổi Mật Khẩu</li>
-                <li id="address-info-menu" onclick="showContent('address-info', this, 'personal-info-menu')">Địa Chỉ</li>
+                <li id="info-first" class="active">Thông Tin Cá Nhân</li>
+                <li id="update-info-menu">Đổi Mật Khẩu</li>
+                <li id="address-info-menu">Địa Chỉ</li>
 
             </ul>
-            <li id="change-password-menu" onclick="toggleSubmenu('personal-info-menuu', this)">Test</li>
-            <ul id="personal-info-menuu" class="submenu" style="display:none;">
-                <li id="info-firstt" onclick="showContent('personal-detaill', this, 'personal-info-menuu')">Test 1</li>
-                <li id="update-info-menuu" onclick="showContent('update-infoo', this, 'personal-info-menuu')">Test 2</li>
-            </ul>
-            <li id="address-menu" onclick="showContent('address', this)">Đơn mua</li>
+            <li id="address-menu">Đơn mua</li>
         </ul>
     </div>
     <div class="content" style="background: white; min-height: 500px">
@@ -517,26 +512,26 @@
             <form id="personal-info-form" method="post" th:action="@{/updateUser}" enctype="multipart/form-data">
                 <div class="form-left">
                     <label for="full-name">Họ và tên</label>
-                    <input type="text" id="full-name" th:value="${name}" name="name">
-                    <input type="hidden" name="id" th:value="${id}" />
+                    <input type="text" id="full-name" th:value="${user.getName()}" name="name">
+                    <input type="hidden" name="id" th:value="${user.getId()}" />
 
 
                     <label for="email">Email</label>
-                    <input type="email" id="email" th:value="${email}" name="email">
+                    <input type="email" id="email" th:value="${user.getEmail()}" name="email">
 
                     <label for="phone">Số điện thoại</label>
-                    <input type="tel" id="phone" th:value="${phoneNumber}" name="phoneNumber">
+                    <input type="tel" id="phone" th:value="${user.getPhoneNumber()}" name="phoneNumber">
 
                     <label for="address">Địa chỉ</label>
-                    <input type="text" id="addres" th:value="${address}" name="address">
+                    <input type="text" id="address" th:value="${user.getAddress()}" name="address">
 
                     <label>Giới tính</label>
-                    <div class="gender-options" th:value="${gender}">
-                        <input type="radio" id="male" name="gender" value="male" th:checked="${gender == 'male'}">
+                    <div class="gender-options" th:value="${user.getGender()}">
+                        <input type="radio" id="male" name="gender" value="male" th:checked="${user.getGender() == 'male'}">
                         <label for="male">Nam</label>
-                        <input type="radio" id="female" name="gender" value="female" th:checked="${gender == 'female'}">
+                        <input type="radio" id="female" name="gender" value="female" th:checked="${user.getGender() == 'female'}">
                         <label for="female">Nữ</label>
-                        <input type="radio" id="other" name="gender" value="other" th:checked="${gender == 'other'}">
+                        <input type="radio" id="other" name="gender" value="other" th:checked="${user.getGender() == 'other'}">
                         <label for="other">Khác</label>
                     </div>
 
@@ -555,68 +550,12 @@
                     <button type="submit">Lưu thông tin</button>
                 </div>
                 <div class="form-right">
-                    <img id="profile-picture" th:src="${avatarUrl}" alt="Profile Picture">
+                    <img id="profile-picture" th:src="${user.getAvatarUrl()}" alt="Profile Picture">
                     <input type="file" id="upload-picture" name="avatarUrl" accept="image/*" onchange="previewImage(event)">
                     <label for="upload-picture" class="custom-file-upload">Chọn ảnh</label>
                 </div>
 
             </form>
-        </div>
-        <div id="updatePasword-info" class="content-section" style="display:none;">
-            <h5>Thay đổi mật khẩu</h5>
-            <p>Quản lý mật khẩu cá nhân</p>
-            <br><br>
-            <form method="post" th:action="@{/changePassword}">
-                <div class="form-left">
-                    <label for="newPassword">Mật khẩu mới</label>
-                    <div class="password-container">
-                        <input type="password" id="newPassword" name="newPassword" placeholder="Nhập mật khẩu mới...">
-                        <span class="toggle-password" onclick="togglePassword('newPassword', this)">
-                <i class="fa fa-eye-slash"></i>
-            </span>
-                    </div>
-
-                    <label for="repeatNewPassword">Nhập lại mật khẩu mới</label>
-                    <div class="password-container">
-                        <input type="password" id="repeatNewPassword" name="repeatNewPassword" placeholder="Nhập lại mật khẩu mới...">
-                        <span class="toggle-password" onclick="togglePassword('repeatNewPassword', this)">
-                <i class="fa fa-eye-slash"></i>
-            </span>
-                    </div>
-
-                    <button type="submit">Lưu</button>
-                </div>
-            </form>
-        </div>
-        <div id="address-info" class="content-section" style="display:none;">
-            <h2>Địa Chỉ</h2>
-            <p>Form để cập nhật địa chỉ của bạn.</p>
-        </div>
-        <div id="personal-detaill" class="content-section">
-            <h2>Đổi mật khẩu 1</h2>
-            <p>Thông tin chi tiết về cá nhân của bạn.</p>
-            <h2>Thông tin cá nhân</h2>
-            <p>Thông tin chi tiết về cá nhân của bạn.</p>
-            <h2>Thông tin cá nhân</h2>
-            <p>Thông tin chi tiết về cá nhân của bạn.</p>
-            <h2>Thông tin cá nhân</h2>
-            <p>Thông tin chi tiết về cá nhân của bạn.</p>
-            <h2>Thông tin cá nhân</h2>
-            <p>Thông tin chi tiết về cá nhân của bạn.</p>
-            <h2>Thông tin cá nhân</h2>
-            <p>Thông tin chi tiết về cá nhân của bạn.</p>
-        </div>
-        <div id="update-infoo" class="content-section" style="display:none;">
-            <h2>Đổi mật khẩu 2</h2>
-            <p>Form để cập nhật thông tin cá nhân của bạn.</p>
-        </div>
-        <div id="change-password" class="content-section" style="display:none;">
-            <h2>Đổi mật khẩu</h2>
-            <p>Form để thay đổi mật khẩu của bạn.</p>
-        </div>
-        <div id="address" class="content-section" style="display:none;">
-            <h2>Địa chỉ</h2>
-            <p>Thông tin về địa chỉ của bạn.</p>
         </div>
     </div>
     <!--End: Content-->
@@ -630,91 +569,6 @@
 ></div>
 <!--End: Footer-->
 
-<script>
-    function togglePassword(fieldId, icon) {
-        var passwordField = document.getElementById(fieldId);
-        var iconElement = icon.querySelector('i');
-
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            iconElement.classList.remove('fa-eye-slash');
-            iconElement.classList.add('fa-eye');
-        } else {
-            passwordField.type = "password";
-            iconElement.classList.remove('fa-eye');
-            iconElement.classList.add('fa-eye-slash');
-        }
-    }
-</script>
-<script>
-    var submenu = document.getElementById(info-first);
-    submenu.classList.add('active');
-
-    function showContent(sectionId, element, parentMenuId = null) {
-        var sections = document.getElementsByClassName('content-section');
-        for (var i = 0; i < sections.length; i++) {
-            sections[i].style.display = 'none';
-        }
-        document.getElementById(sectionId).style.display = 'block';
-
-        var sidebarItems = document.querySelectorAll('.sidebar ul li');
-        for (var i = 0; i < sidebarItems.length; i++) {
-            sidebarItems[i].classList.remove('active');
-        }
-        element.classList.add('active');
-
-        if (parentMenuId) {
-            var parentMenu = document.querySelector(`[onclick="toggleSubmenu('${parentMenuId}', this)"]`);
-            parentMenu.classList.remove('active');
-        }
-
-        localStorage.setItem('activeSection', sectionId);
-        localStorage.setItem('activeItem', element.id);
-    }
-
-    function toggleSubmenu(submenuId, element) {
-        var submenu = document.getElementById(submenuId);
-        var firstSubmenuItem = submenu.querySelector('li');
-
-        var allSubmenus = document.querySelectorAll('.submenu');
-        for (var i = 0; i < allSubmenus.length; i++) {
-            allSubmenus[i].style.display = 'none';
-        }
-        submenu.style.display = 'block';
-
-        var sidebarItems = document.querySelectorAll('.sidebar ul li');
-        for (var i = 0; i < sidebarItems.length; i++) {
-            sidebarItems[i].classList.remove('active');
-        }
-
-        if (firstSubmenuItem) {
-            showContent(firstSubmenuItem.getAttribute('onclick').split("'")[1], firstSubmenuItem, submenuId);
-        } else {
-            element.classList.add('active');
-        }
-
-        localStorage.setItem('activeSubmenu', submenuId);
-        localStorage.setItem('activeItem', element.id);
-    }
-
-    // window.onload = function() {
-    //     var activeSection = localStorage.getItem('activeSection');
-    //     var activeItem = localStorage.getItem('activeItem');
-    //     var activeSubmenu = localStorage.getItem('activeSubmenu');
-    //
-    //     if (activeSection && activeItem) {
-    //         var element = document.getElementById(activeItem);
-    //         if (activeSubmenu) {
-    //             document.getElementById(activeSubmenu).style.display = 'block';
-    //         }
-    //         showContent(activeSection, element, activeSubmenu);
-    //     } else {
-    //         document.getElementById('personal-info-menu').style.display = 'block';
-    //         document.getElementById('info-first').classList.add('active');
-    //     }
-    // }
-
-</script>
 
 <script>
     function previewImage(event) {
