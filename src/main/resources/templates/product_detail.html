@@ -429,16 +429,16 @@
     <div class="product-detail-container">
         <div class="product-images">
             <div class="main-image">
-                <img id="main-product-image" src="/images/ao_trang_nam.jpg" alt="Main Product Image">
+                <img id="main-product-image" th:src="${product.getUrl()}" alt="Main Product Image">
             </div>
             <div class="thumbnail-images">
-                <img src="/images/ao_trang_nam.jpg" alt="Thumbnail 1" onclick="changeMainImage(this)">
+                <img th:src="${product.getUrl()}" alt="Thumbnail 1" onclick="changeMainImage(this)">
                 <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd69-lvytecdr0mzq35" alt="Thumbnail 2" onclick="changeMainImage(this)">
                 <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd4q-lvytecfoxsau0b" alt="Thumbnail 3" onclick="changeMainImage(this)">
             </div>
         </div>
         <div class="product-info">
-            <h1 class="product-name" th:text="${product.name}"></h1>
+            <h1 class="product-name" th:text="${product.getName()}"></h1>
             <div class="product-rating">
                 <span th:each="i : ${#numbers.sequence(1, product.getRating())}">
                     <i class="fa fa-star"  style="color: gold;"></i>

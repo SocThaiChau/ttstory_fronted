@@ -117,7 +117,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
-            background-color: #4CAF50;
+            background-color: #e67e22;
             color: white;
             transition: background-color 0.3s;
         }
@@ -130,15 +130,106 @@
             background-color: #45a049;
         }
 
+        .buy-now{
+            background-color: #f39c12;
+            color: white;
+        }
+        .buy-now:hover{
+            background-color:  #e67e22;
+            color: white;
+        }
     </style>
 
     <style>
-        .price-wrapper {
-            color: #7f8c8d;
-            text-decoration: line-through;
-            margin-left: 5px;
+        .color-buttons button{
+            width: auto;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border: 1px solid #777;
+            background: white;
+            color: black;
+        }
+        .color-buttons .selected{
+            border: 1px solid #f00;
+            color: red;
+        }
+    </style>
+    <style>
+        .address-class {
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .change-address {
+            margin-left: auto;
+            color: #0A68FF;
+        }
+    </style>
+
+    <style>
+        .table-borderless tbody tr td, .table-borderless tbody tr th,
+        .table-borderless thead tr th {
+            border: none;
+        }
+
+        .table-borderless tbody tr th{
+            justify-content: center;
+        }
+        .table-borderless tbody tr td, .table-borderless tbody tr th{
+            align-content: center;
+        }
+
+        .img-thumbnail {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .input-group {
+            width: 100px;
+        }
+
+
+        .quantity-controls {
+            display: flex;
             align-items: center;
         }
+
+        .quantity-controls .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .quantity-controls #quantity-input {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #ddd;
+            margin: 0 5px;
+        }
+
+        /* Giới hạn chiều rộng của cột sản phẩm */
+        .product-column {
+            width: 600px; /* Chỉnh lại giá trị này theo ý muốn */
+        }
+        .number-column{
+            width: 80px;
+            text-align: right;
+        }
+        .total-column{
+            width: 150px;
+            text-align: right;
+        }
+
     </style>
 </head>
 <body style="background: #f4f4f4">
@@ -264,57 +355,6 @@
 </svg>
 <!--Begin: Header-->
 <div th:replace="~{common/header :: header}"></div>
-<div style="
-    height: auto;
-    width: 100%;
-    margin: 0;
-    background: #00aced;
-">
-<nav class="main-menu d-flex navbar navbar-expand-lg p-2 py-3 p-lg-4 py-lg-4 ">
-    <div class="container-fluid">
-
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavba" aria-labelledby="offcanvasNavbarLabel" style="align-items: center;">
-
-            <div class="offcanvas-body justify-content-between" style="padding: 0px 80px;">
-
-                <ul class="navbar-nav menu-list list-unstyled align-items-lg-center d-flex gap-md-1 mb-0">
-                    <li class="nav-item">
-                        <a href="/home" class="nav-link mx-2">Home</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-<!--                        <a  href="/product" class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="pagess"-->
-<!--                           data-bs-toggle="dropdown" aria-expanded="false">Product</a>-->
-                        <a href="/product" class="nav-link mx-2 active">Product</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="coursess"
-                           data-bs-toggle="dropdown" aria-expanded="false">About us</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="eventss"
-                           data-bs-toggle="dropdown" aria-expanded="false">events</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="blogg"
-                           data-bs-toggle="dropdown" aria-expanded="false">blog</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="shopp"
-                           data-bs-toggle="dropdown" aria-expanded="false">shop</a>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-
-    </div>
-</nav>
-</div>
 <!--End: Footer-->
 
 <!--Begin: Content-->
@@ -330,81 +370,149 @@
 >
     <!--Start: Content-->
 
-    <div class="sort-container">
-        <div class="left-content">
-            <p style="font-weight: bold; font-size: 16px; color: black" class="category-titlee">Tất cả sản phẩm</p>
+    <div class="table-responsive" style="margin-bottom: 10px;">
+        <div class="address-class">
+            <div style="margin: 5px">
+                <h5 style="color:red; margin-bottom: 20px;">
+                    <i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i>
+                    Địa chỉ nhận hàng
+                </h5>
+                <p style="margin: 0; display: flex; gap: 30px; color:#000;">
+                    <strong>Chau Sóc Thái 0312658742</strong>
+                    <span>01 Đ. Võ Văn Ngân, Linh Chiểu, Thủ Đức, Thành phố Hồ Chí Minh</span>
+                </p>
+            </div>
+            <a href="/#" class="change-address">Thay đổi</a>
         </div>
-        <div class="right-content">
-            <p class="category-titlee">Sắp xếp</p>
-            <div class="dropdown">
-                <button style="color: black; border: 1px solid #777;" class="dropbtn" onclick="toggleDropdown()">Tất cả <i class="fa fa-caret-down"></i></button>
-                <div class="dropdown-content">
-                    <a href="#" onclick="changeSort('Tất cả')">Tất cả</a>
-                    <a href="#" onclick="changeSort('Mới nhất')">Mới nhất</a>
-                    <a href="#" onclick="changeSort('Giá tăng dần')">Giá tăng dần</a>
-                    <a href="#" onclick="changeSort('Giá giảm dần')">Giá giảm dần</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <thead>
+            <tr>
+                <th style="width: 10px"></th>
+                <th class="product-column">Sản phẩm</th>
+                <th class="number-column" >Đơn giá</th>
+                <th class="number-column">Số lượng</th>
+                <th class="total-column">Thành tiền</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd4s-luyo3ym7diyo8b_tn" class="img-fluid img-thumbnail" alt="Sản phẩm 1" style="width: 100px; height: auto;">
+                        <div class="ms-3">
+                            <h6>Áo thun nam trơn cộc tay cổ tròn ngắn tay, thoáng khí, thấm hút, nhanh khô AT02</h6>
+                        </div>
+                    </div>
+                </td>
+                <td class="number-column">
+                    <sup>₫</sup><span>57.000</span>
+                </td>
+                <td class="number-column">
+                    <span>1</span>
+                </td>
+                <td class="number-column">
+                    <sup>₫</sup><span>57.000</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img src="https://down-vn.img.susercontent.com/file/24e4f5d3f3ffdeffcddae14e5545f7eb_tn" class="img-fluid img-thumbnail" alt="Sản phẩm 2" style="width: 100px; height: auto;">
+                        <div class="ms-3">
+                            <h6>Quần đùi nam thể thao quần short hàng xuất cao cấp phong cách trẻ trung năng động T80</h6>
+                        </div>
+                    </div>
+                </td>
+                <td class="number-column">
+                    <sup>₫</sup><span>90.000</span>
+                </td>
+                <td class="number-column">
+                    <span>2</span>
+                </td>
+                <td class="number-column">
+                    <sup>₫</sup><span>180.000</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lpgaocnr7ryze5_tn" class="img-fluid img-thumbnail" alt="Sản phẩm 2" style="width: 100px; height: auto;">
+                        <div class="ms-3">
+                            <h6>Quần kẻ sọc nữ CARO nam nữ lưng cao dáng rộng phong cách Hàn Quốc CAMASTORE QK06</h6>
+                        </div>
+                    </div>
+                </td>
+                <td class="number-column">
+                    <sup>₫</sup><span>79.000</span>
+                </td>
+                <td class="number-column">
+                    <span>1</span>
+                </td>
+                <td class="number-column">
+                    <sup>₫</sup><span>79.000</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img src="https://down-vn.img.susercontent.com/file/1a2793f8325d452bb561d06ac94bc98f_tn" class="img-fluid img-thumbnail" alt="Sản phẩm 2" style="width: 100px; height: auto;">
+                        <div class="ms-3">
+                            <h6>Đồ bộ thể thao nam mặc hè xuyên biên giới, Chất thun cotton thấm hút mồ hôi cực tốt Kiểu dáng Slim Fit siêu đẹp DB37</h6>
+                        </div>
+                    </div>
+                </td>
+                <td class="number-column">
+                    <sup>₫</sup><span>69.000</span>
+                </td>
+                <td class="number-column">
+                    <span>1</span>
+                </td>
+                <td class="number-column">
+                    <sup>₫</sup><span>69.000</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-responsive" style="margin-bottom: 10px;">
+        <div class="address-class">
+            <div style="margin: 5px; display: flex; gap: 50px;">
+                <h5 style="margin-bottom: 20px;">
+                    Phương thức thanh toán
+                </h5>
+                <div class="color-buttons">
+                    <button onclick="selectColor(this)">
+                        <img class="method-icon" src="https://salt.tikicdn.com/ts/upload/92/b2/78/1b3b9cda5208b323eb9ec56b84c7eb87.png" width="32" height="32" alt="icon"> Thanh toán khi nhận hàng
+                    </button>
+                    <button onclick="selectColor(this)">
+                        <img class="method-icon" src="https://salt.tikicdn.com/ts/upload/ce/f6/e8/ea880ef285856f744e3ffb5d282d4b2d.jpg" width="32" height="32" alt="icon"> Ví Momo
+                    </button>
+                    <button onclick="selectColor(this)">
+                        <img class="method-icon" src="https://salt.tikicdn.com/ts/upload/77/6a/df/a35cb9c62b9215dbc6d334a77cda4327.png" width="32" height="32" alt="icon"> VNPAY
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <div id="product-container" class="product-grid">
-        <div class="product-card" th:each="products : ${product}">
-            <form method="post" action="/addToCart">
-                <input type="hidden" name="productId" th:value="${products.getId()}" />
-                <input type="hidden" name="quantity" value="1" />
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img th:src="${products.getUrl()}" alt="Product Image">
-                <h3 class="product-name" th:text="${products.getName()}"></h3>
-                <p class="product-price">
-                    <sup>₫</sup><span th:text="${#numbers.formatDecimal(products.getPromotionalPrice(), 0, 'POINT', 0, 'COMMA')}"></span>
-                    <span class="price-wrapper">
-                    <sup>₫</sup>
-                    <span class="original-price" th:text="${#numbers.formatDecimal(products.getPrice(), 0, 'POINT', 0, 'COMMA')}">150.000</span>
-                </span>
-                </p>
-                <div class="product-rating">
-                <span th:each="i : ${#numbers.sequence(1, products.getRating())}">
-                    <i class="fa fa-star"></i>
-                </span>
-                    <span th:each="i : ${#numbers.sequence(1, 5 - products.getRating())}">
-                    <i class="fa fa-star" th:if="${i + products.getRating() <= 5}"></i>
-                </span>
-                    <p th:text="'Đã bán ' + ${products.getSold()}"></p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart" type="submit"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a th:href="'/product/detail/' + ${products.getId()}" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </form>
+    <div class="d-flex justify-content-end">
+        <div>
+            <p>Tổng thanh toán (5 sản phẩm): <strong style="color:red;"><sup style="font-size: 20px;vertical-align: text-bottom">₫</sup><span>385.000</span></strong></p>
+            <button class="btn buy-now" style="width: 350px; font-size: 18px">Đặt hàng</button>
         </div>
     </div>
-<!--    <div id="product-container" class="product-grid" th:each="product : ${product}">-->
-<!--        <div class="product-card">-->
-<!--            <div class="like-container">-->
-<!--                <i class="fa fa-heart like-button"></i>-->
-<!--            </div>-->
-<!--            <img src="/images/ao_trang_nam.jpg" alt="Product 1">-->
-<!--            <h3 class="product-name" th:text="${product}"></h3>-->
-<!--            <p class="product-price"><sup>₫</sup>172.000</p>-->
-<!--            <div class="product-rating">-->
-<!--                <i class="fa fa-star"></i>-->
-<!--                <i class="fa fa-star"></i>-->
-<!--                <i class="fa fa-star"></i>-->
-<!--                <i class="fa fa-star"></i>-->
-<!--                <i class="fa fa-star-half-alt"></i>-->
-<!--                <p>Đã bán 3</p>-->
-<!--            </div>-->
-<!--            <div class="product-actions">-->
-<!--                <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>-->
-<!--                <a href="/product/detail" class="btn view-details">Xem chi tiết</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-    <div id="pagination" class="pagination"></div>
+
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
@@ -583,28 +691,29 @@
         th:replace="~{common/footer :: footer}"
 ></div>
 <!--End: Footer-->
+
 <script>
-    function toggleDropdown() {
-        document.querySelector('.dropdown-content').classList.toggle('show');
+    function incrementQuantity() {
+        const quantityInput = document.getElementById('quantity-input');
+        let quantity = parseInt(quantityInput.value);
+        quantityInput.value = quantity + 1;
     }
 
-    function changeSort(sortOption) {
-        const dropbtn = document.querySelector('.dropbtn');
-        dropbtn.innerHTML = `${sortOption} <i class="fa fa-caret-down"></i>`;
-        document.querySelector('.dropdown-content').classList.remove('show');
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-        if (!event.target.matches('.dropbtn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            for (var i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
+    function decrementQuantity() {
+        const quantityInput = document.getElementById('quantity-input');
+        let quantity = parseInt(quantityInput.value);
+        if (quantity > 1) {
+            quantityInput.value = quantity - 1;
         }
+    }
+</script>
+<script>
+    function selectColor(button) {
+        var colorButtons = document.querySelectorAll('.color-buttons button');
+        colorButtons.forEach(function(btn) {
+            btn.classList.remove('selected');
+        });
+        button.classList.add('selected');
     }
 
 </script>

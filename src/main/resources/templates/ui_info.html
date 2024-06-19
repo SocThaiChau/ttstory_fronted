@@ -497,12 +497,12 @@
         <ul>
             <li id="personal-info">Tài Khoản Của Tôi</li>
             <ul id="personal-info-menu" class="submenu" style="display:block;">
-                <li id="info-first" class="active">Thông Tin Cá Nhân</li>
-                <li id="update-info-menu">Đổi Mật Khẩu</li>
+                <li id="info-first" class="active" href="/profile/info">Thông Tin Cá Nhân</li>
+                <li id="update-info-menu" href="/profile/password">Đổi Mật Khẩu</li>
                 <li id="address-info-menu">Địa Chỉ</li>
 
             </ul>
-            <li id="address-menu">Đơn mua</li>
+            <li id="address-menu" href="/profile/order">Đơn mua</li>
         </ul>
     </div>
     <div class="content" style="background: white; min-height: 500px">
@@ -571,6 +571,15 @@
 
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Thêm sự kiện click cho các mục có thuộc tính href
+        document.querySelectorAll('li[href]').forEach(function(item) {
+            item.addEventListener('click', function() {
+                window.location.href = item.getAttribute('href');
+            });
+        });
+    });
+
     function previewImage(event) {
         const input = event.target;
         const reader = new FileReader();

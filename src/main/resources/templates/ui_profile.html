@@ -1,160 +1,37 @@
 <!DOCTYPE html>
-<html
-        lang="en"
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns="http://www.w3.org/1999/xhtml"
->
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>FrontEnd</title>
-    <meta name="description" content="Ela Admin - HTML5 Admin Template" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <link rel="apple-touch-icon" href="/images/logo.png" />
-    <link rel="shortcut icon" href="/images/logo.png" />
-
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css"
-    />
-
-    <link th:href="@{/assets/css/cs-skin-elastic.css}" rel="stylesheet" />
-    <link th:href="@{/assets/css/style.css}" rel="stylesheet" />
-    <link th:href="@{/assets/css/login/bootstrap.css}" rel="stylesheet" />
-
-    <link th:href="@{/assets/css/style2.css}" rel="stylesheet" />
-    <link th:href="@{/assets/css/normalize.css}" rel="stylesheet" />
-    <link th:href="@{/assets/css/vendor.css}" rel="stylesheet" />
-
-    <link th:href="@{/assets/css/home.css}" rel="stylesheet" />
-
-    <link
-            rel="stylesheet"
-            type="text/css"
-            href="/assets/css/login/bootstrap.css"
-            th:href="@{/assets/css/login/bootstrap.css}"
-    />
-    <link
-            href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css"
-            rel="stylesheet"
-    />
-    <link
-            href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css"
-            rel="stylesheet"
-    />
-
-    <link
-            href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css"
-            rel="stylesheet"
-    />
-    <link
-            href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css"
-            rel="stylesheet"
-    />
-
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
-            rel="stylesheet"
-    />
-    <link
-            href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
-            rel="stylesheet"
-    />
-
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-            rel="stylesheet"
-    />
-
-
-    <script
-            src="https://kit.fontawesome.com/8f73a47761.js"
-            crossorigin="anonymous"
-    ></script>
-
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="/assets/js/main.js"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Vendor</title>
     <style>
-
-        .container {
-            display: flex;
-            /*height: 100vh;*/
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
             padding: 0;
         }
 
-        .sidebar ul ul {
-            list-style-type: none;
-            padding: 0px 20px;
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
         }
 
-        .sidebar ul li {
-            margin: 10px 0;
-            cursor: pointer;
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
         }
 
-        .sidebar ul li.active {
-            color: red;
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
         }
 
-        .sidebar ul li:hover {
-            /*background-color: #ddd;*/
-            padding-left: 10px;
-            color: red;
-        }
-
-        .submenu {
-            list-style-type: none;
-            padding-left: 20px;
-        }
-
-        .content {
-            flex-grow: 1;
+        .container {
             padding: 20px;
         }
 
@@ -162,143 +39,66 @@
             display: none;
         }
 
-        .content-section#personal-detail {
+        .content-section.active {
             display: block;
         }
 
-        .content-section h2 {
-            margin-top: 0;
+        .form-group {
+            margin-bottom: 15px;
         }
 
-    </style>
-    <style>
-        h5 {
-            margin-top: 0;
-        }
-
-        #personal-info-form {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-        }
-
-        .form-left {
-            /*flex: 1;*/
-            width: 600px;
-        }
-
-        .form-left label {
+        .form-group label {
             display: block;
             margin-bottom: 5px;
-            font-weight: bold;
         }
 
-        .form-left input {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
 
-        .gender-options {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 300px;
-        }
-
-        .gender-options input {
-            /*padding: 8px;*/
-        }
-
-        .gender-options input {
-            margin: 0;
-        }
-
-        .gender-options label {
-            margin-right: 20px;
-            font-weight: normal;
-        }
-
-        .form-right {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        #profile-picture {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 1px solid #ccc;
-            object-fit: cover;
-        }
-
-        #upload-picture {
-            display: none;
-        }
-
-        .custom-file-upload {
-            display: inline-block;
-            padding: 10px 20px;
-            cursor: pointer;
+        .form-group button {
             background-color: #4CAF50;
             color: white;
+            padding: 10px 20px;
             border: none;
             border-radius: 4px;
-            font-size: 14px;
-            text-align: center;
+            cursor: pointer;
         }
 
-        .custom-file-upload:hover {
+        .form-group button:hover {
             background-color: #45a049;
         }
 
-        button[type="submit"] {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #FF0000;
-            color: white;
-            border: none;
+        .product-list, .stats {
+            margin-top: 20px;
+        }
+
+        .product-item, .stat-item {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
             border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #CC0000;
-        }
-
-        .password-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .password-container input[type="password"],
-        .password-container input[type="text"] {
-            width: 100%;
-            padding-right: 30px;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 10px;
-            cursor: pointer;
-        }
-
-        .success-message {
-            color: green;
-        }
-        .error-message {
-            color: red;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
+    <script>
+        function showSection(sectionId) {
+            var sections = document.getElementsByClassName('content-section');
+            for (var i = 0; i < sections.length; i++) {
+                sections[i].classList.remove('active');
+            }
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            showSection('view-products'); // Mặc định hiển thị phần Xem sản phẩm
+        });
+    </script>
 </head>
-<body style="background: #f4f4f4">
+<body>
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
     <defs>
         <symbol id="facebook" viewBox="0 0 24 24">
@@ -419,334 +219,78 @@
         </symbol>
     </defs>
 </svg>
-<!--Begin: Header-->
+
 <div th:replace="~{common/header :: header}"></div>
-<div style="
-    height: auto;
-    width: 100%;
-    margin: 0;
-    background: #00aced;
-">
-    <nav class="main-menu d-flex navbar navbar-expand-lg p-2 py-3 p-lg-4 py-lg-4 " style="background: white;">
-        <div class="container-fluid">
 
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavba" aria-labelledby="offcanvasNavbarLabel" style="align-items: center;">
 
-                <div class="offcanvas-body justify-content-between" style="padding: 0px 80px;">
+<div class="navbar">
+    <a href="#" onclick="showSection('view-products')">Xem sản phẩm</a>
+    <a href="#" onclick="showSection('add-product')">Thêm sản phẩm</a>
+    <a href="#" onclick="showSection('statistics')">Thống kê</a>
+</div>
 
-                    <ul class="navbar-nav menu-list list-unstyled align-items-lg-center d-flex gap-md-1 mb-0">
-                        <li class="nav-item">
-                            <a href="/home" class="nav-link mx-2 ">Home</a>
-                        </li>
-
-                        <li class="nav-item dropdown">
-<!--                            <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="pagess"-->
-<!--                               data-bs-toggle="dropdown" aria-expanded="false">Product</a>-->
-                            <a href="/product" class="nav-link mx-2">Product</a>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="coursess"
-                               data-bs-toggle="dropdown" aria-expanded="false">About us</a>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="eventss"
-                               data-bs-toggle="dropdown" aria-expanded="false">events</a>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="blogg"
-                               data-bs-toggle="dropdown" aria-expanded="false">blog</a>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="shopp"
-                               data-bs-toggle="dropdown" aria-expanded="false">shop</a>
-                        </li>
-                    </ul>
-
-                </div>
+<div class="container">
+    <div id="view-products" class="content-section">
+        <h2>Xem sản phẩm</h2>
+        <div class="product-list">
+            <!-- Danh sách sản phẩm -->
+            <div class="product-item">
+                <h3>Sản phẩm 1</h3>
+                <p>Mô tả sản phẩm 1</p>
             </div>
-
-        </div>
-    </nav>
-
-</div>
-<div th:if="${message}" th:class="${messageType == 'success' ? 'success-message' : 'error-message'}">
-    <p th:text="${message}"></p>
-</div>
-<!--Begin: Content-->
-<div
-        class="container content"
-        style="
-        height: auto;
-        width: 100%;
-        margin: auto;
-        /*background: antiquewhite;*/
-        /*padding: 0px 80px;*/
-      "
->
-    <!--Start: Content-->
-    <div class="sidebar">
-        <div>
-            <img th:src="${avatarUrl}" style="border-radius: 50%; height: 70px; width: 70px;">
-            <span th:if="${name}" style="padding: 0px 0px 0px 10px;display: inline;color: black; font-weight: bold;" th:text="${name}"></span>
-
-        </div>
-        <ul>
-            <li id="personal-info" onclick="toggleSubmenu('personal-info-menu', this)">Tài Khoản Của Tôi</li>
-            <ul id="personal-info-menu" class="submenu" style="display:block;">
-                <li id="info-first" class="active" onclick="showContent('personal-detail', this, 'personal-info-menu')">Thông Tin Cá Nhân</li>
-                <li id="update-info-menu" onclick="showContent('updatePasword-info', this, 'personal-info-menu')">Đổi Mật Khẩu</li>
-                <li id="address-info-menu" onclick="showContent('address-info', this, 'personal-info-menu')">Địa Chỉ</li>
-
-            </ul>
-            <li id="change-password-menu" onclick="toggleSubmenu('personal-info-menuu', this)">Test</li>
-            <ul id="personal-info-menuu" class="submenu" style="display:none;">
-                <li id="info-firstt" onclick="showContent('personal-detaill', this, 'personal-info-menuu')">Test 1</li>
-                <li id="update-info-menuu" onclick="showContent('update-infoo', this, 'personal-info-menuu')">Test 2</li>
-            </ul>
-            <li id="address-menu" onclick="showContent('address', this)">Đơn mua</li>
-        </ul>
-    </div>
-    <div class="content" style="background: white; min-height: 500px">
-        <div id="personal-detail" class="content-section">
-            <h5>Thông tin cá nhân</h5>
-            <p>Quản lý thông tin cá nhân để bảo mật tài khoản</p>
-            <form id="personal-info-form" method="post" th:action="@{/updateUser}" enctype="multipart/form-data">
-                <div class="form-left">
-                    <label for="full-name">Họ và tên</label>
-                    <input type="text" id="full-name" th:value="${name}" name="name">
-                    <input type="hidden" name="id" th:value="${id}" />
-
-
-                    <label for="email">Email</label>
-                    <input type="email" id="email" th:value="${email}" name="email">
-
-                    <label for="phone">Số điện thoại</label>
-                    <input type="tel" id="phone" th:value="${phoneNumber}" name="phoneNumber">
-
-                    <label for="address">Địa chỉ</label>
-                    <input type="text" id="addres" th:value="${address}" name="address">
-
-                    <label>Giới tính</label>
-                    <div class="gender-options" th:value="${gender}">
-                        <input type="radio" id="male" name="gender" value="male" th:checked="${gender == 'male'}">
-                        <label for="male">Nam</label>
-                        <input type="radio" id="female" name="gender" value="female" th:checked="${gender == 'female'}">
-                        <label for="female">Nữ</label>
-                        <input type="radio" id="other" name="gender" value="other" th:checked="${gender == 'other'}">
-                        <label for="other">Khác</label>
-                    </div>
-
-                    <label for="dob">Ngày tháng năm sinh</label>
-                    <input
-                            style="background: white"
-                            type="date"
-                            class="form-control"
-                            placeholder="Ngày tháng năm sinh"
-                            th:value="${dob}"
-                            id="dob"
-                            name="dob"
-                            required
-                    />
-
-                    <button type="submit">Lưu thông tin</button>
-                </div>
-                <div class="form-right">
-                    <img id="profile-picture" th:src="${avatarUrl}" alt="Profile Picture">
-                    <input type="file" id="upload-picture" name="avatarUrl" accept="image/*" onchange="previewImage(event)">
-                    <label for="upload-picture" class="custom-file-upload">Chọn ảnh</label>
-                </div>
-
-            </form>
-        </div>
-        <div id="updatePasword-info" class="content-section" style="display:none;">
-            <h5>Thay đổi mật khẩu</h5>
-            <p>Quản lý mật khẩu cá nhân</p>
-            <br><br>
-            <form method="post" th:action="@{/changePassword}">
-                <div class="form-left">
-                    <label for="newPassword">Mật khẩu mới</label>
-                    <div class="password-container">
-                        <input type="password" id="newPassword" name="newPassword" placeholder="Nhập mật khẩu mới...">
-                        <span class="toggle-password" onclick="togglePassword('newPassword', this)">
-                <i class="fa fa-eye-slash"></i>
-            </span>
-                    </div>
-
-                    <label for="repeatNewPassword">Nhập lại mật khẩu mới</label>
-                    <div class="password-container">
-                        <input type="password" id="repeatNewPassword" name="repeatNewPassword" placeholder="Nhập lại mật khẩu mới...">
-                        <span class="toggle-password" onclick="togglePassword('repeatNewPassword', this)">
-                <i class="fa fa-eye-slash"></i>
-            </span>
-                    </div>
-
-                    <button type="submit">Lưu</button>
-                </div>
-            </form>
-        </div>
-        <div id="address-info" class="content-section" style="display:none;">
-            <h2>Địa Chỉ</h2>
-            <p>Form để cập nhật địa chỉ của bạn.</p>
-        </div>
-        <div id="personal-detaill" class="content-section">
-            <h2>Đổi mật khẩu 1</h2>
-            <p>Thông tin chi tiết về cá nhân của bạn.</p>
-            <h2>Thông tin cá nhân</h2>
-            <p>Thông tin chi tiết về cá nhân của bạn.</p>
-            <h2>Thông tin cá nhân</h2>
-            <p>Thông tin chi tiết về cá nhân của bạn.</p>
-            <h2>Thông tin cá nhân</h2>
-            <p>Thông tin chi tiết về cá nhân của bạn.</p>
-            <h2>Thông tin cá nhân</h2>
-            <p>Thông tin chi tiết về cá nhân của bạn.</p>
-            <h2>Thông tin cá nhân</h2>
-            <p>Thông tin chi tiết về cá nhân của bạn.</p>
-        </div>
-        <div id="update-infoo" class="content-section" style="display:none;">
-            <h2>Đổi mật khẩu 2</h2>
-            <p>Form để cập nhật thông tin cá nhân của bạn.</p>
-        </div>
-        <div id="change-password" class="content-section" style="display:none;">
-            <h2>Đổi mật khẩu</h2>
-            <p>Form để thay đổi mật khẩu của bạn.</p>
-        </div>
-        <div id="address" class="content-section" style="display:none;">
-            <h2>Địa chỉ</h2>
-            <p>Thông tin về địa chỉ của bạn.</p>
+            <div class="product-item">
+                <h3>Sản phẩm 2</h3>
+                <p>Mô tả sản phẩm 2</p>
+            </div>
+            <!-- Thêm các sản phẩm khác tương tự -->
         </div>
     </div>
-    <!--End: Content-->
 
-    <div class="clearfix"></div>
+    <div id="add-product" class="content-section">
+        <h2>Thêm sản phẩm</h2>
+        <form id="add-product-form">
+            <div class="form-group">
+                <label for="product-name">Tên sản phẩm</label>
+                <input type="text" id="product-name" name="product-name" required>
+            </div>
+            <div class="form-group">
+                <label for="product-description">Mô tả sản phẩm</label>
+                <textarea id="product-description" name="product-description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="product-price">Giá sản phẩm</label>
+                <input type="number" id="product-price" name="product-price" required>
+            </div>
+            <div class="form-group">
+                <label for="product-category">Danh mục</label>
+                <select id="product-category" name="product-category" required>
+                    <option value="category1">Danh mục 1</option>
+                    <option value="category2">Danh mục 2</option>
+                    <!-- Thêm các danh mục khác tương tự -->
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit">Thêm sản phẩm</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="statistics" class="content-section">
+        <h2>Thống kê</h2>
+        <div class="stats">
+            <!-- Thống kê doanh thu, sản phẩm đã bán, vv. -->
+            <div class="stat-item">
+                <h3>Doanh thu tháng này</h3>
+                <p>100,000,000 VND</p>
+            </div>
+            <div class="stat-item">
+                <h3>Sản phẩm đã bán</h3>
+                <p>200 sản phẩm</p>
+            </div>
+            <!-- Thêm các thống kê khác tương tự -->
+        </div>
+    </div>
 </div>
-<!--Begin: Footer-->
-<div
-        style="display: flow-root; background: #00aced"
-        th:replace="~{common/footer :: footer}"
-></div>
-<!--End: Footer-->
-
-<script>
-    function togglePassword(fieldId, icon) {
-        var passwordField = document.getElementById(fieldId);
-        var iconElement = icon.querySelector('i');
-
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            iconElement.classList.remove('fa-eye-slash');
-            iconElement.classList.add('fa-eye');
-        } else {
-            passwordField.type = "password";
-            iconElement.classList.remove('fa-eye');
-            iconElement.classList.add('fa-eye-slash');
-        }
-    }
-</script>
-<script>
-    var submenu = document.getElementById(info-first);
-    submenu.classList.add('active');
-
-    function showContent(sectionId, element, parentMenuId = null) {
-        var sections = document.getElementsByClassName('content-section');
-        for (var i = 0; i < sections.length; i++) {
-            sections[i].style.display = 'none';
-        }
-        document.getElementById(sectionId).style.display = 'block';
-
-        var sidebarItems = document.querySelectorAll('.sidebar ul li');
-        for (var i = 0; i < sidebarItems.length; i++) {
-            sidebarItems[i].classList.remove('active');
-        }
-        element.classList.add('active');
-
-        if (parentMenuId) {
-            var parentMenu = document.querySelector(`[onclick="toggleSubmenu('${parentMenuId}', this)"]`);
-            parentMenu.classList.remove('active');
-        }
-
-        localStorage.setItem('activeSection', sectionId);
-        localStorage.setItem('activeItem', element.id);
-    }
-
-    function toggleSubmenu(submenuId, element) {
-        var submenu = document.getElementById(submenuId);
-        var firstSubmenuItem = submenu.querySelector('li');
-
-        var allSubmenus = document.querySelectorAll('.submenu');
-        for (var i = 0; i < allSubmenus.length; i++) {
-            allSubmenus[i].style.display = 'none';
-        }
-        submenu.style.display = 'block';
-
-        var sidebarItems = document.querySelectorAll('.sidebar ul li');
-        for (var i = 0; i < sidebarItems.length; i++) {
-            sidebarItems[i].classList.remove('active');
-        }
-
-        if (firstSubmenuItem) {
-            showContent(firstSubmenuItem.getAttribute('onclick').split("'")[1], firstSubmenuItem, submenuId);
-        } else {
-            element.classList.add('active');
-        }
-
-        localStorage.setItem('activeSubmenu', submenuId);
-        localStorage.setItem('activeItem', element.id);
-    }
-
-    // window.onload = function() {
-    //     var activeSection = localStorage.getItem('activeSection');
-    //     var activeItem = localStorage.getItem('activeItem');
-    //     var activeSubmenu = localStorage.getItem('activeSubmenu');
-    //
-    //     if (activeSection && activeItem) {
-    //         var element = document.getElementById(activeItem);
-    //         if (activeSubmenu) {
-    //             document.getElementById(activeSubmenu).style.display = 'block';
-    //         }
-    //         showContent(activeSection, element, activeSubmenu);
-    //     } else {
-    //         document.getElementById('personal-info-menu').style.display = 'block';
-    //         document.getElementById('info-first').classList.add('active');
-    //     }
-    // }
-
-</script>
-
-<script>
-    function previewImage(event) {
-        const input = event.target;
-        const reader = new FileReader();
-
-        reader.onload = function() {
-            const dataURL = reader.result;
-            const profilePicture = document.getElementById('profile-picture');
-            profilePicture.src = dataURL;
-        };
-
-        if (input.files && input.files[0]) {
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-</script>
-
-
-<script>
-    // Chọn ô input bằng id và áp dụng Flatpickr
-    const dateOfBirthInput = document.getElementById("dob");
-    flatpickr(dateOfBirthInput, {
-        dateFormat: "Y-m-d", // Định dạng ngày/tháng/năm (có thể tùy chỉnh)
-        maxDate: "today", // Chỉ cho phép chọn ngày trong tương lai
-        // defaultDate: 'today' // Đặt ngày mặc định là ngày hiện tại
-    });
-</script>
-
 
 </body>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </html>

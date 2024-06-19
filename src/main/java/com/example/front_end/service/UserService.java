@@ -3,7 +3,9 @@ package com.example.front_end.service;
 import com.cloudinary.Cloudinary;
 import com.example.front_end.config.JwtFilter;
 import com.example.front_end.exception.UserException;
+import com.example.front_end.model.UI.AddToCartRequestUI;
 import com.example.front_end.model.UI.UserRequestUI;
+import com.example.front_end.model.request.AddToCartRequest;
 import com.example.front_end.model.request.AuthenticationRequest;
 import com.example.front_end.model.request.UserRequest;
 import com.example.front_end.model.response.*;
@@ -41,12 +43,16 @@ public class UserService {
     private String checkPassword = "http://localhost:8080/users/checkPassword";
     private String updatePassword = "http://localhost:8080/users/updatePassword";
     private String createUser = "http://localhost:8080/admin/users/create";
-    private String allProduct = "http://localhost:8080/users/home";
-    private String productDetail = "http://localhost:8080/users/product/";
+    private String allProduct = "http://localhost:8080/users/getAllProduct";
+    private String productDetail = "http://localhost:8080/users/product/detail/";
 
     private String updateUser = "http://localhost:8080/users/profile";
 
     private String findUserById = "http://localhost:8080/users/getUser/";
+    private String cartDetail = "http://localhost:8080/users/cart/detail";
+
+    private String addToCart = "http://localhost:8080/users/cart/add";
+
 
     @Autowired
     private JwtFilter jwtFilter;
@@ -425,4 +431,67 @@ public class UserService {
         }
     }
 
+    public CartResponse cartDetail() {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(cartDetail);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken); // Replace with your actual token
+
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+            ResponseEntity<CartResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            CartResponse cartResponse = responseEntity.getBody();
+            if (cartResponse != null) {
+                return cartResponse.getData();
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public String addCart(AddToCartRequestUI addToCartRequestUI) {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(addToCart);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+
+            AddToCartRequest addToCartRequest = new AddToCartRequest();
+            addToCartRequest.setQuantity(addToCartRequestUI.getQuantity());
+            addToCartRequest.setProductId(addToCartRequestUI.getProductId());
+
+            HttpEntity<?> entity = new HttpEntity<>(addToCartRequest);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.POST,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            String cartResponse = responseEntity.getBody();
+            if (cartResponse != null) {
+                return cartResponse;
+            }
+        } catch (Exception ex) {
+            return null;
+        }
+        return null;
+    }
 }

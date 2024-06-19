@@ -117,7 +117,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
-            background-color: #4CAF50;
+            background-color: #e67e22;
             color: white;
             transition: background-color 0.3s;
         }
@@ -130,6 +130,21 @@
             background-color: #45a049;
         }
 
+        .btnUpdate{
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btnUpdate:hover {
+            background-color: #45a049; /* Màu nền khi hover */
+        }
+        .btnDelete{
+            background-color: #FF0000;
+            color: white;
+        }
+
+        .btnDelete:hover{
+            background-color: #c0392b;
+        }
     </style>
 
     <style>
@@ -139,6 +154,58 @@
             margin-left: 5px;
             align-items: center;
         }
+    </style>
+
+    <style>
+        .table-borderless tbody tr td, .table-borderless tbody tr th,
+        .table-borderless thead tr th {
+            border: none;
+        }
+
+        .table-borderless tbody tr th{
+            justify-content: center;
+        }
+        .table-borderless tbody tr td, .table-borderless tbody tr th{
+            align-content: center;
+        }
+
+        .img-thumbnail {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .input-group {
+            width: 100px;
+        }
+
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-controls .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .quantity-controls #quantity-input {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #ddd;
+            margin: 0 5px;
+        }
+
+        /* Giới hạn chiều rộng của cột sản phẩm */
+        .product-column {
+            width: 600px; /* Chỉnh lại giá trị này theo ý muốn */
+        }
+
     </style>
 </head>
 <body style="background: #f4f4f4">
@@ -264,57 +331,6 @@
 </svg>
 <!--Begin: Header-->
 <div th:replace="~{common/header :: header}"></div>
-<div style="
-    height: auto;
-    width: 100%;
-    margin: 0;
-    background: #00aced;
-">
-<nav class="main-menu d-flex navbar navbar-expand-lg p-2 py-3 p-lg-4 py-lg-4 ">
-    <div class="container-fluid">
-
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavba" aria-labelledby="offcanvasNavbarLabel" style="align-items: center;">
-
-            <div class="offcanvas-body justify-content-between" style="padding: 0px 80px;">
-
-                <ul class="navbar-nav menu-list list-unstyled align-items-lg-center d-flex gap-md-1 mb-0">
-                    <li class="nav-item">
-                        <a href="/home" class="nav-link mx-2">Home</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-<!--                        <a  href="/product" class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="pagess"-->
-<!--                           data-bs-toggle="dropdown" aria-expanded="false">Product</a>-->
-                        <a href="/product" class="nav-link mx-2 active">Product</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="coursess"
-                           data-bs-toggle="dropdown" aria-expanded="false">About us</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="eventss"
-                           data-bs-toggle="dropdown" aria-expanded="false">events</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="blogg"
-                           data-bs-toggle="dropdown" aria-expanded="false">blog</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="shopp"
-                           data-bs-toggle="dropdown" aria-expanded="false">shop</a>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-
-    </div>
-</nav>
-</div>
 <!--End: Footer-->
 
 <!--Begin: Content-->
@@ -329,82 +345,62 @@
       "
 >
     <!--Start: Content-->
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <thead>
+            <tr>
+                <th style="width: 10px"></th>
+                <th class="product-column">Sản phẩm</th>
+                <th>Đơn giá</th>
+                <th>Số lượng</th>
+                <th>Số tiền</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cartItem : ${cartResponse.getCartItems()}">
+                <td>
+                    <input type="checkbox" id="selectProduct1" name="selectProduct1">
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img th:src="${cartItem.getImageUrl()}" class="img-fluid img-thumbnail" alt="Sản phẩm 1" style="width: 100px; height: auto;">
+                        <div class="ms-3">
+                            <h6 th:text="${cartItem.getProductName()}"></h6>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <sup>₫</sup><span th:text="${#numbers.formatDecimal(cartItem.getPrice(), 0, 'POINT', 0, 'COMMA')}"></span>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="decrementQuantity()">-</button>
+                            <input type="text" id="quantity-input" th:value="${cartItem.getQuantity()}">
+                            <button class="quantity-btn" onclick="incrementQuantity()">+</button>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <sup>₫</sup><span th:text="${#numbers.formatDecimal(cartItem.getSubtotal(), 0, 'POINT', 0, 'COMMA')}"></span>
+                </td>
+                <td>
+                    <button class="btn btnDelete">Xóa</button>
+                    <button class="btn btnUpdate">Cập nhật</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-end">
+        <div>
 
-    <div class="sort-container">
-        <div class="left-content">
-            <p style="font-weight: bold; font-size: 16px; color: black" class="category-titlee">Tất cả sản phẩm</p>
-        </div>
-        <div class="right-content">
-            <p class="category-titlee">Sắp xếp</p>
-            <div class="dropdown">
-                <button style="color: black; border: 1px solid #777;" class="dropbtn" onclick="toggleDropdown()">Tất cả <i class="fa fa-caret-down"></i></button>
-                <div class="dropdown-content">
-                    <a href="#" onclick="changeSort('Tất cả')">Tất cả</a>
-                    <a href="#" onclick="changeSort('Mới nhất')">Mới nhất</a>
-                    <a href="#" onclick="changeSort('Giá tăng dần')">Giá tăng dần</a>
-                    <a href="#" onclick="changeSort('Giá giảm dần')">Giá giảm dần</a>
-                </div>
-            </div>
+            <p>Tổng thanh toán: <strong style="color:red;"><sup style="font-size: 20px;vertical-align: text-bottom">₫</sup><span th:text="${#numbers.formatDecimal(cartResponse.getTotalPrice(), 0, 'POINT', 0, 'COMMA')}"></span></strong></p>
+            <button class="btn btn-primary btn-block">Mua ngay</button>
         </div>
     </div>
 
-
-    <div id="product-container" class="product-grid">
-        <div class="product-card" th:each="products : ${product}">
-            <form method="post" action="/addToCart">
-                <input type="hidden" name="productId" th:value="${products.getId()}" />
-                <input type="hidden" name="quantity" value="1" />
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img th:src="${products.getUrl()}" alt="Product Image">
-                <h3 class="product-name" th:text="${products.getName()}"></h3>
-                <p class="product-price">
-                    <sup>₫</sup><span th:text="${#numbers.formatDecimal(products.getPromotionalPrice(), 0, 'POINT', 0, 'COMMA')}"></span>
-                    <span class="price-wrapper">
-                    <sup>₫</sup>
-                    <span class="original-price" th:text="${#numbers.formatDecimal(products.getPrice(), 0, 'POINT', 0, 'COMMA')}">150.000</span>
-                </span>
-                </p>
-                <div class="product-rating">
-                <span th:each="i : ${#numbers.sequence(1, products.getRating())}">
-                    <i class="fa fa-star"></i>
-                </span>
-                    <span th:each="i : ${#numbers.sequence(1, 5 - products.getRating())}">
-                    <i class="fa fa-star" th:if="${i + products.getRating() <= 5}"></i>
-                </span>
-                    <p th:text="'Đã bán ' + ${products.getSold()}"></p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart" type="submit"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a th:href="'/product/detail/' + ${products.getId()}" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </form>
-        </div>
-    </div>
-<!--    <div id="product-container" class="product-grid" th:each="product : ${product}">-->
-<!--        <div class="product-card">-->
-<!--            <div class="like-container">-->
-<!--                <i class="fa fa-heart like-button"></i>-->
-<!--            </div>-->
-<!--            <img src="/images/ao_trang_nam.jpg" alt="Product 1">-->
-<!--            <h3 class="product-name" th:text="${product}"></h3>-->
-<!--            <p class="product-price"><sup>₫</sup>172.000</p>-->
-<!--            <div class="product-rating">-->
-<!--                <i class="fa fa-star"></i>-->
-<!--                <i class="fa fa-star"></i>-->
-<!--                <i class="fa fa-star"></i>-->
-<!--                <i class="fa fa-star"></i>-->
-<!--                <i class="fa fa-star-half-alt"></i>-->
-<!--                <p>Đã bán 3</p>-->
-<!--            </div>-->
-<!--            <div class="product-actions">-->
-<!--                <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>-->
-<!--                <a href="/product/detail" class="btn view-details">Xem chi tiết</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-    <div id="pagination" class="pagination"></div>
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
@@ -583,6 +579,22 @@
         th:replace="~{common/footer :: footer}"
 ></div>
 <!--End: Footer-->
+
+<script>
+    function incrementQuantity() {
+        const quantityInput = document.getElementById('quantity-input');
+        let quantity = parseInt(quantityInput.value);
+        quantityInput.value = quantity + 1;
+    }
+
+    function decrementQuantity() {
+        const quantityInput = document.getElementById('quantity-input');
+        let quantity = parseInt(quantityInput.value);
+        if (quantity > 1) {
+            quantityInput.value = quantity - 1;
+        }
+    }
+</script>
 <script>
     function toggleDropdown() {
         document.querySelector('.dropdown-content').classList.toggle('show');

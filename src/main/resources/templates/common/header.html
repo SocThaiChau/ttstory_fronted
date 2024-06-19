@@ -75,7 +75,7 @@
                                             <use href="#user-circle" />
                                         </svg> </a>
                                     <ul class="dropdown-menu" aria-labelledby="userMenu">
-                                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                        <li><a class="dropdown-item" href="/profile/info">Profile</a></li>
                                         <li th:if="${role == 'VENDOR'}"><hr class="dropdown-divider"></li>
                                         <li th:if="${role == 'VENDOR'}"><a class="dropdown-item" href="#">Shop</a></li>
                                         <li><hr class="dropdown-divider"></li>
@@ -101,7 +101,7 @@
                             </li>
 
                             <li class="iconn-container">
-                                <a href="#" class="ms-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
+                                <a href="/cart" class="ms-3" data-bs-target="#offcanvasCart"
                                    aria-controls="offcanvasCart">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px">
                                         <use href="#shopping-bag" />

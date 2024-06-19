@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -33,9 +34,10 @@ public class ProductResponse implements Serializable {
     private String lastModifiedBy;
     private String createdDate;
     private String lastModifiedDate;
+    private String url;
     private UserResponse userResponse;
     private CategoryResponse categoryResponse;
-
+    private List<ImageResponse> images;
     private ProductResponse data;
 
 }

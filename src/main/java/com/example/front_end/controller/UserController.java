@@ -88,7 +88,15 @@ public class UserController {
     }
 
     @GetMapping("/forgotPassword")
-    public String forgotPassword(){
+    public String forgotPassword(Model model){
+        if(message != null){
+            model.addAttribute("message", message);
+        }
+        if(errorMessage != null){
+            model.addAttribute("errorMessage", "Gửi email không thành công");
+        }
+        message = null;
+        errorMessage = null;
         return "ui_forgotPass";
     }
 
@@ -98,9 +106,11 @@ public class UserController {
         message = userService.forgotPassword(email);
 
         if(message.equals("")){
-            message = null;
             errorMessage = "Gửi email không thành công";
             model.addAttribute("errorMessage", errorMessage);
+        }
+        else {
+            model.addAttribute("message", message);
         }
         return "redirect:/forgotPassword";
     }
@@ -213,23 +223,6 @@ public class UserController {
         return "redirect:/home";
     }
 
-    @GetMapping("/profile")
-    public String profile(Model model){
-        if (jwtFilter.getAccessToken() != null){
-            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
-            UserResponse userResponse = userService.findUserById(id);
-            model.addAttribute("user", userResponse);
-
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String dob = formatter.format(userResponse.getDob());
-
-            model.addAttribute("name", userResponse.getName());
-            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
-            model.addAttribute("dob", dob);
-            return "ui_info";
-        }
-        return "redirect:/home";
-    }
 
     @PostMapping("/updateUser")
     public String updateUser(
