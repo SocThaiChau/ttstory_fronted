@@ -231,6 +231,50 @@
         }
 
     </style>
+
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%; /* Could be more or less, depending on screen size */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <style>
+        .choose-address a:hover{
+            color: #0A68FF;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body style="background: #f4f4f4">
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
@@ -364,8 +408,6 @@
         height: auto;
         width: 100%;
         margin: auto;
-        /*background: antiquewhite;*/
-        /*padding: 0px 80px;*/
       "
 >
     <!--Start: Content-->
@@ -377,14 +419,69 @@
                     <i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i>
                     Địa chỉ nhận hàng
                 </h5>
-                <p style="margin: 0; display: flex; gap: 30px; color:#000;">
-                    <strong>Chau Sóc Thái 0312658742</strong>
-                    <span>01 Đ. Võ Văn Ngân, Linh Chiểu, Thủ Đức, Thành phố Hồ Chí Minh</span>
+                <p id="default-address" style="margin: 0; display: flex; gap: 30px; color:#000;">
+                    <strong id="default-fullname" th:text="${defaultAddress.getFullName()} + ' * ' + ${defaultAddress.getPhoneNumber()}"></strong>
+                    <span id="default-address-detail" th:text="${defaultAddress.getWard()} + ', ' + ${defaultAddress.getDistrict()}  + ', ' + ${defaultAddress.getCity()}"></span>
                 </p>
             </div>
-            <a href="/#" class="change-address">Thay đổi</a>
+            <div class="choose-address">
+                <a class="change-address add">Thêm địa chỉ | </a>
+                <a class="change-address change"> Thay đổi</a>
+            </div>
+
         </div>
     </div>
+
+    <div id="address-form" style="display: none;">
+        <h5 id="form-title">Thêm địa chỉ mới</h5>
+        <form id="address-form-element" th:action="@{/address/add}" method="post">
+            <input type="hidden" id="address-id" name="id" />
+            <div class="form-group">
+                <label for="fullName">Họ tên</label>
+                <input type="text" class="form-control" id="fullName" name="fullName" required placeholder="Họ tên..." />
+            </div>
+            <div class="form-group">
+                <label for="ward">Số nhà/ Đường</label>
+                <input type="text" class="form-control" id="ward" name="ward" required placeholder="Số nhà/ Đường..." />
+            </div>
+            <div class="form-group">
+                <label for="district">Quận/ Huyện</label>
+                <input type="text" class="form-control" id="district" name="district" required placeholder="Quận/ Huyện..." />
+            </div>
+            <div class="form-group">
+                <label for="city">Tỉnh/ Thành phố</label>
+                <input type="text" class="form-control" id="city" name="city" required placeholder="Tỉnh/ Thành phố..." />
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Số điện thoại</label>
+                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required placeholder="Số điện thoại..." />
+            </div>
+            <button type="submit" class="btn btn-success">Lưu</button>
+            <button type="button" class="btn btn-secondary" onclick="hideAddAddressForm()">Hủy</button>
+        </form>
+    </div>
+
+    <!-- Modal for changing address -->
+    <div id="addressModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h5>Chọn địa chỉ</h5>
+            <ul style="list-style-type: none;">
+                <li th:each="address, iterStat  : ${addressResponses}" style="margin-bottom: 10px;">
+                    <a href="javascript:void(0)" class="select-address"
+                       th:data-fullname="${address.getFullName()}"
+                       th:data-phone="${address.getPhoneNumber()}"
+                       th:data-ward="${address.getWard()}"
+                       th:data-district="${address.getDistrict()}"
+                       th:data-city="${address.getCity()}">
+                        <strong th:text="${iterStat.index + 1} + ' ' + ${address.getFullName()} + ' * ' + ${address.getPhoneNumber()}"></strong>
+                        <span th:text="${address.getWard()} + ', ' + ${address.getDistrict()}  + ', ' + ${address.getCity()}"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <div class="table-responsive">
         <table class="table table-borderless">
             <thead>
@@ -397,27 +494,27 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>
-                </td>
+            <tr th:each="orderItem, index : ${orderItemResponses}">
+                <td th:text="${index.index + 1}"></td>
                 <td>
                     <div class="d-flex align-items-center">
-                        <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd4s-luyo3ym7diyo8b_tn" class="img-fluid img-thumbnail" alt="Sản phẩm 1" style="width: 100px; height: auto;">
+                        <img th:src="${productDetails[index.index].getUrl()}" class="img-fluid img-thumbnail" alt="Sản phẩm" style="width: 100px; height: auto;">
                         <div class="ms-3">
-                            <h6>Áo thun nam trơn cộc tay cổ tròn ngắn tay, thoáng khí, thấm hút, nhanh khô AT02</h6>
+                            <h6 th:text="${productDetails[index.index].getName()}"></h6>
                         </div>
                     </div>
                 </td>
                 <td class="number-column">
-                    <sup>₫</sup><span>57.000</span>
+                    <sup>₫</sup><span th:text="${#numbers.formatDecimal(productDetails[index.index].getPromotionalPrice(), 0, 'POINT', 0, 'COMMA')}"></span>
                 </td>
                 <td class="number-column">
-                    <span>1</span>
+                    <span th:text="${orderItem.getQuantity()}"></span>
                 </td>
                 <td class="number-column">
-                    <sup>₫</sup><span>57.000</span>
+                    <sup>₫</sup><span th:text="${#numbers.formatDecimal(orderItem.getSubtotal(), 0, 'POINT', 0, 'COMMA')}"></span>
                 </td>
             </tr>
+            <!--
             <tr>
                 <td>
                 </td>
@@ -481,6 +578,7 @@
                     <sup>₫</sup><span>69.000</span>
                 </td>
             </tr>
+            -->
             </tbody>
         </table>
     </div>
@@ -508,8 +606,19 @@
 
     <div class="d-flex justify-content-end">
         <div>
-            <p>Tổng thanh toán (5 sản phẩm): <strong style="color:red;"><sup style="font-size: 20px;vertical-align: text-bottom">₫</sup><span>385.000</span></strong></p>
-            <button class="btn buy-now" style="width: 350px; font-size: 18px">Đặt hàng</button>
+            <p>
+                <span th:text="'Tổng thanh toán (' + ${orderResponse.getTotalItem()} +' sản phẩm): '"></span>
+                <strong style="color:red;">
+                    <sup style="font-size: 20px;vertical-align: text-bottom">₫</sup>
+                    <span th:text="${#numbers.formatDecimal(orderResponse.getTotal(), 0, 'POINT', 0, 'COMMA')}"></span>
+                </strong>
+            </p>
+            <form id="orderForm" th:action="@{/order/confirmOrder}" method="post">
+                <input type="hidden" id="id" name="id" th:value="${orderResponse.getId()}" /> <!-- Thay đổi giá trị của idAddress theo địa chỉ được chọn -->
+                <input type="hidden" id="idAddress" name="idAddress" value="1" /> <!-- Thay đổi giá trị của idAddress theo địa chỉ được chọn -->
+                <input type="hidden" id="paymentType" name="paymentType" value="Thanh toán khi nhận hàng" /> <!-- Thay đổi giá trị của paymentType theo phương thức thanh toán được chọn -->
+                <button type="submit" class="btn buy-now" style="width: 350px; font-size: 18px">Đặt hàng</button>
+            </form>
         </div>
     </div>
 
@@ -539,12 +648,12 @@
                         ></div>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="fullName">Họ và Tên</label>
+                        <label for="fullNamee">Họ và Tên</label>
                         <input
                                 type="text"
                                 class="form-control"
                                 placeholder="Họ và tên"
-                                id="fullName"
+                                id="fullNamee"
                                 name="name"
                                 required
                         />
@@ -693,6 +802,47 @@
 <!--End: Footer-->
 
 <script>
+    $(document).ready(function () {
+        $('.add').click(function () {
+            $('#address-form').css('display', 'block'); // Hiển thị form
+        });
+
+        // Hàm ẩn form
+        window.hideAddAddressForm = function () {
+            $('#address-form').css('display', 'none'); // Ẩn form
+        };
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Handle address selection
+        $(document).on('click', '.select-address', function () {
+            var fullName = $(this).data('fullname');
+            var phone = $(this).data('phone');
+            var ward = $(this).data('ward');
+            var district = $(this).data('district');
+            var city = $(this).data('city');
+
+            $('#default-fullname').text(fullName + ' * ' + phone);
+            $('#default-address-detail').text(ward + ', ' + district + ', ' + city);
+
+            modal.style.display = "none";
+        });
+
+        // Ẩn thông báo sau 5 giây
+        setTimeout(function() {
+            const messageAlert = document.getElementById('messageAlert');
+            if (messageAlert) {
+                messageAlert.classList.add('hide');
+            }
+            const errorAlert = document.getElementById('errorAlert');
+            if (errorAlert) {
+                errorAlert.classList.add('hide');
+            }
+        }, 5000); // 5000 milliseconds = 5 seconds
+    });
+
     function incrementQuantity() {
         const quantityInput = document.getElementById('quantity-input');
         let quantity = parseInt(quantityInput.value);

@@ -6,16 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryResponse implements Serializable {
+public class OrderItemResponse implements Serializable {
     private Long id;
-    private String name;
-    private String imageUrl;
-    private List<CategoryResponse> data;
-    private String image;
+    private Integer quantity;
+    private Long productId;  // Only product ID
+    private Double subtotal;
+    private Date createdDate;
+    private Date lastModifiedDate;
 }

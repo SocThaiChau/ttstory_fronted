@@ -284,17 +284,14 @@
             padding-right: 30px;
         }
 
-        .toggle-password {
-            position: absolute;
-            right: 10px;
-            cursor: pointer;
-        }
+    </style>
 
-        .success-message {
-            color: green;
+    <style>
+        .alert {
+            transition: opacity 0.5s ease-in-out;
         }
-        .error-message {
-            color: red;
+        .hide {
+            display: none;
         }
     </style>
 </head>
@@ -473,9 +470,6 @@
     </nav>
 
 </div>
-<div th:if="${message}" th:class="${messageType == 'success' ? 'success-message' : 'error-message'}">
-    <p th:text="${message}"></p>
-</div>
 <!--Begin: Content-->
 <div
         class="container content"
@@ -497,9 +491,9 @@
         <ul>
             <li id="personal-info">Tài Khoản Của Tôi</li>
             <ul id="personal-info-menu" class="submenu" style="display:block;">
-                <li id="info-first" class="active" href="/profile/info">Thông Tin Cá Nhân</li>
+                <li id="info-first" href="/profile/info">Thông Tin Cá Nhân</li>
                 <li id="update-info-menu" href="/profile/password">Đổi Mật Khẩu</li>
-                <li id="address-info-menu" href="/profile/address">Địa Chỉ</li>
+                <li id="address-info-menu" class="active" href="/profile/address">Địa Chỉ</li>
 
             </ul>
             <li id="address-menu" href="/profile/order">Đơn mua</li>
@@ -507,55 +501,90 @@
     </div>
     <div class="content" style="background: white; min-height: 500px">
         <div id="personal-detail" class="content-section">
-            <h5>Thông tin cá nhân</h5>
-            <p>Quản lý thông tin cá nhân để bảo mật tài khoản</p>
-            <form id="personal-info-form" method="post" th:action="@{/updateUser}" enctype="multipart/form-data">
-                <div class="form-left">
-                    <label for="full-name">Họ và tên</label>
-                    <input type="text" id="full-name" th:value="${user.getName()}" name="name">
-                    <input type="hidden" name="id" th:value="${user.getId()}" />
+            <h5>Thông tin địa chỉ</h5>
+            <p>Quản lý địa chỉ cá nhân</p>
 
+            <!-- Button to add a new address -->
+            <button class="btn btn-primary" onclick="showAddAddressForm()">Thêm địa chỉ mới</button>
 
-                    <label for="email">Email</label>
-                    <input type="email" id="email" th:value="${user.getEmail()}" name="email">
-
-                    <label for="phone">Số điện thoại</label>
-                    <input type="tel" id="phone" th:value="${user.getPhoneNumber()}" name="phoneNumber">
-
-                    <label for="address">Địa chỉ</label>
-                    <input type="text" id="address" th:value="${user.getAddress()}" name="address">
-
-                    <label>Giới tính</label>
-                    <div class="gender-options" th:value="${user.getGender()}">
-                        <input type="radio" id="male" name="gender" value="male" th:checked="${user.getGender() == 'male'}">
-                        <label for="male">Nam</label>
-                        <input type="radio" id="female" name="gender" value="female" th:checked="${user.getGender() == 'female'}">
-                        <label for="female">Nữ</label>
-                        <input type="radio" id="other" name="gender" value="other" th:checked="${user.getGender() == 'other'}">
-                        <label for="other">Khác</label>
-                    </div>
-
-                    <label for="dob">Ngày tháng năm sinh</label>
-                    <input
-                            style="background: white"
-                            type="date"
-                            class="form-control"
-                            placeholder="Ngày tháng năm sinh"
-                            th:value="${dob}"
-                            id="dob"
-                            name="dob"
-                            required
-                    />
-
-                    <button type="submit">Lưu thông tin</button>
+            <div class="col-md-12 form-group pt-1">
+                <div id="messageAlert" th:if="${message}" class="alert alert-success" role="alert"
+                     th:text="${message}">
                 </div>
-                <div class="form-right">
-                    <img id="profile-picture" th:src="${user.getAvatarUrl()}" alt="Profile Picture">
-                    <input type="file" id="upload-picture" name="avatarUrl" accept="image/*" onchange="previewImage(event)">
-                    <label for="upload-picture" class="custom-file-upload">Chọn ảnh</label>
+                <div id="errorAlert" th:if="${errorMessage}" class="alert alert-danger" role="alert"
+                     th:text="${errorMessage}">
                 </div>
+            </div>
+            <!-- Table to display addresses -->
+            <table class="table table-striped mt-1">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Họ tên</th>
+                    <th>Số nhà/ Đường</th>
+                    <th>Quận/ Huyện</th>
+                    <th>Tỉnh/ Thành phố</th>
+                    <th>Số điện thoại</th>
+                    <th>Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="address, iterStat : ${addressResponses}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${address.getFullName()}"></td>
+                    <td th:text="${address.getWard()}"></td>
+                    <td th:text="${address.getDistrict()}"></td>
+                    <td th:text="${address.getCity()}"></td>
+                    <td th:text="${address.getPhoneNumber()}"></td>
+                    <td>
+                        <button class="btn btn-warning edit"
+                                th:data-id="${address.getId()}"
+                                th:data-fullname="${address.getFullName()}"
+                                th:data-ward="${address.getWard()}"
+                                th:data-district="${address.getDistrict()}"
+                                th:data-city="${address.getCity()}"
+                                th:data-phonenumber="${address.getPhoneNumber()}">Chỉnh sửa</button>
+                        <button class="btn btn-danger delete" th:data-id="${address.getId()}">Xóa</button>
+                    </td>
+                </tr>
 
+                </tbody>
+            </table>
+
+            <form id="delete-form" method="post" th:action="@{/address/delete}" style="display:none;">
+                <input type="hidden" name="id" id="delete-id">
             </form>
+
+            <!-- Form to add/edit an address -->
+            <div id="address-form" style="display: none;">
+                <h5 id="form-title">Thêm địa chỉ mới</h5>
+                <form id="address-form-element" th:action="@{/address/add}" method="post">
+                    <input type="hidden" id="address-id" name="id" />
+                    <div class="form-group">
+                        <label for="fullName">Họ tên</label>
+                        <input type="text" class="form-control" id="fullName" name="fullName" required placeholder="Họ tên..." />
+                    </div>
+                    <div class="form-group">
+                        <label for="ward">Số nhà/ Đường</label>
+                        <input type="text" class="form-control" id="ward" name="ward" required placeholder="Số nhà/ Đường..." />
+                    </div>
+                    <div class="form-group">
+                        <label for="district">Quận/ Huyện</label>
+                        <input type="text" class="form-control" id="district" name="district" required placeholder="Quận/ Huyện..." />
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Tỉnh/ Thành phố</label>
+                        <input type="text" class="form-control" id="city" name="city" required placeholder="Tỉnh/ Thành phố..." />
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Số điện thoại</label>
+                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required placeholder="Số điện thoại..." />
+                    </div>
+                    <button type="submit" class="btn btn-success">Lưu</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideAddAddressForm()">Hủy</button>
+                </form>
+            </div>
+        </div>
         </div>
     </div>
     <!--End: Content-->
@@ -569,7 +598,80 @@
 ></div>
 <!--End: Footer-->
 
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.delete', function () {
+            const addressId = $(this).data('id');
+            $('#delete-id').val(addressId);
+            $('#delete-form').submit();
+        });
 
+        $(document).on('click', '.edit', function () {
+            const addressId = $(this).data('id');
+            const fullName = $(this).data('fullname');
+            const ward = $(this).data('ward');
+            const district = $(this).data('district');
+            const city = $(this).data('city');
+            const phoneNumber = $(this).data('phonenumber');
+
+            $('#address-id').val(addressId);
+            $('#fullName').val(fullName);
+            $('#ward').val(ward);
+            $('#district').val(district);
+            $('#city').val(city);
+            $('#phoneNumber').val(phoneNumber);
+
+            $('#address-form').show();
+            $('#form-title').text('Chỉnh sửa địa chỉ');
+            $('#address-form-element').attr('action', '/address/update');
+        });
+
+        // Ẩn thông báo sau 5 giây
+        setTimeout(function() {
+            const messageAlert = document.getElementById('messageAlert');
+            if (messageAlert) {
+                messageAlert.classList.add('hide');
+            }
+            const errorAlert = document.getElementById('errorAlert');
+            if (errorAlert) {
+                errorAlert.classList.add('hide');
+            }
+        }, 5000); // 5000 milliseconds = 5 seconds
+    });
+    function hideAddAddressForm() {
+        $('#address-form').hide();
+        $('#address-form-element')[0].reset();
+        $('#form-title').text('Thêm địa chỉ mới');
+        $('#address-form-element').attr('action', '/address/add');
+    }
+</script>
+
+<script>
+    function showAddAddressForm() {
+        document.getElementById('address-form').style.display = 'block';
+        document.getElementById('form-title').innerText = 'Thêm địa chỉ mới';
+    }
+
+    function hideAddAddressForm() {
+        document.getElementById('address-form').style.display = 'none';
+    }
+
+    function editAddress(id) {
+        // Fetch the address details and show the form with pre-filled data
+        // This can be done using an AJAX request to fetch address details by ID
+        // For simplicity, here we just show the form
+        showAddAddressForm();
+        document.getElementById('form-title').innerText = 'Chỉnh sửa địa chỉ';
+    }
+
+    function deleteAddress(id) {
+        if (confirm('Bạn có chắc chắn muốn xóa địa chỉ này?')) {
+            // Make an AJAX request to delete the address
+            // For simplicity, here we just log the ID
+            console.log('Deleting address with ID:', id);
+        }
+    }
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Thêm sự kiện click cho các mục có thuộc tính href
@@ -579,7 +681,6 @@
             });
         });
     });
-
     function previewImage(event) {
         const input = event.target;
         const reader = new FileReader();

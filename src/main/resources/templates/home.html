@@ -473,499 +473,80 @@
                 <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/quan-kaki-nam-jogger-yody-qkm6027-den-6.jpg?v=1697254421893" alt="Quần Kaki">
                 <h3>Quần Kaki</h3>
             </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/apm3299-xxm-7.jpg?v=1690163862957" alt="Áo Polo">
-                <h3>Áo Polo</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/gut7050-tra-qsm6037-tan-5.jpg?v=1710487363020" alt="Áo Thun">
-                <h3>Áo Thun</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/smm4073-xnh-4-5f31f3af-196e-474f-80eb-ce0b4617d518.jpg?v=1690163848063" alt="Áo Sơ Mi">
-                <h3>Áo Sơ Mi</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/akm4027-cam-1.jpg?v=1690163864163" alt="Áo Khoác">
-                <h3>Áo Khoác</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/quan-jeans-nam-qjm6067-xah-1.jpg?v=1690163441093" alt="Quần Jeans">
-                <h3>Quần Jeans</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/qam3191-tit-5.jpg?v=1704250636197" alt="Quần Âu">
-                <h3>Quần Âu</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/quan-kaki-nam-jogger-yody-qkm6027-den-6.jpg?v=1697254421893" alt="Quần Kaki">
-                <h3>Quần Kaki</h3>
-            </div>
         </div>
     </div>
 
     <div style="background: white; border-radius: 10px; padding: 10px; margin-top: 10px;">
         <h2 class="category-title" style="width: auto; background: #FA5330; padding: inherit; border-radius: 5px; color: yellow; text-align: center;">SẢN PHẨM BÁN CHẠY</h2>
         <div id="product-container" class="product-grid">
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="https://down-vn.img.susercontent.com/file/1a2793f8325d452bb561d06ac94bc98f" alt="Product 1">
-                <h3 class="product-name">Đồ bộ thể thao nam mặc hè xuyên biên giới, Chất thun cotton thấm hút mồ hôi cực tốt Kiểu dáng Slim Fit siêu đẹp DB37</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>69.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">109.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
+            <div class="product-card" th:each="products : ${productBySold}">
+                <form method="post" th:action="@{/cart/addToCart}">
+                    <input type="hidden" name="productId" th:value="${products.getId()}" />
+                    <input type="hidden" name="quantity" value="1" />
+                    <div class="like-container">
+                        <i class="fa fa-heart like-button"></i>
+                    </div>
+                    <img th:src="${products.getUrl()}" alt="Product Image">
+                    <h3 class="product-name" th:text="${products.getName()}"></h3>
+                    <p class="product-price">
+                        <sup>₫</sup><span th:text="${#numbers.formatDecimal(products.getPromotionalPrice(), 0, 'POINT', 0, 'COMMA')}"></span>
+                        <span class="price-wrapper">
+                    <sup>₫</sup>
+                    <span class="original-price" th:text="${#numbers.formatDecimal(products.getPrice(), 0, 'POINT', 0, 'COMMA')}">150.000</span>
+                </span>
+                    </p>
+                    <div class="product-rating">
+                <span th:each="i : ${#numbers.sequence(1, products.getRating())}">
                     <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 230</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
+                </span>
+                        <span th:each="i : ${#numbers.sequence(1, 5 - products.getRating())}">
+                    <i class="fa fa-star" th:if="${i + products.getRating() <= 5}"></i>
+                </span>
+                        <p th:text="'Đã bán ' + ${products.getSold()}"></p>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn add-to-cart" type="submit"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
+                        <a th:href="'/product/detail/' + ${products.getId()}" class="btn view-details">Xem chi tiết</a>
+                    </div>
+                </form>
             </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="https://salt.tikicdn.com/cache/750x750/ts/product/81/de/76/4aeff2a014259c4ddf9ce16c02fdcd55.jpg.webp" alt="Product 1">
-                <h3 class="product-name">Áo thun polo nam ngắn tay, chất thun vải mềm mịn, thiết kế phần bo tay và cổ áo phối màu độc lạ</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>179.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">230.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 225</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lew8rx4suxjr28" alt="Product 1">
-                <h3 class="product-name">QUẦN JEAN NAM, QUẦN SỌT LỬNG THÊU CHỮ WASH RÁCH CHUẨN SOÁI KA HOY MÙA HÈ - DB 006- DUBATI FASHION</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>79.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">158.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 215</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lst9rzdw6h8k40" alt="Product 1">
-                <h3 class="product-name">Quần Thể Thao Nam 3 Sọc Quần Nam Thu Đông Co Giãn Ống Suông ,Ống Côn</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>89.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">120.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 189</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="https://down-vn.img.susercontent.com/file/sg-11134201-22110-4skh4o17aekv3d" alt="Product 1">
-                <h3 class="product-name">Quần Jean Hiphop Rách Gối Ống Rộng phong cách Retro Cá Tính Âu Mỹ (Nhiều Mẫu, Có Bigsize) - KYUBI</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>200.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">250.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 175</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lw5lrms9r3dlbe" alt="Product 1">
-                <h3 class="product-name">Quần Jeans Ống Rộng, quần bò baggy suông đen xám wash smoke chất jean demin mềm Form Unisex Nam Nữ Helloyou</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>165.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">200.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 160</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lnxts1kbtsvub6" alt="Product 1">
-                <h3 class="product-name">Quần bò jean ống rộng suông xuông nữ jeans cạp cao phong cách jeanshop_0603 ms06</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>115.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">130.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 150</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lw10f0nqxyajb2" alt="Product 1">
-                <h3 class="product-name">Quần ống rộng vải linen form xuông may dập ly, quần ống suông nữ linen phối 3 màu MQ042</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>199.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">225.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 120</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-
-
         </div>
     </div>
 
     <div style="background: white; border-radius: 10px; padding: 10px; margin-top: 10px;">
         <h2 class="category-title" style="width: auto; background: #0A68FF; padding: inherit; border-radius: 5px; color: white; text-align: center;">HÀNG MỚI NHẤT</h2>
         <div class="product-grid">
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="https://salt.tikicdn.com/cache/750x750/ts/product/7a/de/3d/09189a77657f6bcc95e8e2ec1addd628.jpg.webp" alt="Product 1">
-                <h3 class="product-name">Áo Polo Nam cổ bẻ TSIMPLE thun có cổ tay lỡ vải cá sấu cotton phong cách trẻ trung, chuẩn form, nhiều màu</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>149.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">189.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
+            <div class="product-card" th:each="products : ${productByDate}">
+                <form method="post" th:action="@{/cart/addToCart}">
+                    <input type="hidden" name="productId" th:value="${products.getId()}" />
+                    <input type="hidden" name="quantity" value="1" />
+                    <div class="like-container">
+                        <i class="fa fa-heart like-button"></i>
+                    </div>
+                    <img th:src="${products.getUrl()}" alt="Product Image">
+                    <h3 class="product-name" th:text="${products.getName()}"></h3>
+                    <p class="product-price">
+                        <sup>₫</sup><span th:text="${#numbers.formatDecimal(products.getPromotionalPrice(), 0, 'POINT', 0, 'COMMA')}"></span>
+                        <span class="price-wrapper">
+                    <sup>₫</sup>
+                    <span class="original-price" th:text="${#numbers.formatDecimal(products.getPrice(), 0, 'POINT', 0, 'COMMA')}">150.000</span>
+                </span>
+                    </p>
+                    <div class="product-rating">
+                <span th:each="i : ${#numbers.sequence(1, products.getRating())}">
                     <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 10</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
+                </span>
+                        <span th:each="i : ${#numbers.sequence(1, 5 - products.getRating())}">
+                    <i class="fa fa-star" th:if="${i + products.getRating() <= 5}"></i>
+                </span>
+                        <p th:text="'Đã bán ' + ${products.getSold()}"></p>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn add-to-cart" type="submit"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
+                        <a th:href="'/product/detail/' + ${products.getId()}" class="btn view-details">Xem chi tiết</a>
+                    </div>
+                </form>
             </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>150.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">150.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>150.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">150.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>150.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">150.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>150.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">150.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>150.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">150.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>150.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">150.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
-                </div>
-                <img src="/images/ao_trang_nam.jpg" alt="Product 1">
-                <h3 class="product-name">Product 1 with a very long name that needs to be truncated</h3>
-                <p class="product-price">
-                    <span>
-                    <sup>₫</sup><span>150.000</span>
-
-                    <span class="price-wrapper">
-                        <sup>₫</sup>
-                        <span class="original-price">150.000</span>
-                    </span>
-                </span></p>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <p>Đã bán 3</p>
-                </div>
-                <div class="product-actions">
-                    <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <a href="/product/detail" class="btn view-details">Xem chi tiết</a>
-                </div>
-            </div>
-
-
-
         </div>
     </div>
     <!--Start: Content-->

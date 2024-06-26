@@ -47,10 +47,6 @@
                         </a>
                     </div>
 
-                    <div class="search-container">
-                        <input type="text" placeholder="Search..." class="search-input">
-                        <button class="search-button"><i class="fas fa-search"></i></button>
-                    </div>
 
                     <div class="d-none d-lg-flex align-items-center">
                         <ul class="d-flex  align-items-center list-unstyled m-0">
@@ -83,41 +79,6 @@
                                     </ul>
                                 </li>
                             </ul>
-                            <li class="iconn-container">
-                                <a href="wishlist.html" class="ms-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px">
-                                        <use href="#heart" />
-                                    </svg>
-                                    <span style="position: absolute;
-                                        background-color: red;
-                                        color: white;
-                                        border-radius: 50%;
-                                        padding: 2px 5px;
-                                        font-size: 12px;
-                                        margin-left: -10px;
-                                        margin-top: -10px;
-                                        font-weight: bold;" class="badge">5</span>
-                                </a>
-                            </li>
-
-                            <li class="iconn-container">
-                                <a href="/cart" class="ms-3" data-bs-target="#offcanvasCart"
-                                   aria-controls="offcanvasCart">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px">
-                                        <use href="#shopping-bag" />
-                                    </svg>
-                                    <span th:if="${total}" style="position: absolute;
-                                        background-color: red;
-                                        color: white;
-                                        border-radius: 50%;
-                                        padding: 2px 5px;
-                                        font-size: 12px;
-                                        margin-left: -10px;
-                                        margin-top: -10px;
-                                        font-weight: bold;" class="badge" th:text="${total}"></span>
-                                </a>
-                            </li>
-
                         </ul>
                     </div>
                 </div>

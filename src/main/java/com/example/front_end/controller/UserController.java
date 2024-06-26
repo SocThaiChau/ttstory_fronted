@@ -188,13 +188,13 @@ public class UserController {
         if (!password.equals(repeatPasword)){
             model.addAttribute("message", "Mật khẩu không khớp.");
             model.addAttribute("messageType", "error");
-            return "redirect:/profile";
+            return "redirect:/profile/info";
         }
         if( !inputService.isValidPassword(password)){
             String mes = "Mật khẩu yêu cầu: chữ số, chữ hoa, chữ thường và ký tự đặc biệt.\nVí dụ: Abc123@def";
             model.addAttribute("message", mes);
             model.addAttribute("messageType", "error");
-            return "redirect:/profile";
+            return "redirect:/profile/info";
         }
 
         message = userService.updatepasword(password);
@@ -207,7 +207,7 @@ public class UserController {
             model.addAttribute("message", "Đổi mật khẩu thành công.");
             model.addAttribute("messageType", "success");
         }
-        return "redirect:/profile";
+        return "redirect:/profile/info";
     }
 
     @PostMapping("/register")
@@ -249,7 +249,7 @@ public class UserController {
         String result = userService.updateUser(userRequestUI, id,avatarUrlFile);
         System.out.println("result: " + result);
 
-        return "redirect:/profile";
+        return "redirect:/profile/info";
     }
 
 }

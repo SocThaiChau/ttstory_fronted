@@ -235,6 +235,44 @@
 
     </style>
 
+    <style>
+        .user-info {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .user-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-info h3 {
+            margin: 0;
+            font-size: 18px;
+            flex-grow: 1;
+        }
+
+        .btn-follow, .btn-unfollow {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-follow .fa, .btn-unfollow .fa {
+            margin-right: 5px;
+        }
+
+        .btn-unfollow {
+            background-color: #dc3545;
+        }
+    </style>
 
 </head>
 <body style="background: #f4f4f4">
@@ -431,11 +469,11 @@
             <div class="main-image">
                 <img id="main-product-image" th:src="${product.getUrl()}" alt="Main Product Image">
             </div>
-            <div class="thumbnail-images">
-                <img th:src="${product.getUrl()}" alt="Thumbnail 1" onclick="changeMainImage(this)">
-                <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd69-lvytecdr0mzq35" alt="Thumbnail 2" onclick="changeMainImage(this)">
-                <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd4q-lvytecfoxsau0b" alt="Thumbnail 3" onclick="changeMainImage(this)">
-            </div>
+<!--            <div class="thumbnail-images">-->
+<!--                <img th:src="${product.getUrl()}" alt="Thumbnail 1" onclick="changeMainImage(this)">-->
+<!--                <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd69-lvytecdr0mzq35" alt="Thumbnail 2" onclick="changeMainImage(this)">-->
+<!--                <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd4q-lvytecfoxsau0b" alt="Thumbnail 3" onclick="changeMainImage(this)">-->
+<!--            </div>-->
         </div>
         <div class="product-info">
             <h1 class="product-name" th:text="${product.getName()}"></h1>
@@ -452,24 +490,27 @@
                 <i class="fa fa-heart"></i> <span th:text=" 'Đã thích (' + ${product.getFavoriteCount()} + ')'"></span>
             </div>
             <p class="sold" th:text="'Đã bán: ' + ${product.getSold()}"></p>
-            <div class="product-options">
-                <div style=" margin-bottom: 30px;" class="colors">
-                    <label>Màu sắc:</label>
-                    <div class="color-buttons">
-                        <button onclick="selectColor(this)">Trắng</button>
-                        <button onclick="selectColor(this)">Đen</button>
-                        <button onclick="selectColor(this)">Xanh</button>
-                    </div>
-                </div>
-                <div class="sizes">
-                    <label>Kích cỡ:</label>
-                    <div class="size-buttons">
-                        <button onclick="selectSize(this)">S</button>
-                        <button onclick="selectSize(this)">M</button>
-                        <button onclick="selectSize(this)">L</button>
-                    </div>
-                </div>
-            </div>
+            <p class="product-price" style="color: red; font-size: 35px;">
+                <sup>₫</sup><span th:text="${#numbers.formatDecimal(product.getPromotionalPrice(), 0, 'POINT', 0, 'COMMA')}"></span>
+            </p>
+<!--            <div class="product-options">-->
+<!--                <div style=" margin-bottom: 30px;" class="colors">-->
+<!--                    <label>Màu sắc:</label>-->
+<!--                    <div class="color-buttons">-->
+<!--                        <button onclick="selectColor(this)">Trắng</button>-->
+<!--                        <button onclick="selectColor(this)">Đen</button>-->
+<!--                        <button onclick="selectColor(this)">Xanh</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="sizes">-->
+<!--                    <label>Kích cỡ:</label>-->
+<!--                    <div class="size-buttons">-->
+<!--                        <button onclick="selectSize(this)">S</button>-->
+<!--                        <button onclick="selectSize(this)">M</button>-->
+<!--                        <button onclick="selectSize(this)">L</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="quantity">
                 <label>Số lượng:</label>
                 <div class="quantity-controls">
@@ -479,12 +520,55 @@
                 </div>
             </div>
             <div class="product-actions">
-                <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
-                <button class="btn buy-now">Mua ngay</button>
+                <button class="btn add-to-cart" onclick="addToCart()"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                <button class="btn buy-now" onclick="submitOrder()">Mua ngay</button>
             </div>
+            <form id="addToCartForm" method="post" th:action="@{/cart/addToCart}" style="display: none;">
+                <input type="hidden" name="productId" th:value="${product.getId()}">
+                <input type="hidden" name="quantity" id="quantity">
+            </form>
+
+<!--            <form id="orderForm" method="post" th:action="@{/order/addOrder}" style="display: none;">-->
+<!--                &lt;!&ndash; Input ẩn để chứa các sản phẩm đã chọn &ndash;&gt;-->
+<!--                <input type="hidden" name="productId" th:value="${product.getId()}">-->
+<!--                <input type="hidden" name="quantity" id="quantityOrder">-->
+<!--                <input type="hidden" name="cartItems" id="cartItems">-->
+            </form>
         </div>
     </div>
 
+    <div style="
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;"
+         class="user-info">
+
+        <div class="d-flex align-items-center">
+            <!-- User Image -->
+            <img src="/images/ao_trang_nam.jpg" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+
+            <!-- User Name -->
+            <div style="flex-grow: 1;">
+                <h3 th:text="${userName}"></h3>
+            </div>
+
+            <!-- Follow/Unfollow Button -->
+            <form th:action="@{/user/follow}" method="post" class="follow-form">
+                <input type="hidden" name="userId" th:value="${userId}">
+                <button type="submit" class="btn btn-follow">
+                    <i class="fa fa-plus"></i> Follow
+                </button>
+            </form>
+            <form th:action="@{/user/unfollow}" method="post" class="unfollow-form">
+                <input type="hidden" name="userId" th:value="${userId}">
+                <button type="submit" class="btn btn-unfollow">
+                    Unfollow
+                </button>
+            </form>
+        </div>
+    </div>
     <!-- Mô tả sản phẩm -->
     <div style="
     background-color: white;
@@ -728,6 +812,56 @@
             quantityInput.value = quantity - 1;
         }
     }
+
+    // Function to add to cart
+    function addToCart() {
+        const quantity = document.getElementById('quantity-input').value;
+
+        // Set productId and quantity to hidden form inputs
+        document.getElementById('quantity').value = quantity;
+
+        // Submit the hidden form
+        document.getElementById('addToCartForm').submit();
+    }
+
+    function submitOrder() {
+        //
+        // const quantity = document.getElementById('quantity-input').value;
+        // // Set productId and quantity to hidden form inputs
+        // document.getElementById('quantityOrder').value = quantity;
+        // // Submit the hidden form
+        // document.getElementById('orderForm').submit();
+
+        const quantity = document.getElementById('quantity-input').value;
+        const productId = document.querySelector('input[name="productId"]').value;
+
+        const orderData = [{
+            productId: productId,
+            quantity: quantity
+        }];
+        fetch('/order/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                location.reload();
+            })
+            .finally(() => {
+                // Dù thành công hay thất bại, chuyển hướng về trang /order
+                window.location.href = '/order';
+            });
+        event.preventDefault();
+    }
+
 
     function selectColor(button) {
         var colorButtons = document.querySelectorAll('.color-buttons button');

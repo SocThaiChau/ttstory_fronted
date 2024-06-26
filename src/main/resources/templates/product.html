@@ -351,7 +351,7 @@
 
     <div id="product-container" class="product-grid">
         <div class="product-card" th:each="products : ${product}">
-            <form method="post" action="/addToCart">
+            <form method="post" th:action="@{/cart/addToCart}">
                 <input type="hidden" name="productId" th:value="${products.getId()}" />
                 <input type="hidden" name="quantity" value="1" />
                 <div class="like-container">

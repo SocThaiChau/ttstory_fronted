@@ -110,7 +110,6 @@
   />
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="/assets/js/main.js"></script>
-
   <style>
     .btn {
       padding: 10px 15px;
@@ -134,208 +133,11 @@
   </style>
 
   <style>
-
-    .menu-vendor {
-      width: 100%;
-      justify-content: center;
-      gap: 20px;
-      display: flex;
-    }
-
-    .menu-vendor a {
-      float: left;
-      display: block;
-      /*color: #f2f2f2;*/
-      text-align: center;
-      padding: 14px 20px;
-      text-decoration: none;
-    }
-
-    .menu-vendor a:hover {
-      background-color: #ddd;
-      color: black;
-    }
-
-    .content-section {
-      display: none;
-      width: 100%;
-    }
-
-    .content-section.active {
-      display: block;
-      width: 100%;
-      margin-bottom: 10px;
-    }
-
-
-
-    .table-borderless tbody tr td, .table-borderless tbody tr th,
-    .table-borderless thead tr th {
-      border: none;
-    }
-
-    .table-borderless tbody tr th{
-      justify-content: center;
-    }
-    .table-borderless tbody tr td, .table-borderless tbody tr th{
-      align-content: center;
-    }
-
-    .btn-delete {
-      border: 2px solid red;
-      color: red;
-      background-color: white;
-      padding: 5px 10px;
-      font-size: 16px;
-      cursor: pointer;
-      display: inline-flex;
+    .price-wrapper {
+      color: #7f8c8d;
+      text-decoration: line-through;
+      margin-left: 5px;
       align-items: center;
-      gap: 8px;
-    }
-    .btn-delete i {
-      color: red;
-    }
-    .btn-update{
-      border: 2px solid blue;
-      color: blue;
-      background-color: white;
-      padding: 5px 10px;
-      font-size: 16px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .btn-update i{
-      color: blue;
-    }
-    /*.custom-column{*/
-    /*  border-right: solid 1px white;*/
-    /*  background-color: #2D3748 !important;*/
-    /*  color: white !important;*/
-    /*}*/
-
-    .images-set{
-      width: 50px;
-      height: 50px;
-    }
-    .img-thumbnail {
-      padding: .25rem;
-      background-color: #fff;
-      border: 1px solid #dee2e6;
-      border-radius: .25rem;
-      width: 50px;
-      height: 50px;
-    }
-  </style>
-  <style>
-    .my-button, .filter-button {
-      padding: 10px 20px;
-      background-color: #2D3748;
-      color: white;
-      border: none;
-      text-align: center;
-      text-decoration: none;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 10px;
-    }
-    .search-box {
-      position: relative;
-    }
-    .search {
-      width: 100%;
-      text-align: right;
-      /*position:absolute;*/
-    }
-
-  </style>
-  <style>
-    .image-preview {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-top: 10px;
-    }
-    .image-preview img {
-      max-width: 100%;
-      max-height: 100px;
-      object-fit: contain;
-    }
-  </style>
-  <style>
-    .statistics-card {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-top: 10px;
-      background-color: white;
-      margin-bottom: 10px;
-    }
-    .statistics-card h3 {
-      margin-bottom: 20px;
-    }
-    .statistics-item {
-      margin-bottom: 10px;
-      font-size: 40px;
-    }
-    .order-list {
-      list-style: none;
-      padding-left: 0;
-    }
-    .order-list li {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-    }
-  </style>
-
-  <style>
-    /* CSS Tùy chỉnh */
-    table {
-      table-layout: auto;
-      width: 100%;
-    }
-    .custom-column {
-      white-space: nowrap;
-    }
-    .custom-column-image {
-      width: 70px; /* Điều chỉnh kích thước của cột hình ảnh */
-    }
-    .custom-column-action {
-      width: 70px; /* Điều chỉnh kích thước của cột thao tác */
-    }
-    .custom-column-price{
-      width: 100px;
-    }
-    .custom-column-status{
-      width: 100px;
-    }
-    .custom-column-category{
-      width: 200px;
-    }
-    /* Tùy chỉnh các nút phân trang */
-    .dataTables_paginate{
-      margin-bottom: 10px;
-    }
-    .dataTables_paginate .paginate_button {
-      color: #fff !important;
-      background-color: #007bff !important;
-      border: 1px solid #007bff !important;
-      border-radius: 5px;
-      padding: 5px 10px;
-      margin: 2px;
-      cursor: pointer;
-    }
-    .dataTables_paginate .paginate_button:hover {
-      background-color: #0056b3 !important;
-      border-color: #004085 !important;
-    }
-    .dataTables_paginate .paginate_button.current {
-      background-color: #0056b3 !important;
-      border-color: #004085 !important;
     }
   </style>
 </head>
@@ -461,15 +263,14 @@
   </defs>
 </svg>
 <!--Begin: Header-->
-<div th:replace="~{common/header_vendor :: header}"></div>
-
+<div th:replace="~{common/header :: header}"></div>
 <div style="
     height: auto;
     width: 100%;
     margin: 0;
     background: #00aced;
 ">
-  <nav class="main-menu d-flex navbar navbar-expand-lg p-2 py-3 p-lg-4 py-lg-4 " style=" background-color: #2D3748; ">
+  <nav class="main-menu d-flex navbar navbar-expand-lg p-2 py-3 p-lg-4 py-lg-4 ">
     <div class="container-fluid">
 
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavba" aria-labelledby="offcanvasNavbarLabel" style="align-items: center;">
@@ -478,11 +279,33 @@
 
           <ul class="navbar-nav menu-list list-unstyled align-items-lg-center d-flex gap-md-1 mb-0">
             <li class="nav-item">
-              <a class="nav-link mx-2 dropdown-toggle align-items-center" href="#" onclick="showSection('view-products')" style="color: white;">Xem sản phẩm</a>
+              <a href="/home" class="nav-link mx-2">Home</a>
             </li>
 
             <li class="nav-item dropdown">
-              <a class="nav-link mx-2 dropdown-toggle align-items-center" href="#" onclick="showSection('statistics')" style="color: white;">Thống kê</a>
+              <!--                        <a  href="/product" class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="pagess"-->
+              <!--                           data-bs-toggle="dropdown" aria-expanded="false">Product</a>-->
+              <a href="/product" class="nav-link mx-2 active">Product</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="coursess"
+                 data-bs-toggle="dropdown" aria-expanded="false">About us</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="eventss"
+                 data-bs-toggle="dropdown" aria-expanded="false">events</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="blogg"
+                 data-bs-toggle="dropdown" aria-expanded="false">blog</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="shopp"
+                 data-bs-toggle="dropdown" aria-expanded="false">shop</a>
             </li>
           </ul>
 
@@ -492,7 +315,6 @@
     </div>
   </nav>
 </div>
-
 <!--End: Footer-->
 
 <!--Begin: Content-->
@@ -502,194 +324,190 @@
         height: auto;
         width: 100%;
         margin: auto;
-        padding: 0px;
+        /*background: antiquewhite;*/
+        /*padding: 0px 80px;*/
       "
 >
-
-  <div id="view-products" class="content-section">
-    <br>
-
-    <div class="search-box">
-      <div class="search">
-        <button class="my-button" id="showFormButton"><i class="fas fa-plus add"></i>Thêm sản phẩm</button>
-      </div>
-    </div>
-    <table id="example" class="table table-striped mt-1">
-      <thead>
-      <tr>
-        <th class="custom-column custom-column-image">Hình ảnh</th>
-        <th class="custom-column">Tên sản phẩm</th>
-        <th class="custom-column custom-column-price">Đơn giá</th>
-        <th class="custom-column custom-column-status">Trạng thái</th>
-        <th class="custom-column custom-column-category">Danh mục</th>
-        <th class="custom-column custom-column-action">Thao tác</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="products : ${product}">
-        <td>
-          <img  th:src="${products.getUrl()}" class="img-fluid images-set img-thumbnail" alt="Sản phẩm 1" style="height: auto;">
-        </td>
-        <td th:text="${products.getName()}"></td>
-        <td>
-          <sup>₫</sup><span th:text="${#numbers.formatDecimal(products.getPrice(), 0, 'POINT', 0, 'COMMA')}"></span>
-        </td>
-        <td th:text="${products.getIsActive() ? 'Active' : 'Not Active'}"></td>
-        <td th:text="${products.getCategoryName()}"></td>
-        <td>
-          <button class="btn-delete">
-            <i class="fas fa-trash"></i>
-          </button>
-          <button class="btn-update">
-            <i class="fas fa-pencil-alt"></i>
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div id="statistics" class="content-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="statistics-card">
-            <h3>Doanh thu</h3>
-            <p style="color: green" id="totalRevenue" class="statistics-item"><sup>₫</sup><span>0</span></p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="statistics-card">
-            <h3>Số lượng sản phẩm đã bán</h3>
-            <p style="color: orangered" id="totalProductsSold" class="statistics-item">0</p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="statistics-card">
-            <h3>Các đơn hàng</h3>
-            <table id="example1"  class="table table-striped" style="width:100%">
-              <thead>
-              <tr>
-                <th class="custom-column">Mã đơn</th>
-                <th class="custom-column">Ngày đặt</th>
-                <th class="custom-column">Số lượng</th>
-                <th class="custom-column">Thành tiền</th>
-                <th class="custom-column">Thanh toán</th>
-                <th class="custom-column">Trạng thái</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr th:each="order : ${orderResponses}">
-                <td th:text="${order.getId()}"></td>
-                <td th:text="${order.getCreatedDate()}"></td>
-                <td th:text="${order.getTotalItem()}"></td>
-                <td th:text="${order.getTotal()}"></td>
-                <td th:text="${order.getPaymentType()}"></td>
-                <td>
-                  <button class="dropbtn"><i class="fas fa-ellipsis-h"></i></button>
-                </td>
-              </tr>
-
-
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!--Start: Content-->
+
+  <div class="sort-container">
+    <div class="left-content">
+      <p style="font-weight: bold; font-size: 16px; color: black" class="category-titlee">Tất cả sản phẩm</p>
+    </div>
+    <div class="right-content">
+      <p class="category-titlee">Sắp xếp</p>
+      <div class="dropdown">
+        <button style="color: black; border: 1px solid #777;" class="dropbtn" onclick="toggleDropdown()">Tất cả <i class="fa fa-caret-down"></i></button>
+        <div class="dropdown-content">
+          <a href="#" onclick="changeSort('Tất cả')">Tất cả</a>
+          <a href="#" onclick="changeSort('Mới nhất')">Mới nhất</a>
+          <a href="#" onclick="changeSort('Giá tăng dần')">Giá tăng dần</a>
+          <a href="#" onclick="changeSort('Giá giảm dần')">Giá giảm dần</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="product-container" class="product-grid">
+    <div class="product-card" th:each="products : ${product}">
+      <form method="post" th:action="@{/cart/addToCart}">
+        <input type="hidden" name="productId" th:value="${products.getId()}" />
+        <input type="hidden" name="quantity" value="1" />
+        <div class="like-container">
+          <i class="fa fa-heart like-button"></i>
+        </div>
+        <img th:src="${products.getUrl()}" alt="Product Image">
+        <h3 class="product-name" th:text="${products.getName()}"></h3>
+        <p class="product-price">
+          <sup>₫</sup><span th:text="${#numbers.formatDecimal(products.getPromotionalPrice(), 0, 'POINT', 0, 'COMMA')}"></span>
+          <span class="price-wrapper">
+                    <sup>₫</sup>
+                    <span class="original-price" th:text="${#numbers.formatDecimal(products.getPrice(), 0, 'POINT', 0, 'COMMA')}">150.000</span>
+                </span>
+        </p>
+        <div class="product-rating">
+                <span th:each="i : ${#numbers.sequence(1, products.getRating())}">
+                    <i class="fa fa-star"></i>
+                </span>
+          <span th:each="i : ${#numbers.sequence(1, 5 - products.getRating())}">
+                    <i class="fa fa-star" th:if="${i + products.getRating() <= 5}"></i>
+                </span>
+          <p th:text="'Đã bán ' + ${products.getSold()}"></p>
+        </div>
+        <div class="product-actions">
+          <button class="btn add-to-cart" type="submit"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
+          <a th:href="'/product/detail/' + ${products.getId()}" class="btn view-details">Xem chi tiết</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--    <div id="product-container" class="product-grid" th:each="product : ${product}">-->
+  <!--        <div class="product-card">-->
+  <!--            <div class="like-container">-->
+  <!--                <i class="fa fa-heart like-button"></i>-->
+  <!--            </div>-->
+  <!--            <img src="/images/ao_trang_nam.jpg" alt="Product 1">-->
+  <!--            <h3 class="product-name" th:text="${product}"></h3>-->
+  <!--            <p class="product-price"><sup>₫</sup>172.000</p>-->
+  <!--            <div class="product-rating">-->
+  <!--                <i class="fa fa-star"></i>-->
+  <!--                <i class="fa fa-star"></i>-->
+  <!--                <i class="fa fa-star"></i>-->
+  <!--                <i class="fa fa-star"></i>-->
+  <!--                <i class="fa fa-star-half-alt"></i>-->
+  <!--                <p>Đã bán 3</p>-->
+  <!--            </div>-->
+  <!--            <div class="product-actions">-->
+  <!--                <button class="btn add-to-cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>-->
+  <!--                <a href="/product/detail" class="btn view-details">Xem chi tiết</a>-->
+  <!--            </div>-->
+  <!--        </div>-->
+  <!--    </div>-->
+  <div id="pagination" class="pagination"></div>
+
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
   <!--End: Content-->
   <div class="overlay" id="formOverlay">
-    <div class="container" style="width: 600px; height: auto">
-      <div class="registration-form" style="margin-top: 10px">
-        <h2>Thêm sản phẩm</h2>
-        <form id="registrationForm" method="post" th:action="@{/vendor/addProduct}" enctype="multipart/form-data">
-          <div class="form-group mb-3">
-            <label for="categoryId">Danh mục</label>
-            <select style="cursor: pointer"
-                    class="form-control"
-                    name="categoryId"
-                    id="categoryId"
-                    required>
-              <option value="" disabled selected>Chọn danh mục</option>
-              <option th:each="category : ${categoryResponse}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
-
-              <!-- Thêm các danh mục khác tương tự -->
-            </select>
+    <div class="container" style="width: 600px; height: 800px">
+      <div class="registration-form">
+        <h2>Đăng Ký</h2>
+        <form id="registrationForm" method="post" th:action="@{/register}">
+          <div class="col-md-12 form-group">
+            <div
+                    id="errorMessage"
+                    th:if="${message}"
+                    class="alert alert-success"
+                    role="alert"
+                    th:text="${message}"
+            ></div>
+            <div
+                    id="errorMessage1"
+                    th:if="${errorMessage}"
+                    class="alert alert-danger"
+                    role="alert"
+                    th:text="${errorMessage}"
+            ></div>
           </div>
           <div class="form-group mb-3">
-            <label for="name">Tên sản phẩm</label>
+            <label for="fullName">Họ và Tên</label>
             <input
                     type="text"
                     class="form-control"
-                    placeholder="Tên sản phẩm"
-                    id="name"
+                    placeholder="Họ và tên"
+                    id="fullName"
                     name="name"
                     required
             />
           </div>
           <div class="form-group mb-3">
-            <label for="description">Mô tả</label>
+            <label for="email">Email</label>
             <input
-                    type="text"
+                    type="email"
                     class="form-control"
-                    placeholder="Mô tả"
-                    id="description"
-                    name="description"
+                    placeholder="Email"
+                    id="email"
+                    name="email"
                     required
             />
           </div>
           <div class="form-group mb-3">
-            <label for="price">Đơn giá</label>
+            <label for="dob">Ngày Tháng Năm Sinh</label>
             <input
-                    type="text"
+                    style="background: white"
+                    type="date"
                     class="form-control"
-                    placeholder="Đơn giá"
-                    id="price"
-                    name="price"
+                    placeholder="Ngày tháng năm sinh"
+                    id="dob"
+                    name="dob"
                     required
             />
           </div>
           <div class="form-group mb-3">
-            <label for="promotionalPrice">Giá khuyến mại</label>
+            <label for="address">Địa Chỉ</label>
             <input
                     type="text"
                     class="form-control"
-                    placeholder="Giá khuyến mại"
-                    id="promotionalPrice"
-                    name="promotionalPrice"
+                    placeholder="Địa chỉ"
+                    id="address"
+                    name="address"
                     required
             />
           </div>
           <div class="form-group mb-3">
-            <label for="quantity">Số lượng</label>
+            <label for="phone">Số Điện Thoại</label>
             <input
-                    type="text"
+                    type="tel"
                     class="form-control"
-                    placeholder="Số lượng"
-                    id="quantity"
-                    name="quantity"
+                    placeholder="Số điện thoại"
+                    id="phone"
+                    name="phoneNumber"
+                    pattern="[0-9]{10}"
                     required
             />
           </div>
           <div class="form-group mb-3">
-            <label for="url">Hình ảnh</label>
-            <input type="file" class="form-control" id="url" name="url" accept="image/*" onchange="previewImage(event)">
-<!--            <div class="image-preview" id="imagePreview">-->
-<!--              <img id="imagePreviewImg" src="#" alt="Image Preview" style="display: none;">-->
-<!--            </div>-->
+            <label for="gender">Giới Tính</label>
+            <select
+                    style="cursor: pointer"
+                    class="form-control"
+                    id="gender"
+                    name="gender"
+                    required
+            >
+              <option value="">Chọn giới tính</option>
+              <option value="male">Nam</option>
+              <option value="female">Nữ</option>
+              <option value="other">Khác</option>
+            </select>
           </div>
           <br />
           <button type="submit" class="btn btn-custom w-100">
-            THÊM SẢN PHẨM
+            ĐĂNG KÝ
           </button>
         </form>
       </div>
-
     </div>
   </div>
 
@@ -765,112 +583,124 @@
         th:replace="~{common/footer :: footer}"
 ></div>
 <!--End: Footer-->
-
 <script>
-  // Dữ liệu mẫu, thay thế bằng dữ liệu thực tế
-  const statisticsData = {
-    totalRevenue: 1500000,
-    totalProductsSold: 150,
-    orders: [
-      { id: 1, status: "Completed", total: 300000 },
-      { id: 2, status: "Pending", total: 500000 },
-      { id: 3, status: "Canceled", total: 700000 },
-    ]
-  };
-
-  // Cập nhật Doanh thu
-  document.getElementById('totalRevenue').querySelector('span').textContent = statisticsData.totalRevenue.toLocaleString();
-
-  // Cập nhật Số lượng sản phẩm đã bán
-  document.getElementById('totalProductsSold').textContent = statisticsData.totalProductsSold;
-
-  // Cập nhật danh sách Đơn hàng
-  const orderList = document.getElementById('orderList');
-  orderList.innerHTML = ''; // Xóa nội dung mặc định
-  statisticsData.orders.forEach(order => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `Đơn hàng #${order.id} - Trạng thái: ${order.status} - Tổng: ₫${order.total.toLocaleString()}`;
-    orderList.appendChild(listItem);
-  });
-
-  // Nếu không có đơn hàng nào
-  if (statisticsData.orders.length === 0) {
-    orderList.innerHTML = '<li>Không có đơn hàng nào</li>';
+  function toggleDropdown() {
+    document.querySelector('.dropdown-content').classList.toggle('show');
   }
-</script>
-<script>
-  function previewImage(event) {
-    const input = event.target;
-    const reader = new FileReader();
-    reader.onload = function() {
-      const dataURL = reader.result;
-      const output = document.getElementById('imagePreviewImg');
-      output.src = dataURL;
-      output.style.display = 'block';
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-<script>
-  $(document).ready(function() {
-    $('#example').DataTable({
-      "paging": true, // Bật phân trang
-      "searching": true, // Bật tìm kiếm
-      "info": true, // Hiển thị thông tin bảng
-      "lengthChange": true, // Cho phép người dùng thay đổi số lượng mục trên mỗi trang
-      "pageLength": 10, // Số lượng mục trên mỗi trang mặc định
-      "columnDefs": [
-        { "width": "70px", "targets": 0 }, // Điều chỉnh kích thước của cột hình ảnh
-        { "width": "70px", "targets": 5 }  // Điều chỉnh kích thước của cột thao tác
-      ]
-    });
-  });
 
-</script>
-<script>
-  function showSection(sectionId) {
-    var sections = document.getElementsByClassName('content-section');
-    for (var i = 0; i < sections.length; i++) {
-      sections[i].classList.remove('active');
+  function changeSort(sortOption) {
+    const dropbtn = document.querySelector('.dropbtn');
+    dropbtn.innerHTML = `${sortOption} <i class="fa fa-caret-down"></i>`;
+    document.querySelector('.dropdown-content').classList.remove('show');
+  }
+
+  // Close the dropdown if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      for (var i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
     }
-    document.getElementById(sectionId).classList.add('active');
   }
 
-  document.addEventListener("DOMContentLoaded", function() {
-    showSection('view-products'); // Mặc định hiển thị phần Xem sản phẩm
-  });
 </script>
 <script>
-  let currentIndex = 0;
-  const slides = document.querySelectorAll(".slide");
-  const totalSlides = slides.length;
+  document.addEventListener("DOMContentLoaded", function () {
+    const productsPerPage = 16;
+    const productContainer = document.getElementById("product-container");
+    const paginationContainer = document.getElementById("pagination");
 
-  function showSlide(index) {
-    if (index >= totalSlides) {
-      currentIndex = 0;
-    } else if (index < 0) {
-      currentIndex = totalSlides - 1;
-    } else {
-      currentIndex = index;
+    const products = Array.from(productContainer.children);
+    const totalPages = Math.ceil(products.length / productsPerPage);
+    let currentPage = 1;
+
+    function showPage(page) {
+      if (page < 1) page = 1;
+      if (page > totalPages) page = totalPages;
+
+      const start = (page - 1) * productsPerPage;
+      const end = start + productsPerPage;
+
+      products.forEach((product, index) => {
+        product.style.display = index >= start && index < end ? "block" : "none";
+      });
+
+      currentPage = page;
+      updatePagination();
     }
-    const offset = -currentIndex * 100;
-    document.querySelector(".slides").style.transform = `translateX(${offset}%)`;
-  }
 
-  function moveSlide(n) {
-    showSlide(currentIndex + n);
-  }
+    function createPagination() {
+      const prevButton = document.createElement("button");
+      prevButton.innerHTML = "&laquo;";
+      prevButton.classList.add("prev");
+      prevButton.addEventListener("click", () => showPage(currentPage - 1));
+      paginationContainer.appendChild(prevButton);
 
-  function autoSlide() {
-    moveSlide(1);
-    setTimeout(autoSlide, 3000);
-  }
+      const nextButton = document.createElement("button");
+      nextButton.innerHTML = "&raquo;";
+      nextButton.classList.add("next");
+      nextButton.addEventListener("click", () => showPage(currentPage + 1));
+      paginationContainer.appendChild(nextButton);
 
-  document.addEventListener("DOMContentLoaded", () => {
-    autoSlide();
+      updatePagination();
+    }
+
+    function updatePagination() {
+      const buttons = Array.from(paginationContainer.children);
+      const prevButton = buttons[0];
+      const nextButton = buttons[buttons.length - 1];
+
+      prevButton.classList.toggle("disabled", currentPage === 1);
+      nextButton.classList.toggle("disabled", currentPage === totalPages);
+
+      // Clear current pagination buttons except prev and next
+      buttons.forEach((button, index) => {
+        if (index !== 0 && index !== buttons.length - 1) {
+          button.remove();
+        }
+      });
+
+      let buttonHTML = '';
+
+      if (currentPage > 2) {
+        buttonHTML += `<button data-page="1">1</button>`;
+      }
+
+      if (currentPage > 3) {
+        buttonHTML += `<span class="ellipsis">...</span>`;
+      }
+
+      for (let i = Math.max(1, currentPage - 1); i <= Math.min(totalPages, currentPage + 1); i++) {
+        buttonHTML += `<button data-page="${i}" ${i === currentPage ? 'class="active"' : ''}>${i}</button>`;
+      }
+
+      if (currentPage < totalPages - 2) {
+        buttonHTML += `<span class="ellipsis">...</span>`;
+      }
+
+      if (currentPage < totalPages - 1) {
+        buttonHTML += `<button data-page="${totalPages}">${totalPages}</button>`;
+      }
+
+      nextButton.insertAdjacentHTML('beforebegin', buttonHTML);
+
+      // Add event listeners to the new buttons
+      Array.from(paginationContainer.querySelectorAll('button')).forEach(button => {
+        button.addEventListener('click', (e) => {
+          const page = parseInt(e.target.dataset.page);
+          if (!isNaN(page)) {
+            showPage(page);
+          }
+        });
+      });
+    }
+
+    createPagination();
+    showPage(currentPage);
   });
 
 </script>

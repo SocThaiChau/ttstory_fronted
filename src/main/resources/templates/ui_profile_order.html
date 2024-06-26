@@ -539,10 +539,6 @@
 
     </div>
   </nav>
-
-</div>
-<div th:if="${message}" th:class="${messageType == 'success' ? 'success-message' : 'error-message'}">
-  <p th:text="${message}"></p>
 </div>
 <!--Begin: Content-->
 <div
@@ -567,7 +563,7 @@
       <ul id="personal-info-menu" class="submenu" style="display:block;">
         <li id="info-first" href="/profile/info">Thông Tin Cá Nhân</li>
         <li id="update-info-menu" href="/profile/password">Đổi Mật Khẩu</li>
-        <li id="address-info-menu">Địa Chỉ</li>
+        <li id="address-info-menu" href="/profile/address">Địa Chỉ</li>
 
       </ul>
       <li id="address-menu" class="active" href="/profile/order">Đơn mua</li>
@@ -590,96 +586,45 @@
         </button>
       </div>
 
+      <div class="col-md-12 form-group pt-1">
+        <div id="messageAlert" th:if="${message}" class="alert alert-success" role="alert"
+             th:text="${message}">
+        </div>
+        <div id="errorAlert" th:if="${errorMessage}" class="alert alert-danger" role="alert"
+             th:text="${errorMessage}">
+        </div>
+      </div>
+
       <div id="order-content">
         <div id="all" class="order-category">
           <div class="table-responsive">
-            <table class="table table-borderless">
+            <table class="table table-striped mt-1">
               <thead>
               <tr>
-<!--                <th style="width: 10px"></th>-->
-                <th class="product-column">Sản phẩm</th>
-                <th class="number-column" >Đơn giá</th>
-                <th class="number-column">Số lượng</th>
-                <th class="total-column">Thành tiền</th>
+                <th>Mã đơn</th>
+                <th>Ngày đặt</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Thanh toán</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
               </tr>
               </thead>
               <tbody>
-              <tr>
+              <tr th:each="order : ${orderResponses}">
+                <td th:text="${order.getId()}"></td>
+                <td th:text="${order.getCreatedDate()}"></td>
+                <td th:text="${order.getTotalItem()}"></td>
+                <td th:text="${order.getTotal()}"></td>
+                <td th:text="${order.getPaymentType()}"></td>
+                <td th:text="${order.getStatus()}"></td>
                 <td>
-                  <div class="d-flex align-items-center">
-                    <img src="https://down-vn.img.susercontent.com/file/sg-11134301-7rd4s-luyo3ym7diyo8b_tn" class="img-fluid img-thumbnail" alt="Sản phẩm 1" style="width: 100px; height: auto;">
-                    <div class="ms-3">
-                      <h6>Áo thun nam trơn cộc tay cổ tròn ngắn tay, thoáng khí, thấm hút, nhanh khô AT02</h6>
-                    </div>
+                  <div class="dropdown">
+                    <button class="dropbtn" style="border: none; color: red">Hủy đơn</button>
                   </div>
                 </td>
-                <td class="number-column">
-                  <sup>₫</sup><span>57.000</span>
-                </td>
-                <td class="number-column">
-                  <span>1</span>
-                </td>
-                <td class="number-column">
-                  <sup>₫</sup><span>57.000</span>
-                </td>
               </tr>
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <img src="https://down-vn.img.susercontent.com/file/24e4f5d3f3ffdeffcddae14e5545f7eb_tn" class="img-fluid img-thumbnail" alt="Sản phẩm 2" style="width: 100px; height: auto;">
-                    <div class="ms-3">
-                      <h6>Quần đùi nam thể thao quần short hàng xuất cao cấp phong cách trẻ trung năng động T80</h6>
-                    </div>
-                  </div>
-                </td>
-                <td class="number-column">
-                  <sup>₫</sup><span>90.000</span>
-                </td>
-                <td class="number-column">
-                  <span>2</span>
-                </td>
-                <td class="number-column">
-                  <sup>₫</sup><span>180.000</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lpgaocnr7ryze5_tn" class="img-fluid img-thumbnail" alt="Sản phẩm 2" style="width: 100px; height: auto;">
-                    <div class="ms-3">
-                      <h6>Quần kẻ sọc nữ CARO nam nữ lưng cao dáng rộng phong cách Hàn Quốc CAMASTORE QK06</h6>
-                    </div>
-                  </div>
-                </td>
-                <td class="number-column">
-                  <sup>₫</sup><span>79.000</span>
-                </td>
-                <td class="number-column">
-                  <span>1</span>
-                </td>
-                <td class="number-column">
-                  <sup>₫</sup><span>79.000</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <img src="https://down-vn.img.susercontent.com/file/1a2793f8325d452bb561d06ac94bc98f_tn" class="img-fluid img-thumbnail" alt="Sản phẩm 2" style="width: 100px; height: auto;">
-                    <div class="ms-3">
-                      <h6>Đồ bộ thể thao nam mặc hè xuyên biên giới, Chất thun cotton thấm hút mồ hôi cực tốt Kiểu dáng Slim Fit siêu đẹp DB37</h6>
-                    </div>
-                  </div>
-                </td>
-                <td class="number-column">
-                  <sup>₫</sup><span>69.000</span>
-                </td>
-                <td class="number-column">
-                  <span>1</span>
-                </td>
-                <td class="number-column">
-                  <sup>₫</sup><span>69.000</span>
-                </td>
-              </tr>
+
               </tbody>
             </table>
           </div>
@@ -722,6 +667,7 @@
         th:replace="~{common/footer :: footer}"
 ></div>
 <!--End: Footer-->
+
 
 <script>
   function showOrders(category) {

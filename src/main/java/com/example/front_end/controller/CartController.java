@@ -9,10 +9,7 @@ import com.example.front_end.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +26,9 @@ public class CartController {
     private UserService userService;
     @GetMapping
     public String cart(Model model){
+        if(jwtFilter.getAccessToken() == null){
+            return "redirect:/home";
+        }
         if (errorMassage != null){
             model.addAttribute("errorMessage", errorMassage);
             errorMassage = null;
@@ -48,26 +48,27 @@ public class CartController {
 
         CartResponse cartResponse = userService.cartDetail();
         model.addAttribute("cartResponse", cartResponse);
+        Integer total = cartResponse.getTotalItem();
+        model.addAttribute("total", total);
         return "cart";
     }
 
     @PostMapping("/addToCart")
-    public String addToCart(@ModelAttribute AddToCartRequestUI addToCartRequestUI, Model model){
-        if (jwtFilter.getAccessToken() == null){
+    public String addToCart(@ModelAttribute AddToCartRequestUI addToCartRequestUI, Model model) {
+        if (jwtFilter.getAccessToken() == null) {
             return "redirect:/home";
         }
-        System.out.println("product Id: " + addToCartRequestUI.getProductId());
-        System.out.println("quantity: " + addToCartRequestUI.getQuantity());
-
         String result = userService.addCart(addToCartRequestUI);
         if(result == null){
             errorMassage = "Thêm vào giỏ hàng thất bại";
             model.addAttribute("errorMassage", errorMassage);
+            System.out.println(errorMassage);
             return "redirect:/home";
         }
         else {
             massage = "Sản phẩn đã được thêm";
             model.addAttribute("massage", massage);
+            System.out.println(massage);
         }
 
         return "redirect:/cart";

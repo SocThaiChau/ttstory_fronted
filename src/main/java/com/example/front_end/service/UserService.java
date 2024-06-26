@@ -3,11 +3,8 @@ package com.example.front_end.service;
 import com.cloudinary.Cloudinary;
 import com.example.front_end.config.JwtFilter;
 import com.example.front_end.exception.UserException;
-import com.example.front_end.model.UI.AddToCartRequestUI;
-import com.example.front_end.model.UI.UserRequestUI;
-import com.example.front_end.model.request.AddToCartRequest;
-import com.example.front_end.model.request.AuthenticationRequest;
-import com.example.front_end.model.request.UserRequest;
+import com.example.front_end.model.UI.*;
+import com.example.front_end.model.request.*;
 import com.example.front_end.model.response.*;
 import jdk.jshell.spi.ExecutionControl;
 import org.slf4j.Logger;
@@ -44,6 +41,11 @@ public class UserService {
     private String updatePassword = "http://localhost:8080/users/updatePassword";
     private String createUser = "http://localhost:8080/admin/users/create";
     private String allProduct = "http://localhost:8080/users/getAllProduct";
+    private String getProductByDate = "http://localhost:8080/users/getProductByDate";
+    private String getProductBySold = "http://localhost:8080/users/getProductBySold";
+
+    private String productFavorite = "http://localhost:8080/users/favorite";
+
     private String productDetail = "http://localhost:8080/users/product/detail/";
 
     private String updateUser = "http://localhost:8080/users/profile";
@@ -52,6 +54,26 @@ public class UserService {
     private String cartDetail = "http://localhost:8080/users/cart/detail";
 
     private String addToCart = "http://localhost:8080/users/cart/add";
+    private String deleteItem = "http://localhost:8080/users/delete/cartItem/";
+
+    private String myOrder = "http://localhost:8080/order/my-orders";
+
+    private String orderPending = "http://localhost:8080/order/pending";
+
+    private String addAddress = "http://localhost:8080/address/add";
+    private String deleteAddress = "http://localhost:8080/address/delete/";
+    private String updateAddress = "http://localhost:8080/address/update/";
+    private String confirmOrder = "http://localhost:8080/order/confirmOrder/";
+
+    private String addOrder = "http://localhost:8080/order/addOrder";
+
+    private String addProduct = "http://localhost:8080/admin/product/create";
+
+    private String categorybyId = "http://localhost:8080/admin/category/";
+
+
+
+
 
 
     @Autowired
@@ -286,10 +308,11 @@ public class UserService {
             if (userResponse != null) {
                 return userResponse;
             }
+            return null;
+
         } catch (Exception ex) {
             return null;
         }
-        return null;
     }
 
     public List<ProductResponse> findAllProduct() {
@@ -305,6 +328,89 @@ public class UserService {
                     builder.toUriString(),
                     HttpMethod.GET,
                     null, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            ProducListResponse  productListResponse  = responseEntity.getBody();
+            if (productListResponse  != null) {
+                return productListResponse.getData();
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<ProductResponse> get8ProductBySold() {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getProductBySold);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            ResponseEntity<ProducListResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    null, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            ProducListResponse  productListResponse  = responseEntity.getBody();
+            if (productListResponse  != null) {
+                return productListResponse.getData();
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<ProductResponse> get8ProductByDate() {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getProductByDate);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            ResponseEntity<ProducListResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    null, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            ProducListResponse  productListResponse  = responseEntity.getBody();
+            if (productListResponse  != null) {
+                return productListResponse.getData();
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+    public List<ProductResponse> productFavorite() {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(productFavorite);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken);
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<ProducListResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    entity, // Include the HttpEntity with headers,
                     new ParameterizedTypeReference<>() {}
             );
 
@@ -472,12 +578,16 @@ public class UserService {
                 builder.queryParam(entry.getKey(), entry.getValue());
             }
 
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken);
+
 
             AddToCartRequest addToCartRequest = new AddToCartRequest();
             addToCartRequest.setQuantity(addToCartRequestUI.getQuantity());
             addToCartRequest.setProductId(addToCartRequestUI.getProductId());
 
-            HttpEntity<?> entity = new HttpEntity<>(addToCartRequest);
+            HttpEntity<?> entity = new HttpEntity<>(addToCartRequest,headers);
             ResponseEntity<String> responseEntity = restTemplate.exchange(
                     builder.toUriString(),
                     HttpMethod.POST,
@@ -488,6 +598,495 @@ public class UserService {
             String cartResponse = responseEntity.getBody();
             if (cartResponse != null) {
                 return cartResponse;
+            }
+        } catch (Exception ex) {
+            return null;
+        }
+        return null;
+    }
+
+    public String deleteCartItem(Long id) {
+        try {
+            Map<String, String> params = new HashMap<>();
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(deleteItem + id);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken);
+
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.DELETE,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            String response = responseEntity.getBody();
+            if (response != null) {
+                return response;
+            }
+            return null;
+
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public String updateCartItem(int id, int quantity) {
+        try {
+            Map<String, String> params = new HashMap<>();
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(addToCart);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            System.out.println("id: " + id + "quantity: " + quantity);
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken);
+
+            AddToCartRequest addToCartRequest = new AddToCartRequest();
+            addToCartRequest.setProductId(id);
+            addToCartRequest.setQuantity(quantity);
+
+            HttpEntity<?> entity = new HttpEntity<>(addToCartRequest,headers);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.POST,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            String response = responseEntity.getStatusCode().toString();
+            if (response != null) {
+                return response;
+            }
+            return null;
+
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<OrderResponse> orderResponses(){
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(myOrder);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken);
+
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<List<OrderResponse>> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            List<OrderResponse>  orderResponse  = responseEntity.getBody();
+            if (orderResponse  != null) {
+                return orderResponse;
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<OrderResponse> allOrderResponses(){
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8080/order/getAll");
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+
+
+            ResponseEntity<List<OrderResponse>> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    null, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            List<OrderResponse>  orderResponse  = responseEntity.getBody();
+            if (orderResponse  != null) {
+                return orderResponse;
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+    public OrderResponse orderDetail() {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(orderPending);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken); // Replace with your actual token
+
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+            ResponseEntity<OrderResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            OrderResponse orderResponse = responseEntity.getBody();
+            if (orderResponse != null) {
+                return orderResponse;
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<CategoryResponse> listCategory(){
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8080/users/categories");
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            ResponseEntity<CategoryResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    null, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            CategoryResponse categoryResponse  = responseEntity.getBody();
+            if (categoryResponse  != null) {
+                return categoryResponse.getData();
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+
+    }
+
+    public CategoryResponse categoryById(Long id) {
+        try {
+            Map<String, String> params = new HashMap<>();
+//            String api = productDetail + id;
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(categorybyId + id);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            ResponseEntity<CategoryResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    null, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            CategoryResponse categoryResponse  = responseEntity.getBody();
+
+            if (categoryResponse  != null) {
+                return categoryResponse;
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+    public List<AddressResponse> listAddress(){
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8080/address/my-addresses");
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken); // Replace with your actual token
+
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<List<AddressResponse>> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            List<AddressResponse> addressResponses  = responseEntity.getBody();
+            if (addressResponses  != null) {
+                return addressResponses;
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+
+    }
+
+    public String addAddress(AddressRequestUI addressRequestUI) {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(addAddress);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken);
+
+
+            AddressRequest addressRequest = new AddressRequest();
+            addressRequest.setFullName(addressRequestUI.getFullName());
+            addressRequest.setDistrict(addressRequestUI.getDistrict());
+            addressRequest.setWard(addressRequestUI.getWard());
+            addressRequest.setCity(addressRequestUI.getCity());
+            addressRequest.setPhoneNumber(addressRequestUI.getPhoneNumber());
+
+            HttpEntity<?> entity = new HttpEntity<>(addressRequest,headers);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.POST,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            String result = responseEntity.getBody();
+            if (result != null) {
+                return result;
+            }
+            return null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+    }
+    public String deleteAddress(Long id) {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(deleteAddress + id);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken);
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.DELETE,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            String result = responseEntity.getBody();
+            if (result != null) {
+                return result;
+            }
+            return null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+    }
+
+    public String updateAddress(AddressRequestUI addressRequestUI) {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(updateAddress + addressRequestUI.getId());
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken);
+
+
+            AddressRequest addressRequest = new AddressRequest();
+            addressRequest.setFullName(addressRequestUI.getFullName());
+            addressRequest.setDistrict(addressRequestUI.getDistrict());
+            addressRequest.setWard(addressRequestUI.getWard());
+            addressRequest.setCity(addressRequestUI.getCity());
+            addressRequest.setPhoneNumber(addressRequestUI.getPhoneNumber());
+
+            HttpEntity<?> entity = new HttpEntity<>(addressRequest,headers);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.PUT,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            String result = responseEntity.getBody();
+            if (result != null) {
+                return result;
+            }
+            return null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+    }
+
+    public String confirmAddOrder(OrderRequestUI orderRequestUI) {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            System.out.println(confirmOrder + orderRequestUI.getId());
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(confirmOrder + orderRequestUI.getId());
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken);
+
+
+            OrderRequest orderRequest = new OrderRequest();
+            orderRequest.setIdAddress(orderRequestUI.getIdAddress());
+            orderRequest.setPaymentType(orderRequestUI.getPaymentType());
+
+            HttpEntity<?> entity = new HttpEntity<>(orderRequest,headers);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.POST,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            String result = responseEntity.getBody();
+            if (result != null) {
+                return result;
+            }
+            return null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+    }
+
+    public String addOrder(OrderRequest orderRequest) {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(addOrder);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken);
+
+            for (AddToCartRequest item : orderRequest.getCartItems()){
+                System.out.println("ProductId: " + item.getProductId() + " Quantity: " + item.getQuantity());
+            }
+
+            HttpEntity<?> entity = new HttpEntity<>(orderRequest,headers);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.POST,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            String result = responseEntity.getBody();
+            if (result != null) {
+                return result;
+            }
+            return null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+    }
+
+    public String addProduct(ProductRequestUI productRequestUI, MultipartFile file) {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(addProduct);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken);
+
+            ProductRequest productRequest = new ProductRequest();
+
+            if (productRequestUI.getUrl() != null && !productRequestUI.getUrl().isEmpty()) {
+                try {
+                    Map<String, Object> uploadResult = upload(file);
+                    String avatarUrl = (String) uploadResult.get("url");
+                    productRequest.setUrl(avatarUrl);
+                } catch (RuntimeException e) {
+                    throw new UserException("Image upload failed: " + e.getMessage());
+                }
+            }
+
+            productRequest.setName(productRequestUI.getName());
+            productRequest.setCategoryId(productRequestUI.getCategoryId());
+            productRequest.setQuantity(productRequestUI.getQuantity());
+            productRequest.setPrice(productRequestUI.getPrice());
+            productRequest.setDescription(productRequestUI.getDescription());
+            productRequest.setPromotionalPrice(productRequestUI.getPromotionalPrice());
+
+
+            HttpEntity<?> entity = new HttpEntity<>(productRequest,headers);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.POST,
+                    entity, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            String result = responseEntity.getBody();
+            if (result != null) {
+                return result;
             }
         } catch (Exception ex) {
             return null;

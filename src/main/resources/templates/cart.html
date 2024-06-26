@@ -148,15 +148,6 @@
     </style>
 
     <style>
-        .price-wrapper {
-            color: #7f8c8d;
-            text-decoration: line-through;
-            margin-left: 5px;
-            align-items: center;
-        }
-    </style>
-
-    <style>
         .table-borderless tbody tr td, .table-borderless tbody tr th,
         .table-borderless thead tr th {
             border: none;
@@ -332,7 +323,57 @@
 <!--Begin: Header-->
 <div th:replace="~{common/header :: header}"></div>
 <!--End: Footer-->
+<div style="
+    height: auto;
+    width: 100%;
+    margin: 0;
+    background: #00aced;
+">
+    <nav class="main-menu d-flex navbar navbar-expand-lg p-2 py-3 p-lg-4 py-lg-4 ">
+        <div class="container-fluid">
 
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavba" aria-labelledby="offcanvasNavbarLabel" style="align-items: center;">
+
+                <div class="offcanvas-body justify-content-between" style="padding: 0px 80px;">
+
+                    <ul class="navbar-nav menu-list list-unstyled align-items-lg-center d-flex gap-md-1 mb-0">
+                        <li class="nav-item">
+                            <a href="/home" class="nav-link mx-2">Home</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <!--                        <a href="/product" class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="pagess"-->
+                            <!--                           data-bs-toggle="dropdown" aria-expanded="false">Product</a>-->
+                            <a href="/product" class="nav-link mx-2">Product</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="coursess"
+                               data-bs-toggle="dropdown" aria-expanded="false">About us</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="eventss"
+                               data-bs-toggle="dropdown" aria-expanded="false">events</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="blogg"
+                               data-bs-toggle="dropdown" aria-expanded="false">blog</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link mx-2 dropdown-toggle align-items-center" role="button" id="shopp"
+                               data-bs-toggle="dropdown" aria-expanded="false">shop</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+    </nav>
+</div>
 <!--Begin: Content-->
 <div
         class="container content"
@@ -345,7 +386,16 @@
       "
 >
     <!--Start: Content-->
+
     <div class="table-responsive">
+        <div class="col-md-12 form-group">
+            <div id="errorMessage" th:if="${message}" class="alert alert-success" role="alert"
+                 th:text="${message}">
+            </div>
+            <div id="errorMessage1" th:if="${errorMessage}" class="alert alert-danger" role="alert"
+                 th:text="${errorMessage}">
+            </div>
+        </div>
         <table class="table table-borderless">
             <thead>
             <tr>
@@ -358,9 +408,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="cartItem : ${cartResponse.getCartItems()}">
+            <tr style="background-color: white" th:each="cartItem : ${cartResponse.getCartItems()}">
                 <td>
-                    <input type="checkbox" id="selectProduct1" name="selectProduct1">
+                    <input type="checkbox" id="selectProduct1" name="selectProduct1" onchange="handleCheckboxClick(this)">
+                    <input type="hidden" name="id" th:value="${cartItem.getProductId()}" />
                 </td>
                 <td>
                     <div class="d-flex align-items-center">
@@ -371,23 +422,30 @@
                     </div>
                 </td>
                 <td>
-                    <sup>₫</sup><span th:text="${#numbers.formatDecimal(cartItem.getPrice(), 0, 'POINT', 0, 'COMMA')}"></span>
+                    <sup>₫</sup><span class="product-pricee" th:text="${#numbers.formatDecimal(cartItem.getPrice(), 0, 'POINT', 0, 'COMMA')}"></span>
                 </td>
                 <td>
                     <div class="input-group">
                         <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="decrementQuantity()">-</button>
-                            <input type="text" id="quantity-input" th:value="${cartItem.getQuantity()}">
-                            <button class="quantity-btn" onclick="incrementQuantity()">+</button>
+                            <button class="quantity-btn" onclick="decrementQuantity(this)">-</button>
+                            <input type="text" class="form-control quantity-input" th:value="${cartItem.getQuantity()}" onchange="updateQuantity(this)">
+                            <button class="quantity-btn" onclick="incrementQuantity(this)">+</button>
                         </div>
                     </div>
                 </td>
                 <td>
-                    <sup>₫</sup><span th:text="${#numbers.formatDecimal(cartItem.getSubtotal(), 0, 'POINT', 0, 'COMMA')}"></span>
+                    <sup>₫</sup><span class="subtotal" th:text="${#numbers.formatDecimal(cartItem.getSubtotal(), 0, 'POINT', 0, 'COMMA')}"></span>
                 </td>
-                <td>
-                    <button class="btn btnDelete">Xóa</button>
-                    <button class="btn btnUpdate">Cập nhật</button>
+                <td style="display: flex; gap: 5px ; align-items: center;">
+                    <form method="post" action="/cartItem/delete" class="delete-form">
+                        <input type="hidden" name="id" th:value="${cartItem.getId()}">
+                        <button type="button" class="btn btnDelete" onclick="submitDeleteForm(this)">Xóa</button>
+                    </form>
+                    <form method="post" th:action="@{/cartItem/update}" class="update-form">
+                        <input type="hidden" name="id" th:value="${cartItem.getProductId()}">
+                        <input type="hidden" name="quantity" th:value="${cartItem.getQuantity()}" class="quantity-hidden">
+                        <button type="submit" class="btn btnUpdate">Cập nhật</button>
+                    </form>
                 </td>
             </tr>
             </tbody>
@@ -395,11 +453,17 @@
     </div>
     <div class="d-flex justify-content-end">
         <div>
-
             <p>Tổng thanh toán: <strong style="color:red;"><sup style="font-size: 20px;vertical-align: text-bottom">₫</sup><span th:text="${#numbers.formatDecimal(cartResponse.getTotalPrice(), 0, 'POINT', 0, 'COMMA')}"></span></strong></p>
-            <button class="btn btn-primary btn-block">Mua ngay</button>
+            <button class="btn btn-primary btn-block" onclick="submitOrder()">Mua ngay</button>
         </div>
     </div>
+
+    <!-- Hidden form for order submission -->
+    <form id="orderForm" method="post" action="/order/submit" style="display: none;">
+        <!-- Input ẩn để chứa các sản phẩm đã chọn -->
+        <input type="hidden" name="cartItems" id="cartItems">
+    </form>
+
 
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -410,22 +474,6 @@
             <div class="registration-form">
                 <h2>Đăng Ký</h2>
                 <form id="registrationForm" method="post" th:action="@{/register}">
-                    <div class="col-md-12 form-group">
-                        <div
-                                id="errorMessage"
-                                th:if="${message}"
-                                class="alert alert-success"
-                                role="alert"
-                                th:text="${message}"
-                        ></div>
-                        <div
-                                id="errorMessage1"
-                                th:if="${errorMessage}"
-                                class="alert alert-danger"
-                                role="alert"
-                                th:text="${errorMessage}"
-                        ></div>
-                    </div>
                     <div class="form-group mb-3">
                         <label for="fullName">Họ và Tên</label>
                         <input
@@ -581,30 +629,133 @@
 <!--End: Footer-->
 
 <script>
-    function incrementQuantity() {
-        const quantityInput = document.getElementById('quantity-input');
-        let quantity = parseInt(quantityInput.value);
-        quantityInput.value = quantity + 1;
-    }
+    let selectedCartItems = [];
 
-    function decrementQuantity() {
-        const quantityInput = document.getElementById('quantity-input');
-        let quantity = parseInt(quantityInput.value);
-        if (quantity > 1) {
-            quantityInput.value = quantity - 1;
+    // Function to handle checkbox click
+    function handleCheckboxClick(checkbox) {
+        const row = checkbox.closest('tr');
+        const productId = row.querySelector('input[name="id"]').value;
+        const quantity = row.querySelector('.quantity-input').value;
+
+        // Check if the product is already in selectedCartItems
+        const existingItemIndex = selectedCartItems.findIndex(item => item.productId === productId);
+
+        if (checkbox.checked) {
+            if (existingItemIndex !== -1) {
+                // Product already exists in selectedCartItems, update quantity
+                selectedCartItems[existingItemIndex].quantity = quantity;
+            } else {
+                // Product does not exist, add it to selectedCartItems
+                selectedCartItems.push({ productId, quantity });
+            }
+        } else {
+            // Checkbox is unchecked, remove the product from selectedCartItems
+            if (existingItemIndex !== -1) {
+                selectedCartItems.splice(existingItemIndex, 1);
+            }
         }
     }
-</script>
-<script>
-    function toggleDropdown() {
-        document.querySelector('.dropdown-content').classList.toggle('show');
+
+    // Function to decrement quantity
+    function decrementQuantity(button) {
+        var input = button.nextElementSibling;
+        var currentValue = parseInt(input.value);
+        if (currentValue > 1) {
+            input.value = currentValue - 1;
+            updateSubtotal(input);
+            updateQuantity(input);
+        }
     }
 
-    function changeSort(sortOption) {
-        const dropbtn = document.querySelector('.dropbtn');
-        dropbtn.innerHTML = `${sortOption} <i class="fa fa-caret-down"></i>`;
-        document.querySelector('.dropdown-content').classList.remove('show');
+    // Function to increment quantity
+    function incrementQuantity(button) {
+        var input = button.previousElementSibling;
+        var currentValue = parseInt(input.value);
+        input.value = currentValue + 1;
+        updateSubtotal(input);
+        updateQuantity(input);
     }
+
+    // Function to update subtotal based on quantity change
+    function updateSubtotal(input) {
+        var quantity = parseInt(input.value);
+        var price = parseFloat(input.closest('tr').querySelector('.product-pricee').innerText.replace(/\D/g, ''));
+        var subtotal = quantity * price;
+        input.closest('tr').querySelector('.subtotal').innerText = formatCurrency(subtotal);
+    }
+
+    function updateQuantity(input) {
+        const quantity = input.value;
+        const form = input.closest('tr').querySelector('.update-form');
+        const hiddenQuantityInput = form.querySelector('.quantity-hidden');
+        hiddenQuantityInput.value = quantity;
+
+        // Update selectedCartItems if checkbox is checked
+        const checkbox = input.closest('tr').querySelector('input[type="checkbox"]');
+        if (checkbox.checked) {
+            const productId = input.closest('tr').querySelector('input[name="id"]').value;
+            selectedCartItems = selectedCartItems.map(item =>
+                item.productId === parseInt(productId) ? { ...item, quantity: parseInt(quantity) } : item
+            );
+        }
+    }
+
+    // Helper function to format currency display
+    function formatCurrency(value) {
+        return value.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
+
+    function submitDeleteForm(button) {
+        var form = button.closest('form');
+        form.submit();
+    }
+
+    // Function to submit the order
+    function submitOrder() {
+
+        if (selectedCartItems.length === 0) {
+            alert("Vui lòng chọn ít nhất một sản phẩm.");
+            return;
+        }
+
+        console.log(selectedCartItems);
+
+        fetch('/order/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(selectedCartItems),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                location.reload();
+            })
+            .finally(() => {
+                // Dù thành công hay thất bại, chuyển hướng về trang /order
+                window.location.href = '/order';
+            });
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của nút (ví dụ: tránh submit form)
+
+    }
+
+    // Gọi hàm submitOrder khi nút "Mua ngay" được nhấn
+    // document.querySelector('.btn.btn-primary.btn-block').addEventListener('click', submitOrder);
+
+    // Attach event listeners to checkboxes
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            handleCheckboxClick(this);
+        });
+    });
+</script>
+
+<script>
 
     // Close the dropdown if the user clicks outside of it
     window.onclick = function(event) {

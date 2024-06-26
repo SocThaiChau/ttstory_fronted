@@ -1,46 +1,57 @@
-package com.example.front_end.model.response;
+package com.example.front_end.model.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-@Setter
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
-public class ProductResponse implements Serializable {
+@AllArgsConstructor
+@Builder
+public class ProductRequest {
 
     private Long id;
+
     private String name;
+
     private String description;
+
     private Double price;
+
     private Double promotionalPrice;
+
     private Integer quantity;
+
     private Integer quantityAvailable;
+
     private Integer numberOfRating;
+
     private Integer favoriteCount;
+
     private Integer sold;
+
     private Boolean isActive;
+
     private Boolean isSelling;
-    private Double rating;
+
+    private Float rating;
+
     private String createdBy;
+
     private String lastModifiedBy;
-    private String createdDate;
-    private String lastModifiedDate;
-    private String url;
-    private UserResponse userResponse;
-    private CategoryResponse categoryResponse;
-    private List<ImageResponse> images;
-    private Long userId;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createdDate;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date lastModifiedDate;
+
     private Long categoryId;
-    private String categoryName;
-    private ProductResponse data;
+    private String url;
 
 }
