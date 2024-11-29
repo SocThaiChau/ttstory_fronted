@@ -40,21 +40,21 @@ public class UserService {
     private String checkPassword = "http://localhost:8080/users/checkPassword";
     private String updatePassword = "http://localhost:8080/users/updatePassword";
     private String createUser = "http://localhost:8080/admin/users/create";
-    private String allProduct = "http://localhost:8080/users/getAllProduct";
-    private String getProductByDate = "http://localhost:8080/users/getProductByDate";
-    private String getProductBySold = "http://localhost:8080/users/getProductBySold";
+    private String allProduct = "http://localhost:8080/api/vp/getAllProduct";
+    private String getProductByDate = "http://localhost:8080/api/vp/getProductByDate";
+    private String getProductBySold = "http://localhost:8080/api/vp/getProductBySold";
 
     private String productFavorite = "http://localhost:8080/users/favorite";
 
-    private String productDetail = "http://localhost:8080/users/product/detail/";
+    private String productDetail = "http://localhost:8080/api/vp/product/detail/";
 
     private String updateUser = "http://localhost:8080/users/profile";
 
     private String findUserById = "http://localhost:8080/users/getUser/";
-    private String cartDetail = "http://localhost:8080/users/cart/detail";
+    private String cartDetail = "http://localhost:8080/cart/cartDetail";
 
-    private String addToCart = "http://localhost:8080/users/cart/add";
-    private String deleteItem = "http://localhost:8080/users/delete/cartItem/";
+    private String addToCart = "http://localhost:8080/cart/add";
+    private String deleteItem = "http://localhost:8080/cart/delete/cartItem/";
 
     private String myOrder = "http://localhost:8080/order/my-orders";
 
@@ -67,7 +67,7 @@ public class UserService {
 
     private String addOrder = "http://localhost:8080/order/addOrder";
 
-    private String addProduct = "http://localhost:8080/admin/product/create";
+    private String addProduct = "http://localhost:8080//api/vp/product/create";
 
     private String categorybyId = "http://localhost:8080/admin/category/";
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping
     public class TestController {
     public static String errorMassage;
     @Autowired
@@ -56,5 +56,26 @@ import java.util.List;
 
 
         return "home";
+    }
+
+    @GetMapping("/admin")
+    public String getAdmin(Model model){
+        if (jwtFilter.getAccessToken() != null){
+
+            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+            UserResponse userResponse = userService.findUserById(id);
+            model.addAttribute("user", userResponse);
+
+            model.addAttribute("name", userResponse.getName());
+            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+
+            CartResponse cartResponse = userService.cartDetail();
+            Integer total = cartResponse.getTotalItem();
+            model.addAttribute("total", total);
+
+        }
+
+
+        return "admin";
     }
 }
