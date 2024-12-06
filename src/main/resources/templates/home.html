@@ -166,13 +166,8 @@
     <style>
 
         .product-category {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 20px;
-            width: 100%;
-            max-width: 1280px;
-            margin: 20px auto;
-            /*padding: 20px;*/
+            display: inline-block;
+            padding: 0px 0px 0px 78px;
         }
 
         .category-item {
@@ -444,34 +439,10 @@
 
     <div style="background: white; border-radius: 10px; padding: 10px; margin-top: 10px;">
         <h2 class="category-title">DANH MỤC</h2>
-        <div class="product-category">
+        <div class="product-category" th:each="category : ${categoryDTOS}">
             <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/apm3299-xxm-7.jpg?v=1690163862957" alt="Áo Polo">
-                <h3>Áo Polo</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/gut7050-tra-qsm6037-tan-5.jpg?v=1710487363020" alt="Áo Thun">
-                <h3>Áo Thun</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/smm4073-xnh-4-5f31f3af-196e-474f-80eb-ce0b4617d518.jpg?v=1690163848063" alt="Áo Sơ Mi">
-                <h3>Áo Sơ Mi</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/akm4027-cam-1.jpg?v=1690163864163" alt="Áo Khoác">
-                <h3>Áo Khoác</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/quan-jeans-nam-qjm6067-xah-1.jpg?v=1690163441093" alt="Quần Jeans">
-                <h3>Quần Jeans</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/qam3191-tit-5.jpg?v=1704250636197" alt="Quần Âu">
-                <h3>Quần Âu</h3>
-            </div>
-            <div class="category-item">
-                <img src="https://bizweb.dktcdn.net/thumb/large/100/438/408/products/quan-kaki-nam-jogger-yody-qkm6027-den-6.jpg?v=1697254421893" alt="Quần Kaki">
-                <h3>Quần Kaki</h3>
+                <img th:src="${category.getImage()}" alt="Áo Polo">
+                <h3 th:text="${category.getName()}"></h3>
             </div>
         </div>
     </div>

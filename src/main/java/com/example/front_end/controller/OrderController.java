@@ -3,10 +3,12 @@ package com.example.front_end.controller;
 import com.example.front_end.config.JwtFilter;
 import com.example.front_end.model.UI.AddToCartRequestUI;
 import com.example.front_end.model.UI.OrderRequestUI;
+import com.example.front_end.model.dto.user.UserDTO;
 import com.example.front_end.model.request.AddToCartRequest;
 import com.example.front_end.model.request.CartItemRequest;
 import com.example.front_end.model.request.OrderRequest;
 import com.example.front_end.model.response.*;
+import com.example.front_end.service.AddressService;
 import com.example.front_end.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -32,6 +34,9 @@ public class OrderController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AddressService addressService;
+
     @GetMapping
     public String order(Model model){
         if (errorMassage != null){
@@ -41,18 +46,18 @@ public class OrderController {
         }
         if (jwtFilter.getAccessToken() != null){
             Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
-            UserResponse userResponse = userService.findUserById(id);
-            model.addAttribute("user", userResponse);
+            UserDTO userDTO = userService.findUserById(id);
+            model.addAttribute("user", userDTO);
 
-            model.addAttribute("name", userResponse.getName());
-            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("name", userDTO.getName());
+//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
 
             CartResponse cartResponse = userService.cartDetail();
             Integer total = cartResponse.getTotalItem();
             model.addAttribute("total", total);
 
             // Lấy danh sách địa chỉ
-            List<AddressResponse> addressResponses = userService.listAddress();
+            List<AddressResponse> addressResponses = addressService.listAddress();
             model.addAttribute("addressResponses", addressResponses);
             System.out.println("addressResponses: " + addressResponses);
 

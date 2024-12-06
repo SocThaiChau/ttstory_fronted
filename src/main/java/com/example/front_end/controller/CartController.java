@@ -2,6 +2,7 @@ package com.example.front_end.controller;
 
 import com.example.front_end.config.JwtFilter;
 import com.example.front_end.model.UI.AddToCartRequestUI;
+import com.example.front_end.model.dto.user.UserDTO;
 import com.example.front_end.model.response.CartResponse;
 import com.example.front_end.model.response.ProductResponse;
 import com.example.front_end.model.response.UserResponse;
@@ -39,11 +40,11 @@ public class CartController {
         }
         if (jwtFilter.getAccessToken() != null){
             Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
-            UserResponse userResponse = userService.findUserById(id);
-            model.addAttribute("user", userResponse);
+            UserDTO userDTO = userService.findUserById(id);
+            model.addAttribute("user", userDTO);
 
-            model.addAttribute("name", userResponse.getName());
-            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("name", userDTO.getName());
+//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
         }
 
         CartResponse cartResponse = userService.cartDetail();

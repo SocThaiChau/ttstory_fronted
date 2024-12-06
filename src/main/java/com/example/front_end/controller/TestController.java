@@ -1,10 +1,14 @@
 package com.example.front_end.controller;
 
 import com.example.front_end.config.JwtFilter;
+import com.example.front_end.model.dto.category.CategoryDTO;
+import com.example.front_end.model.dto.user.UserDTO;
 import com.example.front_end.model.response.CartResponse;
 import com.example.front_end.model.response.CategoryResponse;
 import com.example.front_end.model.response.ProductResponse;
 import com.example.front_end.model.response.UserResponse;
+import com.example.front_end.service.CategoryService;
+import com.example.front_end.service.ProductService;
 import com.example.front_end.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +27,12 @@ import java.util.List;
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private ProductService productService;
+
     @GetMapping("/home")
     public String getHome(Model model){
         if (errorMassage != null){
@@ -33,11 +43,11 @@ import java.util.List;
         if (jwtFilter.getAccessToken() != null){
 
             Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
-            UserResponse userResponse = userService.findUserById(id);
-            model.addAttribute("user", userResponse);
+            UserDTO userDTO = userService.findUserById(id);
+            model.addAttribute("user", userDTO);
 
-            model.addAttribute("name", userResponse.getName());
-            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("name", userDTO.getName());
+//            model.addAttribute("role", userDTO.getUserRoleResponse().getRoles());
 
             CartResponse cartResponse = userService.cartDetail();
             Integer total = cartResponse.getTotalItem();
@@ -45,13 +55,13 @@ import java.util.List;
 
         }
 
-        List<CategoryResponse> categoryResponse = userService.listCategory();
-        model.addAttribute("categoryResponse", categoryResponse);
+        List<CategoryDTO> categoryDTOS = categoryService.findAll();
+        model.addAttribute("categoryDTOS", categoryDTOS);
 
-        List<ProductResponse> productBySold = userService.get8ProductBySold();
+        List<ProductResponse> productBySold = productService.get8ProductBySold();
         model.addAttribute("productBySold", productBySold);
 
-        List<ProductResponse> productByDate = userService.get8ProductByDate();
+        List<ProductResponse> productByDate = productService.get8ProductByDate();
         model.addAttribute("productByDate", productByDate);
 
 
@@ -63,11 +73,11 @@ import java.util.List;
         if (jwtFilter.getAccessToken() != null){
 
             Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
-            UserResponse userResponse = userService.findUserById(id);
-            model.addAttribute("user", userResponse);
+            UserDTO userDTO = userService.findUserById(id);
+            model.addAttribute("user", userDTO);
 
-            model.addAttribute("name", userResponse.getName());
-            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("name", userDTO.getName());
+//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
 
             CartResponse cartResponse = userService.cartDetail();
             Integer total = cartResponse.getTotalItem();

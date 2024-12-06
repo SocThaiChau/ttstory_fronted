@@ -6,6 +6,7 @@ import com.example.front_end.model.UI.AddressRequestUI;
 import com.example.front_end.model.response.AddressResponse;
 import com.example.front_end.model.response.CartResponse;
 import com.example.front_end.model.response.UserResponse;
+import com.example.front_end.service.AddressService;
 import com.example.front_end.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class AddressController {
     private JwtFilter jwtFilter;
 
     @Autowired
-    private UserService userService;
+    private AddressService addressService;
 
     private String message;
     private String errorMessage;
@@ -37,7 +38,7 @@ public class AddressController {
             return "redirect:/home";
         }
 
-        String result = userService.addAddress(addressRequestUI);
+        String result = addressService.addAddress(addressRequestUI);
         if (result == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "Thêm địa chỉ thất bại");
         } else {
@@ -52,7 +53,7 @@ public class AddressController {
         if (jwtFilter.getAccessToken() == null) {
             return "redirect:/home";
         }
-        String result = userService.deleteAddress(addressRequestUI.getId());
+        String result = addressService.deleteAddress(addressRequestUI.getId());
         if(result == null){
             redirectAttributes.addFlashAttribute("errorMessage", "Xóa địa chỉ thất bại");
         }
@@ -69,7 +70,7 @@ public class AddressController {
             return "redirect:/home";
         }
         System.out.println("id: " + addressRequestUI.getId());
-        String result = userService.updateAddress(addressRequestUI);
+        String result = addressService.updateAddress(addressRequestUI);
         if(result == null){
             redirectAttributes.addFlashAttribute("errorMessage", "Cập nhật địa chỉ thất bại");
         }
