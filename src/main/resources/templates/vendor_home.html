@@ -616,7 +616,7 @@
                     id="categoryId"
                     required>
               <option value="" disabled selected>Chọn danh mục</option>
-              <option th:each="category : ${categoryResponse}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
+              <option th:each="category : ${categoryDTOS}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
 
               <!-- Thêm các danh mục khác tương tự -->
             </select>

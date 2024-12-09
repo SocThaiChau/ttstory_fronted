@@ -436,16 +436,16 @@
                 <td>
                     <sup>₫</sup><span class="subtotal" th:text="${#numbers.formatDecimal(cartItem.getSubtotal(), 0, 'POINT', 0, 'COMMA')}"></span>
                 </td>
-                <td style="display: flex; gap: 5px ; align-items: center;">
+                <td style="gap: 5px ; align-items: center;">
                     <form method="post" action="/cartItem/delete" class="delete-form">
                         <input type="hidden" name="id" th:value="${cartItem.getId()}">
                         <button type="button" class="btn btnDelete" onclick="submitDeleteForm(this)">Xóa</button>
                     </form>
-                    <form method="post" th:action="@{/cartItem/update}" class="update-form">
-                        <input type="hidden" name="id" th:value="${cartItem.getProductId()}">
-                        <input type="hidden" name="quantity" th:value="${cartItem.getQuantity()}" class="quantity-hidden">
-                        <button type="submit" class="btn btnUpdate">Cập nhật</button>
-                    </form>
+<!--                    <form method="post" th:action="@{/cartItem/update}" class="update-form">-->
+<!--                        <input type="hidden" name="id" th:value="${cartItem.getProductId()}">-->
+<!--                        <input type="hidden" name="quantity" th:value="${cartItem.getQuantity()}" class="quantity-hidden">-->
+<!--                        <button type="submit" class="btn btnUpdate">Cập nhật</button>-->
+<!--                    </form>-->
                 </td>
             </tr>
             </tbody>

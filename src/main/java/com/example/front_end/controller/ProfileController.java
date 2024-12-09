@@ -1,7 +1,9 @@
 package com.example.front_end.controller;
 
 import com.example.front_end.config.JwtFilter;
+import com.example.front_end.model.dto.user.UserDTO;
 import com.example.front_end.model.response.*;
+import com.example.front_end.service.AddressService;
 import com.example.front_end.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,9 @@ public class ProfileController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AddressService addressService;
     @GetMapping("/info")
     public String profile(Model model){
 //        if(message != null){
@@ -36,14 +41,14 @@ public class ProfileController {
 
         if (jwtFilter.getAccessToken() != null){
             Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
-            UserResponse userResponse = userService.findUserById(id);
-            model.addAttribute("user", userResponse);
+            UserDTO userDTO = userService.findUserById(id);
+            model.addAttribute("user", userDTO);
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String dob = formatter.format(userResponse.getDob());
+            String dob = formatter.format(userDTO.getDob());
 
-            model.addAttribute("name", userResponse.getName());
-            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("name", userDTO.getName());
+//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
             model.addAttribute("dob", dob);
 
             CartResponse cartResponse = userService.cartDetail();
@@ -67,14 +72,14 @@ public class ProfileController {
 
         if (jwtFilter.getAccessToken() != null){
             Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
-            UserResponse userResponse = userService.findUserById(id);
-            model.addAttribute("user", userResponse);
+            UserDTO userDTO = userService.findUserById(id);
+            model.addAttribute("user", userDTO);
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String dob = formatter.format(userResponse.getDob());
+            String dob = formatter.format(userDTO.getDob());
 
-            model.addAttribute("name", userResponse.getName());
-            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("name", userDTO.getName());
+//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
             model.addAttribute("dob", dob);
 
             CartResponse cartResponse = userService.cartDetail();
@@ -101,14 +106,14 @@ public class ProfileController {
 
         if (jwtFilter.getAccessToken() != null){
             Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
-            UserResponse userResponse = userService.findUserById(id);
-            model.addAttribute("user", userResponse);
+            UserDTO userDTO = userService.findUserById(id);
+            model.addAttribute("user", userDTO);
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String dob = formatter.format(userResponse.getDob());
+            String dob = formatter.format(userDTO.getDob());
 
-            model.addAttribute("name", userResponse.getName());
-            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("name", userDTO.getName());
+//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
             model.addAttribute("dob", dob);
 
             CartResponse cartResponse = userService.cartDetail();
@@ -124,21 +129,21 @@ public class ProfileController {
 
         if (jwtFilter.getAccessToken() != null){
             Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
-            UserResponse userResponse = userService.findUserById(id);
-            model.addAttribute("user", userResponse);
+            UserDTO userDTO = userService.findUserById(id);
+            model.addAttribute("user", userDTO);
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String dob = formatter.format(userResponse.getDob());
+            String dob = formatter.format(userDTO.getDob());
 
-            model.addAttribute("name", userResponse.getName());
-            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("name", userDTO.getName());
+//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
             model.addAttribute("dob", dob);
 
             CartResponse cartResponse = userService.cartDetail();
             Integer total = cartResponse.getTotalItem();
             model.addAttribute("total", total);
 
-            List<AddressResponse> addressResponses = userService.listAddress();
+            List<AddressResponse> addressResponses = addressService.listAddress();
             model.addAttribute("addressResponses", addressResponses);
 
             // message và errorMessage được thêm vào từ RedirectAttributes
