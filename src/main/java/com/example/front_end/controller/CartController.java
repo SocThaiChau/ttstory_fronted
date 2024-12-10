@@ -44,7 +44,7 @@ public class CartController {
             model.addAttribute("user", userDTO);
 
             model.addAttribute("name", userDTO.getName());
-//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
         }
 
         CartResponse cartResponse = userService.cartDetail();

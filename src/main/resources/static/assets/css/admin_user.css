@@ -1,0 +1,42 @@
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.user-table th, .user-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+.status {
+    padding: 5px;
+    border-radius: 5px;
+}
+.status.active {
+    background-color: #4caf50;
+    color: white;
+}
+.status.blocked {
+    background-color: #f44336;
+    color: white;
+}
+.btn-edit, .btn-block {
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+.btn-edit {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+}
+.btn-block {
+    background-color: #f44336;
+    color: white;
+    border: none;
+}
+.btn-edit:hover {
+    background-color: #45a049;
+}
+.btn-block:hover {
+    background-color: #e53935;
+}

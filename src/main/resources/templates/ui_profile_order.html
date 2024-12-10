@@ -573,9 +573,11 @@
     <div id="personal-detail" class="content-section">
       <div class="order-tabs">
         <button class="tab-link active" onclick="showOrders('all')">Tất cả</button>
-        <button class="tab-link" onclick="showOrders('pending')">Chờ thanh toán</button>
-        <button class="tab-link" onclick="showOrders('shipping')">Vận chuyển</button>
+        <button class="tab-link" onclick="showOrders('pending')">Chờ xác nhận</button>
+        <button class="tab-link" onclick="showOrders('getting')">Chờ lấy hàng</button>
         <button class="tab-link" onclick="showOrders('delivering')">Chờ giao hàng</button>
+        <button class="tab-link" onclick="showOrders('delivered')">Đã giao</button>
+        <button class="tab-link" onclick="showOrders('return')">trả hàng</button>
         <button class="tab-link" onclick="showOrders('canceled')">Đã hủy</button>
       </div>
 
@@ -603,9 +605,7 @@
               <tr>
                 <th>Mã đơn</th>
                 <th>Ngày đặt</th>
-                <th>Số lượng</th>
                 <th>Thành tiền</th>
-                <th>Thanh toán</th>
                 <th>Trạng thái</th>
                 <th>Hành động</th>
               </tr>
@@ -614,9 +614,7 @@
               <tr th:each="order : ${orderResponses}">
                 <td th:text="${order.getId()}"></td>
                 <td th:text="${order.getCreatedDate()}"></td>
-                <td th:text="${order.getTotalItem()}"></td>
                 <td th:text="${order.getTotal()}"></td>
-                <td th:text="${order.getPaymentType()}"></td>
                 <td th:text="${order.getStatus()}"></td>
                 <td>
                   <div class="dropdown">
