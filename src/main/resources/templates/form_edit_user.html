@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chỉnh sửa thông tin người dùng</title>
+  <link rel="stylesheet" href="/assets/css/admin.css">
+  <link rel="stylesheet" href="/assets/css/form_edit_user.css">
+</head>
+<body>
+  <div class="container-main">
+    <div class="container-left">
+        <div class="background-left-logo">
+            <div class="item-logo">
+                <div class="logo">
+                    <img class="logo-img" src="/images/logo.png" alt="">
+                </div>
+            </div>
+            <div class="background-left">
+                <div class="item-navbar">
+                    <div class="navbar-general">
+                        <img class="img" src="/images/home.png" alt="">
+                        <span>Trang chủ</span>
+                    </div>
+                    <div class="navbar-general">
+                        <img class="img" src="/images/user.png" alt="">
+                        <span>Người dùng</span>
+                    </div>
+                    <div class="navbar-general">
+                        <img class="img" src="/images/statistics.png" alt="">
+                        <span>Thống kê</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-right-main">
+      <div class="container-right">
+        <div class="form-container">
+          <h3 class="form-title">Chỉnh sửa thông tin người dùng</h3>
+
+          <form id="edit-user-form">
+            <div class="form-group">
+              <label for="username">Tên đăng nhập</label>
+              <input type="text" id="username" name="username" value="NguyenVanA" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" value="nguyenvana@gmail.com" required />
+            </div>
+            <div class="form-group">
+              <label for="name">Họ và tên</label>
+              <input type="text" id="name" name="name" value="Nguyễn Văn A" required />
+            </div>
+            <div class="form-group">
+              <label for="password">Mật khẩu</label>
+              <input type="password" id="password" name="password" value="password123" />
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber">Số điện thoại</label>
+              <input type="text" id="phoneNumber" name="phoneNumber" value="0123456789" />
+            </div>
+            <div class="form-group">
+              <label for="gender">Giới tính</label>
+              <select id="gender" name="gender">
+                <option value="male" selected>Nam</option>
+                <option value="female">Nữ</option>
+                <option value="other">Khác</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="avatarUrl">URL Avatar</label>
+              <input type="text" id="avatarUrl" name="avatarUrl" value="https://example.com/avatar.jpg" />
+            </div>
+            <div class="form-group">
+              <label for="createdByUserId">Người tạo</label>
+              <input type="text" id="createdByUserId" name="createdByUserId" value="123" readonly />
+            </div>
+            <div class="form-group">
+              <label for="lastModifiedBy">Chỉnh sửa lần cuối bởi</label>
+              <input type="text" id="lastModifiedBy" name="lastModifiedBy" value="Admin" readonly />
+            </div>
+            <div class="form-group">
+              <label for="modifiedByUserId">Người chỉnh sửa</label>
+              <input type="text" id="modifiedByUserId" name="modifiedByUserId" value="456" />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="submit-btn">Lưu thay đổi</button>
+              <button type="reset" class="reset-btn">Hủy bỏ</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>
