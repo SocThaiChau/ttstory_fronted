@@ -1,0 +1,66 @@
+/* Custom styling for the chart container */
+.chart-container {
+    display: none;
+}
+
+.statistics-main {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-direction: column;
+  background-color: white;
+  height:650px;
+}
+.statistics-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.statistics {
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 10px 20px;
+  border-radius: 8px;
+  width: 30%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.statistics-lable {
+  font-size: 14px;
+  color: #888;
+}
+
+.statistics-main .statistics:hover {
+  background-color: #e7f0ff;
+  cursor: pointer;
+}
+.tab-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.tab-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+.tab-button.active {
+    background-color: #007bff;
+    color: white;
+}
+.chart-container.active {
+    display: block;
+    height:450px
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+canvas {
+    width: 100%;
+    height: 400px;
+}

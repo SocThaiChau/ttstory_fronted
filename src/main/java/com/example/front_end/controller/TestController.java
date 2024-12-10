@@ -86,6 +86,6 @@ import java.util.List;
         }
 
 
-        return "admin";
+        return "statistics";
     }
 }
