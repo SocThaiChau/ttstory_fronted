@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <title>Admin TTStore</title>
+  <link rel="stylesheet" href="/assets/css/admin.css">
+    <link rel="stylesheet" href="/assets/css/tatistics.css"></link>
+</head>
+<body>
+    <div class="container-main">
+        <div class="container-left">
+            <div class="background-left-logo">
+                <div class="item-logo">
+                    <div class="logo">
+                        <img class="logo-img" src="/images/logo.png" alt="">
+                    </div>
+                </div>
+                <div class="background-left">
+                    <div class="item-navbar">
+                        <div class="navbar-general">
+                            <img class="img" src="/images/home.png" alt="">
+                            <span>Trang chủ</span>
+                        </div>
+                        <div class="navbar-general">
+                            <img class="img" src="/images/user.png" alt="">
+                            <span>Người dùng</span>
+                        </div>
+                        <div class="navbar-general active">
+                            <img class="img" src="/images/statistics.png" alt="">
+                            <span>Thống kê</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container-right-main">
+            <div class="container-right">
+                <div class="container-bar">
+                    <img class="icon" src="/images/back.png" alt="">
+                    <img class="icon" src="/images/next.png" alt="">
+                    <div class="bar-general">
+                        <div class="search-container">
+                            <div>
+                                <img class="icon" src="/images/search_4398584.png" alt="">
+                            </div>
+                            <div>
+                                <input class="input" placeholder="Thông tin tìm kiếm....">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="statistics-main">
+                    <!-- Tab Navigation for Switching Charts -->
+                    <div class="tab-container">
+                        <div class="tab-button active" id="revenueTab">Thống kê Doanh thu</div>
+                        <div class="tab-button" id="orderTab">Thống kê Đơn hàng</div>
+                    </div>
+
+                    <!-- Thống kê Doanh thu -->
+                    <div class="chart-container active" id="revenueChartContainer">
+                        <h3>Thống kê Doanh thu</h3>
+                        <div class="filter-section">
+                            <label for="date-range">Chọn khoảng thời gian:</label>
+                            <select id="date-range" class="filter-select">
+                                <option value="day">Ngày</option>
+                                <option value="month">Tháng</option>
+                                <option value="year">Năm</option>
+                            </select>
+                        </div>
+                        <div class="chart-container active">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Thống kê Đơn hàng -->
+                    <div class="chart-container active" id="orderChartContainer">
+                        <h3>Thống kê Đơn hàng</h3>
+                        <div class="filter-section">
+                            <label for="order-date-range">Chọn khoảng thời gian:</label>
+                            <select id="order-date-range" class="filter-select">
+                                <option value="day">Ngày</option>
+                                <option value="month">Tháng</option>
+                                <option value="year">Năm</option>
+                            </select>
+                        </div>
+                        <div class="filter-section">
+                            <label for="order-status">Chọn trạng thái đơn hàng:</label>
+                            <select id="order-status" class="filter-select">
+                                <option value="all">Tất cả</option>
+                                <option value="success">Giao thành công</option>
+                                <option value="failed">Giao thất bại</option>
+                                <option value="in-progress">Đang giao</option>
+                            </select>
+                        </div>
+                        <div class="chart-container active">
+                            <canvas id="orderStatusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <script src="/js/statistics.js"></script>
+                <script src="/js/statistics_order.js"></script>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        // Chuyển tab hiển thị
+        document.getElementById('revenueTab').addEventListener('click', function() {
+            // Chuyển đổi phần tử hiển thị
+            document.getElementById('revenueChartContainer').classList.add('active');
+            document.getElementById('orderChartContainer').classList.remove('active');
+
+            // Cập nhật lớp active cho các tab
+            this.classList.add('active');
+            document.getElementById('orderTab').classList.remove('active');
+        });
+
+        document.getElementById('orderTab').addEventListener('click', function() {
+            // Chuyển đổi phần tử hiển thị
+            document.getElementById('orderChartContainer').classList.add('active');
+            document.getElementById('revenueChartContainer').classList.remove('active');
+
+            // Cập nhật lớp active cho các tab
+            this.classList.add('active');
+            document.getElementById('revenueTab').classList.remove('active');
+        });
+
+    </script>
+
+</body>
+</html>

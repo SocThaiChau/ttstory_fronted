@@ -6,9 +6,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
   <title>Admin TTStore</title>
-    <link rel="stylesheet" href="/assets/css/admin.css">
+  <link rel="stylesheet" href="/assets/css/admin.css">
+  <link rel="stylesheet" href="/assets/css/admin_user.css">
+
 </head>
 <body  >
+
     <div class="container-main">
         <div class="container-left">
             <div class="background-left-logo">
@@ -20,15 +23,15 @@
                 <div class="background-left">
     
                     <div class="item-navbar">
-                        <div class="navbar-general">
+                        <div class="navbar-general " data-link="admin.html">
                             <img class="img" src="/images/home.png" alt="">
                             <span>Trang chủ</span>
                         </div>
-                        <div class="navbar-general">
+                        <div class="navbar-general active" data-link="admin_user.html">
                             <img class="img" src="/images/user.png" alt="">
                             <span>Người dùng</span>
                         </div>
-                        <div class="navbar-general">
+                        <div class="navbar-general" data-link="statics.html">
                             <img class="img" src="/images/statistics.png" alt="">
                             <span>Thống kê</span>
                         </div>
@@ -80,56 +83,28 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="statistics-main">
-                    <div class="statistics">Doanh thu
-                        <div class="statistics-lable">Hiển thị số lượng</div>
-                    </div>
-                    <div class="statistics">Người dùng
-                        <div class="statistics-lable">Hiển thị số lượng</div>
-                    </div>
-                    <div class="statistics">Sản phẩm
-                        <div class="statistics-lable">Hiển thị số lượng</div>
-                    </div>
-                </div>
                 <div class="user">
-                    <h3 class="table-title">Người dùng mới đăng ký</h3>
-                    <table class="user-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Tên người dùng</th>
-                                <th>Email</th>
-                                <th>Thời gian đăng ký</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Nguyễn Văn A</td>
-                                <td>nguyenvana@gmail.com</td>
-                                <td>04/12/2024 10:30</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Trần Thị B</td>
-                                <td>tranthib@gmail.com</td>
-                                <td>03/12/2024 14:15</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Phạm Minh C</td>
-                                <td>phaminhc@gmail.com</td>
-                                <td>02/12/2024 09:45</td>
-                            </tr>
-                            <!-- Thêm các hàng người dùng mới ở đây -->
-                        </tbody>
-                    </table>
-                </div>
-    
-          
+                <table class="user-table">
+                  <thead>
+                    <tr>
+                      <th># </th>
+                      <th>Tên người dùng</th>
+                      <th>Email</th>
+                      <th>Thời gian đăng ký</th>
+                      <th>Trạng thái</th>
+                      <th>Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody id="user-list">
+                    <!-- Dữ liệu người dùng sẽ được thêm vào đây từ script.js -->
+                  </tbody>
+                </table>
+                    <div id="pagination" class="pagination"></div>
+              </div>
             </div>
         </div>
     </div>
+    <script src="/js/script_user.js"></script>
+
 </body>
 </html>

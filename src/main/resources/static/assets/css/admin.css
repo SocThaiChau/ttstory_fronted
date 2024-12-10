@@ -1,3 +1,4 @@
+
 body{
     font-family: Inter,sans-serif;
     font-size: 14px;
@@ -28,7 +29,7 @@ body{
     padding-left: 28px;
     padding-top: 0px;
     padding-bottom: 25px;
-
+    height: 750px;
 }
 .background-left-more{
     background-color: #231b2e;
@@ -39,10 +40,12 @@ body{
     padding-top: 0px;
     padding-bottom: 25px;
     padding-top: 25px;
-    height: 400px;
+    height: 500px;
+
 }
 .background-left-logo{
     background-color: #231b2e;
+    row-gap: 40px;
 }
 .item-logo{
     padding-top: 13px;
@@ -55,33 +58,34 @@ body{
     height: 70px;
 }
 .logo-img{
-    height: 40px;
-    width: 120px;
+    height: 50px;
+    width: 180px;
+}
+.img{
+    height: 28px;
+    width: 28px;
 }
 .item-navbar{
     display: flex;
     flex-direction: column;
     font-size: 14px;
     justify-content: center;
-    row-gap: 20px;
+    row-gap: 40px;
 }
 .navbar-general{
     display: flex;
     flex-direction: row;
     align-items: center;
     column-gap: 13px;
+    
+}
 
-}
-.live{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
 .container-right-main{
     width: 82%;
-    height: 700px;
-    background-color: #09293f;
+    height: 733px ;
+    background-color: #5c5763;
     margin: 0px;
+    height: 833px;
 }
 .container-right{
     display: flex;
@@ -92,12 +96,11 @@ body{
     color: white;
     margin: 0px;
     row-gap: 30px;
-
+    
 }
 .container-bar{
     display: flex;
     flex-direction: row;
-
     align-items: center;
     height: 70px;
     column-gap: 20px;
@@ -108,7 +111,6 @@ body{
 .icon{
     height: 24px;
     width: 25px;
-    border-radius: 10px;
 }
 .bar-general{
     display: flex;
@@ -118,15 +120,19 @@ body{
     column-gap: 10px;
 
 }
+.navbar-general.active {
+    color: #007bff;
+    font-weight: bold; /* Làm chữ đậm hơn (tuỳ chọn) */
+}
 .search-container{
     display: flex;
     flex-direction: row;
     align-items: center;
     column-gap: 7px;
     border-style: solid;
-    border-color: #40374e;
+    border-color: #170f23;
     border-width: 0px;
-    background-color: #c5bbd1;
+    background-color: #2f2739;
     border-radius: 90px;
     height: 40px;
     padding-left: 5px;
@@ -138,16 +144,8 @@ body{
     outline: 2px solid transparent;
     outline-offset: 2px;
     border-style: none;
-<<<<<<< HEAD
-    background-color: #323133;
-    border-radius: 20px;
-    width: 360px;
-    height: 35px;
-
-=======
     background-color: #2f2739;
-
->>>>>>> 9b8f319e1e757d4be16ac17896cef1be718a9a34
+    
 }
 ::placeholder{
     color: #cfcecf;
@@ -196,7 +194,7 @@ body{
     border-radius: 50%;
     background-color: #2f2739;
     height: 40px;
-    width: 40px;
+    width: 40px;   
 }
 .setting-img{
     height: 20px;
@@ -211,28 +209,39 @@ body{
     border-width: 0px;
     border-radius: 50%;
     height: 40px;
-    width: 40px;
+    width: 40px;   
 }
 .avatar-img{
     border-style: solid;
     border-width: 0px;
     border-radius: 50%;
     height: 40px;
-    width: 40px;
+    width: 40px; 
 }
 .statistics-main{
     height:209.719px ;
     padding-bottom: 15px;
     margin-left: 0px;
     margin-right: 0px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+    margin-top: 10px;
+
+
 }
 .statistics{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding-top: 32px;
     justify-content: center;
-    column-gap: 30px;
-    height: auto;
+    align-items: center;
+    row-gap: 30px;
+    height: 150px ;
+    width: 200px;
+    border-radius: 20px;
+    background-color: #9d7eb8;
+    font-size: 18px;
 
 }
 .statistics-lable{
@@ -241,10 +250,11 @@ body{
     row-gap: 40px;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #9d7eb8;
+    background-color: #ccc;
     align-items: center;
     height: 177.719x;
     width: 200px;
+    border-radius: 20px;
 }
 .gallary-img{
     height: 177.719x;
@@ -378,7 +388,7 @@ body{
     display: flex;
     flex-direction: column;
     row-gap: 6px;
-
+ 
 }
 .name-title{
     font-size: 14px;
@@ -422,18 +432,17 @@ h1 {
     text-align: center;
 }
 
-.filter select {
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
 
 .stats {
     display: flex;
     justify-content: center;
     margin: 20px 0;
+}
+.filter-section{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    width: 230px;
 }
 
 .total-revenue {
@@ -449,7 +458,97 @@ h1 {
     margin: 0 auto;
 }
 
-canvas {
+/* Đặt lại các margin và padding của các thẻ HTML */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Kiểu chung cho các tiêu đề trong bảng */
+.table-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+    background-color: #8d7171;
+    border-radius: 20px;
+}
+
+/* Kiểu cho bảng */
+.user-table {
     width: 100%;
-    height: 400px;
+    border-collapse: collapse;
+    background-color: #fff;
+    overflow-x: auto; /* Đảm bảo bảng có thể cuộn khi chiều rộng quá lớn */
+    margin-bottom: 20px;
+    border-radius: 20px;
+}
+
+
+/* Kiểu cho các ô trong bảng */
+.user-table th,
+.user-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Đổi màu nền khi hover qua các hàng trong bảng */
+.user-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Kiểu cho các tiêu đề của bảng */
+.user-table th {
+    background-color: #413e3e;
+    font-weight: 600;
+}
+
+/* Kiểu cho các ô của bảng */
+.user-table td {
+    font-size: 1rem;
+    color: #008dff;
+}
+
+/* Các màu sắc cho trạng thái */
+.user-table td:nth-child(4) {
+    font-weight: bold;
+}
+
+/* Kiểu cho cột "Thời gian đăng ký" */
+.user-table td:nth-child(4) {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Kiểu cho các cột tên người dùng và email */
+.user-table td:nth-child(2),
+.user-table td:nth-child(3) {
+    color: #333;
+    font-weight: normal;
+}
+
+
+/* Cải thiện responsive bảng cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .user-table th, .user-table td {
+        padding: 10px;
+    }
+
+    .user-table td {
+        font-size: 0.9rem;
+    }
+
+    /* Hiển thị các cột theo hàng ngang khi màn hình nhỏ */
+    .user-table th, .user-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .user-table td {
+        border: none;
+        border-bottom: 1px solid #ddd;
+    }
 }
