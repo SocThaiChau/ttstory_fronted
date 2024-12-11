@@ -86,6 +86,19 @@ import java.util.List;
         }
 
 
-        return "statistics";
+        return "admin";
+
+    }
+    @GetMapping("/admin_user")
+    public String adminUser() {
+        return "admin_user"; // Không cần thêm ".html"
+    }
+    @GetMapping("/statistics")
+    public String statistics() {
+        return "statistics"; // Không cần thêm ".html"
+    }
+    @GetMapping("/orders")
+    public String orders() {
+        return "orders"; // Không cần thêm ".html"
     }
 }

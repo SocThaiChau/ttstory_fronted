@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
@@ -21,19 +22,23 @@
                     </div>
                 </div>
                 <div class="background-left">
-    
-                    <div class="item-navbar">
-                        <div class="navbar-general " data-link="admin.html">
+
+                    <div class="item-navbar ">
+                        <div class="navbar-general hover-bar"  >
                             <img class="img" src="/images/home.png" alt="">
-                            <span>Trang chủ</span>
+                            <a th:href="@{/admin}">Trang chủ</a>
                         </div>
-                        <div class="navbar-general active" data-link="admin_user.html">
+                        <div class="navbar-general hover-bar" id="statistics-nav">
                             <img class="img" src="/images/user.png" alt="">
-                            <span>Người dùng</span>
+                            <a th:href="@{/admin_user}">Người dùng</a>
                         </div>
-                        <div class="navbar-general" data-link="statics.html">
+                        <div class="navbar-general hover-bar" id="user-nav">
                             <img class="img" src="/images/statistics.png" alt="">
-                            <span>Thống kê</span>
+                            <a th:href="@{/statistics}">Thống kê</a>
+                        </div>
+                        <div class="navbar-general hover-bar" id="order-nav">
+                            <img class="img" src="/images/order.png" alt="">
+                            <a th:href="@{/orders}">Quản lí đơn hàng</a>
                         </div>
                     </div>
                 </div>
@@ -83,7 +88,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="user">
+
+                <div >
                 <table class="user-table">
                   <thead>
                     <tr>
@@ -105,6 +111,5 @@
         </div>
     </div>
     <script src="/js/script_user.js"></script>
-
 </body>
 </html>
