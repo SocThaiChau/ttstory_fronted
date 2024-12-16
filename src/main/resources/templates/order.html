@@ -494,7 +494,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="orderItem, index : ${orderItemResponses}">
+            <tr th:each="orderItem, index : ${orderItems}">
                 <td th:text="${index.index + 1}"></td>
                 <td>
                     <div class="d-flex align-items-center">
@@ -513,72 +513,10 @@
                 <td class="number-column">
                     <sup>₫</sup><span th:text="${#numbers.formatDecimal(orderItem.getSubtotal(), 0, 'POINT', 0, 'COMMA')}"></span>
                 </td>
+<!--                <td class="number-column">-->
+<!--                    <sup>₫</sup><span th:text="${#numbers.formatDecimal(orderItem.getSubtotal(), 0, 'POINT', 0, 'COMMA')}"></span>-->
+<!--                </td>-->
             </tr>
-            <!--
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <div class="d-flex align-items-center">
-                        <img src="https://down-vn.img.susercontent.com/file/24e4f5d3f3ffdeffcddae14e5545f7eb_tn" class="img-fluid img-thumbnail" alt="Sản phẩm 2" style="width: 100px; height: auto;">
-                        <div class="ms-3">
-                            <h6>Quần đùi nam thể thao quần short hàng xuất cao cấp phong cách trẻ trung năng động T80</h6>
-                        </div>
-                    </div>
-                </td>
-                <td class="number-column">
-                    <sup>₫</sup><span>90.000</span>
-                </td>
-                <td class="number-column">
-                    <span>2</span>
-                </td>
-                <td class="number-column">
-                    <sup>₫</sup><span>180.000</span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <div class="d-flex align-items-center">
-                        <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lpgaocnr7ryze5_tn" class="img-fluid img-thumbnail" alt="Sản phẩm 2" style="width: 100px; height: auto;">
-                        <div class="ms-3">
-                            <h6>Quần kẻ sọc nữ CARO nam nữ lưng cao dáng rộng phong cách Hàn Quốc CAMASTORE QK06</h6>
-                        </div>
-                    </div>
-                </td>
-                <td class="number-column">
-                    <sup>₫</sup><span>79.000</span>
-                </td>
-                <td class="number-column">
-                    <span>1</span>
-                </td>
-                <td class="number-column">
-                    <sup>₫</sup><span>79.000</span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <div class="d-flex align-items-center">
-                        <img src="https://down-vn.img.susercontent.com/file/1a2793f8325d452bb561d06ac94bc98f_tn" class="img-fluid img-thumbnail" alt="Sản phẩm 2" style="width: 100px; height: auto;">
-                        <div class="ms-3">
-                            <h6>Đồ bộ thể thao nam mặc hè xuyên biên giới, Chất thun cotton thấm hút mồ hôi cực tốt Kiểu dáng Slim Fit siêu đẹp DB37</h6>
-                        </div>
-                    </div>
-                </td>
-                <td class="number-column">
-                    <sup>₫</sup><span>69.000</span>
-                </td>
-                <td class="number-column">
-                    <span>1</span>
-                </td>
-                <td class="number-column">
-                    <sup>₫</sup><span>69.000</span>
-                </td>
-            </tr>
-            -->
             </tbody>
         </table>
     </div>
@@ -590,13 +528,13 @@
                     Phương thức thanh toán
                 </h5>
                 <div class="color-buttons">
-                    <button onclick="selectColor(this)">
+                    <button type="button" onclick="selectPaymentMethod('COD')" class="payment-btn">
                         <img class="method-icon" src="https://salt.tikicdn.com/ts/upload/92/b2/78/1b3b9cda5208b323eb9ec56b84c7eb87.png" width="32" height="32" alt="icon"> Thanh toán khi nhận hàng
                     </button>
-                    <button onclick="selectColor(this)">
+                    <button type="button" onclick="selectPaymentMethod('MOMO')" class="payment-btn">
                         <img class="method-icon" src="https://salt.tikicdn.com/ts/upload/ce/f6/e8/ea880ef285856f744e3ffb5d282d4b2d.jpg" width="32" height="32" alt="icon"> Ví Momo
                     </button>
-                    <button onclick="selectColor(this)">
+                    <button type="button" onclick="selectPaymentMethod('VNPAY')" class="payment-btn">
                         <img class="method-icon" src="https://salt.tikicdn.com/ts/upload/77/6a/df/a35cb9c62b9215dbc6d334a77cda4327.png" width="32" height="32" alt="icon"> VNPAY
                     </button>
                 </div>
@@ -607,15 +545,14 @@
     <div class="d-flex justify-content-end">
         <div>
             <p>
-                <span th:text="'Tổng thanh toán (' + ${orderResponse.getTotalItem()} +' sản phẩm): '"></span>
+                <span th:text="'Tổng thanh toán (' + ${totalItems} +' sản phẩm): '"></span>
                 <strong style="color:red;">
                     <sup style="font-size: 20px;vertical-align: text-bottom">₫</sup>
-                    <span th:text="${#numbers.formatDecimal(orderResponse.getTotal(), 0, 'POINT', 0, 'COMMA')}"></span>
+                    <span th:text="${#numbers.formatDecimal(totalPrice, 0, 'POINT', 0, 'COMMA')}"></span>
                 </strong>
             </p>
             <form id="orderForm" th:action="@{/order/confirmOrder}" method="post">
-                <input type="hidden" id="id" name="id" th:value="${orderResponse.getId()}" /> <!-- Thay đổi giá trị của idAddress theo địa chỉ được chọn -->
-                <input type="hidden" id="idAddress" name="idAddress" value="1" /> <!-- Thay đổi giá trị của idAddress theo địa chỉ được chọn -->
+                <input type="hidden" id="idAddress" name="idAddress" value="6" /> <!-- Thay đổi giá trị của idAddress theo địa chỉ được chọn -->
                 <input type="hidden" id="paymentType" name="paymentType" value="Thanh toán khi nhận hàng" /> <!-- Thay đổi giá trị của paymentType theo phương thức thanh toán được chọn -->
                 <button type="submit" class="btn buy-now" style="width: 350px; font-size: 18px">Đặt hàng</button>
             </form>
@@ -812,6 +749,21 @@
             $('#address-form').css('display', 'none'); // Ẩn form
         };
     });
+</script>
+
+<script>
+    function selectPaymentMethod(paymentType) {
+        // Cập nhật giá trị cho trường ẩn
+        document.getElementById("paymentType").value = paymentType;
+
+        // Làm nổi bật nút được chọn
+        const buttons = document.querySelectorAll('.payment-btn');
+        buttons.forEach(button => {
+            button.style.backgroundColor = ''; // Reset màu nền
+        });
+
+        event.target.closest('button').style.backgroundColor = '#e0f7fa'; // Đổi màu nút đã chọn
+    }
 </script>
 
 <script>

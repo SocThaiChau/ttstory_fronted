@@ -134,7 +134,7 @@ body{
     justify-content: center;
     align-items: center;
     column-gap: 10px;
-    
+
 }
 .navbar-general.active {
     color: #007bff;
@@ -244,7 +244,7 @@ body{
     column-gap: 30px;
     margin-top: 10px;
 
-    
+
 }
 .statistics{
     display: flex;
@@ -457,7 +457,7 @@ h1 {
 .filter-section{
     display: flex;
     flex-direction: column;
-    row-gap: 10pxpx;
+    row-gap: 10px;
     width: 230px;
 }
 

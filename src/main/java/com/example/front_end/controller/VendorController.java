@@ -54,7 +54,7 @@ public class VendorController {
             model.addAttribute("user", userDTO);
 
             model.addAttribute("name", userDTO.getName());
-//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
 
 
             List<CategoryDTO> categoryDTOS = categoryService.findAll();

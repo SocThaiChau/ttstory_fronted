@@ -452,17 +452,22 @@
         </table>
     </div>
     <div class="d-flex justify-content-end">
-        <div>
+        <form id="orderForm" action="/order/submit" method="post">
+<!--            <input type="hidden" id="items" name="items" />-->
             <p>Tổng thanh toán: <strong style="color:red;"><sup style="font-size: 20px;vertical-align: text-bottom">₫</sup><span th:text="${#numbers.formatDecimal(cartResponse.getTotalPrice(), 0, 'POINT', 0, 'COMMA')}"></span></strong></p>
             <button class="btn btn-primary btn-block" onclick="submitOrder()">Mua ngay</button>
-        </div>
+        </form>
+<!--        <div>-->
+<!--            <p>Tổng thanh toán: <strong style="color:red;"><sup style="font-size: 20px;vertical-align: text-bottom">₫</sup><span th:text="${#numbers.formatDecimal(cartResponse.getTotalPrice(), 0, 'POINT', 0, 'COMMA')}"></span></strong></p>-->
+<!--            <button class="btn btn-primary btn-block" onclick="submitOrder()">Mua ngay</button>-->
+<!--        </div>-->
     </div>
 
     <!-- Hidden form for order submission -->
-    <form id="orderForm" method="post" action="/order/submit" style="display: none;">
-        <!-- Input ẩn để chứa các sản phẩm đã chọn -->
-        <input type="hidden" name="cartItems" id="cartItems">
-    </form>
+<!--    <form id="orderForm" method="post" action="/order/submit" style="display: none;">-->
+<!--        &lt;!&ndash; Input ẩn để chứa các sản phẩm đã chọn &ndash;&gt;-->
+<!--        <input type="hidden" name="cartItems" id="cartItems">-->
+<!--    </form>-->
 
 
 
@@ -629,7 +634,7 @@
 <!--End: Footer-->
 
 <script>
-    let selectedCartItems = [];
+    let items = [];
 
     // Function to handle checkbox click
     function handleCheckboxClick(checkbox) {
@@ -638,24 +643,23 @@
         const quantity = row.querySelector('.quantity-input').value;
 
         // Check if the product is already in selectedCartItems
-        const existingItemIndex = selectedCartItems.findIndex(item => item.productId === productId);
+        const existingItemIndex = items.findIndex(item => item.productId === productId);
 
         if (checkbox.checked) {
             if (existingItemIndex !== -1) {
                 // Product already exists in selectedCartItems, update quantity
-                selectedCartItems[existingItemIndex].quantity = quantity;
+                items[existingItemIndex].quantity = quantity;
             } else {
                 // Product does not exist, add it to selectedCartItems
-                selectedCartItems.push({ productId, quantity });
+                items.push({ productId, quantity });
             }
         } else {
             // Checkbox is unchecked, remove the product from selectedCartItems
             if (existingItemIndex !== -1) {
-                selectedCartItems.splice(existingItemIndex, 1);
+                items.splice(existingItemIndex, 1);
             }
         }
     }
-
     // Function to decrement quantity
     function decrementQuantity(button) {
         var input = button.nextElementSibling;
@@ -694,7 +698,7 @@
         const checkbox = input.closest('tr').querySelector('input[type="checkbox"]');
         if (checkbox.checked) {
             const productId = input.closest('tr').querySelector('input[name="id"]').value;
-            selectedCartItems = selectedCartItems.map(item =>
+            items = items.map(item =>
                 item.productId === parseInt(productId) ? { ...item, quantity: parseInt(quantity) } : item
             );
         }
@@ -713,34 +717,47 @@
     // Function to submit the order
     function submitOrder() {
 
-        if (selectedCartItems.length === 0) {
+        if (items.length === 0) {
             alert("Vui lòng chọn ít nhất một sản phẩm.");
             return;
         }
 
-        console.log(selectedCartItems);
+        console.log(items);
+
 
         fetch('/order/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(selectedCartItems),
+            body: JSON.stringify(items),
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 console.log('Success:', data);
-                location.reload();
+                // Điều hướng đến URL trả về từ backend
+                window.location.href = data.redirectUrl || '/order';
             })
             .catch((error) => {
                 console.error('Error:', error);
-                location.reload();
-            })
-            .finally(() => {
-                // Dù thành công hay thất bại, chuyển hướng về trang /order
-                window.location.href = '/order';
+                alert('Đã xảy ra lỗi khi đặt hàng. Vui lòng thử lại.');
             });
+
         event.preventDefault(); // Ngăn chặn hành vi mặc định của nút (ví dụ: tránh submit form)
+
+        // const jsonData = JSON.stringify(items);
+        //
+        // // Gắn JSON vào input ẩn
+        // document.getElementById('items').value = jsonData;
+        //
+        // console.log("dữ liệu: " + jsonData);
+        // // Gửi form
+        // document.getElementById('orderForm').submit();
 
     }
 

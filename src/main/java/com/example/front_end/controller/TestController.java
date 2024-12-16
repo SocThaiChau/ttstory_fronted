@@ -47,7 +47,7 @@ import java.util.List;
             model.addAttribute("user", userDTO);
 
             model.addAttribute("name", userDTO.getName());
-//            model.addAttribute("role", userDTO.getUserRoleResponse().getRoles());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
 
             CartResponse cartResponse = userService.cartDetail();
             Integer total = cartResponse.getTotalItem();
@@ -77,7 +77,7 @@ import java.util.List;
             model.addAttribute("user", userDTO);
 
             model.addAttribute("name", userDTO.getName());
-//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
 
             CartResponse cartResponse = userService.cartDetail();
             Integer total = cartResponse.getTotalItem();

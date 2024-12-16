@@ -3,24 +3,26 @@ package com.example.front_end.controller;
 import com.example.front_end.config.JwtFilter;
 import com.example.front_end.model.UI.AddToCartRequestUI;
 import com.example.front_end.model.UI.OrderRequestUI;
+import com.example.front_end.model.dto.order.OrderItemRequest;
+import com.example.front_end.model.dto.order.OrderRequest;
+import com.example.front_end.model.dto.order.OrderParentResponse;
 import com.example.front_end.model.dto.user.UserDTO;
-import com.example.front_end.model.request.AddToCartRequest;
-import com.example.front_end.model.request.CartItemRequest;
-import com.example.front_end.model.request.OrderRequest;
 import com.example.front_end.model.response.*;
 import com.example.front_end.service.AddressService;
+import com.example.front_end.service.OrderService;
 import com.example.front_end.service.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -35,10 +37,13 @@ public class OrderController {
     private UserService userService;
 
     @Autowired
+    private OrderService orderService;
+
+    @Autowired
     private AddressService addressService;
 
     @GetMapping
-    public String order(Model model){
+    public String order(HttpSession session, Model model){
         if (errorMassage != null){
             System.out.println(errorMassage);
             model.addAttribute("errorMessage", errorMassage);
@@ -50,7 +55,7 @@ public class OrderController {
             model.addAttribute("user", userDTO);
 
             model.addAttribute("name", userDTO.getName());
-//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
 
             CartResponse cartResponse = userService.cartDetail();
             Integer total = cartResponse.getTotalItem();
@@ -69,91 +74,82 @@ public class OrderController {
                 }
             }
 
-            OrderResponse orderResponse = userService.orderDetail();
-            model.addAttribute("orderResponse", orderResponse);
-            List<OrderItemResponse> orderItemResponses = orderResponse.getOrderItemResponses();
+            // Lấy dữ liệu từ session
+            OrderRequest orderRequest = (OrderRequest) session.getAttribute("orderRequest");
+
             List<ProductResponse> productDetails = new ArrayList<>();
 
-            for (OrderItemResponse orderItem : orderItemResponses) {
-                ProductResponse productDetail = userService.findProductById(orderItem.getProductId());
-                productDetails.add(productDetail);
+            int totalItems = 0;
+            double totalPrice = 0.0;
+
+            if(orderRequest != null){
+                for (OrderItemRequest orderItem : orderRequest.getItems()) {
+                    ProductResponse productDetail = userService.findProductById((long) orderItem.getProductId());
+                    productDetails.add(productDetail);
+
+                    // Tính toán subtotal
+                    double promotionalPrice = productDetail.getPromotionalPrice();
+                    int quantity = orderItem.getQuantity();
+                    orderItem.setSubtotal(promotionalPrice * quantity);
+                    totalPrice += promotionalPrice * quantity; // Cộng tổng tiền
+                    totalItems += quantity; // Cộng tổng số lượng
+                }
             }
 
             model.addAttribute("productDetails", productDetails);
-            model.addAttribute("orderItemResponses", orderItemResponses);
+            model.addAttribute("orderItems", orderRequest.getItems());
+            model.addAttribute("totalPrice", totalPrice);
+            model.addAttribute("totalItems", totalItems);
+
             return "order";
         }
         return "redirect:/home";
     }
 
     @PostMapping("/confirmOrder")
-    public String confirmOrder(@ModelAttribute OrderRequestUI orderRequestUI, RedirectAttributes redirectAttributes){
+    public String confirmOrder(@ModelAttribute OrderRequestUI orderRequestUI, HttpSession session, RedirectAttributes redirectAttributes){
         if (jwtFilter.getAccessToken() == null) {
             return "redirect:/home";
         }
-        String result = userService.confirmAddOrder(orderRequestUI);
+        // Lấy dữ liệu từ session
+        OrderRequest orderRequest = (OrderRequest) session.getAttribute("orderRequest");
+        orderRequest.setAddressId(orderRequestUI.getIdAddress());
+        orderRequest.setPaidBefore(false);
+        orderRequest.setPaymentType(orderRequestUI.getPaymentType());
+
+        OrderParentResponse result = orderService.createOrder(orderRequest);
+
         if(result == null){
             redirectAttributes.addFlashAttribute("errorMessage", "Đặt đơn hàng thất bại");
         }
         else {
+            if (orderRequest.getPaymentType().equals("VNPAY")){
+                return "redirect:" + result.getPaymentUrl();
+            }
             redirectAttributes.addFlashAttribute("message", "Đặt đơn hàng thành công");
         }
 
-        return "redirect:/profile/order";
+//        return "redirect:/profile/order";
+        return "/home";
     }
 
     @PostMapping("/submit")
-    public String submitOrder(@RequestBody List<AddToCartRequestUI> addToCartRequestUIS, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<Map<String, String>> placeOrder(@RequestBody List<AddToCartRequestUI> addToCartRequestUIS, HttpSession session) {
 
+        // Tạo đối tượng OrderRequest từ addToCartRequestUIS
         OrderRequest orderRequest = new OrderRequest();
-
-        System.out.println("đã vào order");
-        List<AddToCartRequest> cartItems = addToCartRequestUIS.stream()
-                .map(item -> new AddToCartRequest(item.getProductId(), item.getQuantity()))
+        List<OrderItemRequest> orderItems = addToCartRequestUIS.stream()
+                .map(item -> new OrderItemRequest(item.getProductId(), item.getQuantity()))
                 .collect(Collectors.toList());
+        orderRequest.setItems(orderItems);
 
-        orderRequest.setCartItems(cartItems);
+        // Lưu OrderRequest vào session
+        session.setAttribute("orderRequest", orderRequest);
 
-        for(AddToCartRequestUI item : addToCartRequestUIS){
-            System.out.println("productId: " + item.getProductId() + " quantity: " + item.getQuantity());
-        }
-        String result = userService.addOrder(orderRequest);
-        if(result == null){
-            redirectAttributes.addFlashAttribute("errorMessage", "Đặt đơn hàng thất bại");
-        }
-        else {
-            redirectAttributes.addFlashAttribute("message", "Đặt đơn hàng thành công");
-        }
-        // Thêm các xử lý khác nếu cần thiết
-        return "redirect:/order";
-    }
-    @PostMapping("/addOrder")
-    public String addOrder(@RequestBody AddToCartRequestUI addToCartRequestUI, RedirectAttributes redirectAttributes) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Order placed successfully!");
 
-        OrderRequest orderRequest = new OrderRequest();
-
-        System.out.println("đã vào order");
-        System.out.println("productId: " + addToCartRequestUI.getProductId() + " quantity: " + addToCartRequestUI.getQuantity());
-
-        List<AddToCartRequest> cartItems = new ArrayList<>();
-
-        AddToCartRequest addToCartRequest = new AddToCartRequest();
-        addToCartRequest.setQuantity(addToCartRequestUI.getQuantity());
-        addToCartRequest.setProductId(addToCartRequestUI.getProductId());
-
-        cartItems.add(addToCartRequest);
-
-        orderRequest.setCartItems(cartItems);
-
-        String result = userService.addOrder(orderRequest);
-        if(result == null){
-            redirectAttributes.addFlashAttribute("errorMessage", "Đặt đơn hàng thất bại");
-        }
-        else {
-            redirectAttributes.addFlashAttribute("message", "Đặt đơn hàng thành công");
-        }
-        // Thêm các xử lý khác nếu cần thiết
-        return "redirect:/order";
+        return ResponseEntity.ok(response);
     }
 
 }

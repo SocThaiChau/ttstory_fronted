@@ -1,9 +1,11 @@
 package com.example.front_end.controller;
 
 import com.example.front_end.config.JwtFilter;
+import com.example.front_end.model.dto.order.OrderResponse;
 import com.example.front_end.model.dto.user.UserDTO;
 import com.example.front_end.model.response.*;
 import com.example.front_end.service.AddressService;
+import com.example.front_end.service.OrderService;
 import com.example.front_end.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ public class ProfileController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private OrderService orderService;
 
     @Autowired
     private AddressService addressService;
@@ -48,7 +52,7 @@ public class ProfileController {
             String dob = formatter.format(userDTO.getDob());
 
             model.addAttribute("name", userDTO.getName());
-//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
             model.addAttribute("dob", dob);
 
             CartResponse cartResponse = userService.cartDetail();
@@ -79,14 +83,14 @@ public class ProfileController {
             String dob = formatter.format(userDTO.getDob());
 
             model.addAttribute("name", userDTO.getName());
-//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
             model.addAttribute("dob", dob);
 
             CartResponse cartResponse = userService.cartDetail();
             Integer total = cartResponse.getTotalItem();
             model.addAttribute("total", total);
 
-            List<OrderResponse> orderResponses = userService.orderResponses();
+            List<OrderResponse> orderResponses = orderService.orderResponses(id);
             model.addAttribute("orderResponses",orderResponses);
             return "ui_profile_order";
         }
@@ -113,7 +117,7 @@ public class ProfileController {
             String dob = formatter.format(userDTO.getDob());
 
             model.addAttribute("name", userDTO.getName());
-//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
             model.addAttribute("dob", dob);
 
             CartResponse cartResponse = userService.cartDetail();
@@ -136,7 +140,7 @@ public class ProfileController {
             String dob = formatter.format(userDTO.getDob());
 
             model.addAttribute("name", userDTO.getName());
-//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
             model.addAttribute("dob", dob);
 
             CartResponse cartResponse = userService.cartDetail();
