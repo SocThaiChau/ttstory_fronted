@@ -4,10 +4,12 @@ import com.example.front_end.config.JwtFilter;
 import com.example.front_end.model.UI.AddToCartRequestUI;
 import com.example.front_end.model.UI.OrderRequestUI;
 import com.example.front_end.model.dto.order.OrderItemRequest;
-import com.example.front_end.model.dto.order.OrderRequest;
 import com.example.front_end.model.dto.order.OrderParentResponse;
+import com.example.front_end.model.dto.order.OrderRequest;
 import com.example.front_end.model.dto.user.UserDTO;
-import com.example.front_end.model.response.*;
+import com.example.front_end.model.response.AddressResponse;
+import com.example.front_end.model.response.CartResponse;
+import com.example.front_end.model.response.ProductResponse;
 import com.example.front_end.service.AddressService;
 import com.example.front_end.service.OrderService;
 import com.example.front_end.service.UserService;
@@ -129,8 +131,7 @@ public class OrderController {
             redirectAttributes.addFlashAttribute("message", "Đặt đơn hàng thành công");
         }
 
-//        return "redirect:/profile/order";
-        return "/home";
+        return "redirect:/profile/order";
     }
 
     @PostMapping("/submit")

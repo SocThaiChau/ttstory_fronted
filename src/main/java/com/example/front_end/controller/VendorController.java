@@ -60,7 +60,7 @@ public class VendorController {
             List<CategoryDTO> categoryDTOS = categoryService.findAll();
             model.addAttribute("categoryDTOS", categoryDTOS);
 
-            List<ProductResponse> product = productService.findAllProduct();
+            List<ProductResponse> product = productService.getAllMyProducts();
             model.addAttribute("product", product);
 
             List<OrderResponse> orderResponses = userService.allOrderResponses();

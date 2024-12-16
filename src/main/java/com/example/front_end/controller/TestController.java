@@ -68,8 +68,8 @@ import java.util.List;
         return "home";
     }
 
-    @GetMapping("/admin")
-    public String getAdmin(Model model){
+    @GetMapping("/admin/statistics")
+    public String statistics(Model model){
         if (jwtFilter.getAccessToken() != null){
 
             Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
@@ -87,5 +87,47 @@ import java.util.List;
 
 
         return "statistics";
+    }
+
+    @GetMapping("/admin/user")
+    public String getUser(Model model){
+        if (jwtFilter.getAccessToken() != null){
+
+            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+            UserDTO userDTO = userService.findUserById(id);
+            model.addAttribute("user", userDTO);
+
+            model.addAttribute("name", userDTO.getName());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
+
+            CartResponse cartResponse = userService.cartDetail();
+            Integer total = cartResponse.getTotalItem();
+            model.addAttribute("total", total);
+
+        }
+
+
+        return "admin_user";
+    }
+
+    @GetMapping("/admin/home")
+    public String getAdminHome(Model model){
+        if (jwtFilter.getAccessToken() != null){
+
+            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+            UserDTO userDTO = userService.findUserById(id);
+            model.addAttribute("user", userDTO);
+
+            model.addAttribute("name", userDTO.getName());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
+
+            CartResponse cartResponse = userService.cartDetail();
+            Integer total = cartResponse.getTotalItem();
+            model.addAttribute("total", total);
+
+        }
+
+
+        return "admin";
     }
 }

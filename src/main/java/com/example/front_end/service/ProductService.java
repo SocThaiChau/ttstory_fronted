@@ -49,6 +49,7 @@ public class ProductService {
     private String productFavorite = "http://localhost:8080/users/favorite";
     private String productDetail = "http://localhost:8080/api/vp/product/detail/";
     private String addProduct = "http://localhost:8080//api/vp/product/create";
+    private String getAllMyProducts = "http://localhost:8080/api/vp/getAllMyProducts";
 
     public List<ProductResponse> findAllProduct() {
         try {
@@ -63,6 +64,38 @@ public class ProductService {
                     builder.toUriString(),
                     HttpMethod.GET,
                     null, // Include the HttpEntity with headers,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            ProducListResponse  productListResponse  = responseEntity.getBody();
+            if (productListResponse  != null) {
+                return productListResponse.getData();
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<ProductResponse> getAllMyProducts() {
+        try {
+            Map<String, String> params = new HashMap<>();
+
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getAllMyProducts);
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.queryParam(entry.getKey(), entry.getValue());
+            }
+
+            String accessToken = jwtFilter.getAccessToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("AUTHORIZATION", accessToken); // Replace with your actual token
+
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+            ResponseEntity<ProducListResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    entity, // Include the HttpEntity with headers,
                     new ParameterizedTypeReference<>() {}
             );
 
