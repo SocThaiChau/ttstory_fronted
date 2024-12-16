@@ -3,16 +3,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
     <title>Admin TTStore</title>
     <link rel="stylesheet" href="/assets/css/admin.css">
-    <link rel="stylesheet" href="/assets/css/order.css">
+    <link rel="stylesheet" href="/assets/css/category.css">
 
 </head>
 <body  >
-
 <div class="container-main">
     <div class="container-left">
         <div class="background-left-logo">
@@ -22,7 +22,6 @@
                 </div>
             </div>
             <div class="background-left">
-
                 <div class="item-navbar ">
                     <div class="navbar-general hover-bar"  >
                         <img class="img" src="/images/home.png" alt="">
@@ -44,8 +43,12 @@
                         <img class="img" src="/images/order.png" alt="">
                         <a th:href="@{/admin/categories}">Quản lí danh mục</a>
                     </div>
+
                 </div>
             </div>
+        </div>
+        <div class="background-left-more">
+
         </div>
     </div>
     <div class="container-right-main">
@@ -75,58 +78,110 @@
                 </div>
             </div>
 
-            <div class="order-management">
-                <h1>Quản lý đơn hàng</h1>
-                <div class="filter-section">
-                    <!-- Thêm phần lọc trạng thái đơn hàng -->
-                    <select id="order-status">
-                        <option value="all">Tất cả</option>
-                        <option value="Đang xử lý">Đang xử lý</option>
-                        <option value="Đang giao">Đang giao</option>
-                        <option value="Hoàn thành">Hoàn thành</option>
-                        <option value="Hủy">Hủy</option>
-                    </select>
-
+            <div class="category-management">
+                <h1>Quản lý danh mục</h1>
+                <button id="show-form-btn" class="add-category-btn">Thêm danh mục</button>
+<!--                Form thêm danh mục-->
+                <div id="add-category-form" style="display: none;">
+                    <h3>Thêm danh mục mới</h3>
+                    <form th:action="@{/admin/categories/add}" method="post" enctype="multipart/form-data">
+                        <div>
+                            <label for="name">Tên danh mục:</label>
+                            <input type="text" id="name" name="name" placeholder="Tên danh mục" required>
+                        </div>
+                        <div>
+                            <label for="image-upload">Tải lên hình ảnh:</label>
+                            <input type="file" id="image-upload" name="imageFile" accept="image/*">
+                        </div>
+                        <div>
+                            <label for="image-url">Hoặc nhập URL hình ảnh:</label>
+                            <input type="url" id="image-url" name="imageUrl" placeholder="URL hình ảnh">
+                        </div>
+                        <p style="font-size: 12px; color: gray;">(Chỉ cần chọn một trong hai: tải lên hoặc nhập URL)</p>
+                        <button type="submit">Thêm</button>
+                    </form>
+                    <!-- Nút hủy -->
+                    <button id="hide-form-btn" class="cancel-btn">Hủy</button>
                 </div>
 
-                <div class="filter-section">
-                    <label for="sort-date">Sắp xếp đơn hàng theo thời gian:</label>
-                    <select id="sort-date" class="filter-select">
-                        <option value="asc">Tăng dần (Ngày tạo từ cũ đến mới)</option>
-                        <option value="desc">Giảm dần (Ngày tạo từ mới đến cũ)</option>
-                    </select>
-                </div>
-                <table class="order-table">
+                <table class="category-table">
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Cửa hàng</th>
-                        <th>Trạng thái</th>
-                        <th>Tổng cộng</th>
-                        <th>Ngày tạo</th>
-                        <th>Ngày sửa cuối</th>
-                        <th>Địa chỉ</th>
-                        <th>ĐVVC</th>
-
+                        <th>Tên danh mục</th>
+                        <th>Hình ảnh</th>
+                        <th>Hành động</th>
                     </tr>
                     </thead>
-                    <tbody id="order-list">
-                    <!-- Các dòng dữ liệu sẽ được tạo động ở đây -->
+                    <tbody>
+                    <tr th:each="category : ${categories}">
+                        <td th:text="${category.id}"></td>
+                        <td th:text="${category.name}"></td>
+                        <td><img th:src="${category.image}" alt="Category Image" width="50"></td>
+                        <td>
+                            <button class="edit-btn">Sửa</button>
+                            <button class="delete-btn">Xóa</button>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
-                <div id="carrier-modal" class="carrier-modal">
-                    <h3>Chọn đơn vị vận chuyển</h3>
-                    <ul id="carrier-list" style="list-style: none; padding: 0;"></ul>
-                    <button onclick="closeModal()">Đóng</button>
-                </div>
-                <!-- Phần phân trang -->
-                <div id="page-info" class="page-info">
-                    <span>Trang <span id="current-page">1</span> /<span id="total-pages">1</span></span>
+                <!-- Pagination -->
+                <div id="pagination">
+                    <button th:if="${currentPage > 0}"
+                            th:onclick="'window.location.href=\'?page=' + (${currentPage} - 1) + '\''">
+                        Trang trước
+                    </button>
+                    <span>Trang <span th:text="${currentPage + 1}"></span> / <span th:text="${totalPages}"></span></span>
+                    <button th:if="${currentPage < totalPages - 1}"
+                            th:onclick="'window.location.href=\'?page=' + (${currentPage} + 1) + '\''">
+                        Trang tiếp theo
+                    </button>
                 </div>
             </div>
+
         </div>
     </div>
+    <script>
+        // Lấy các phần tử từ DOM
+        const showFormBtn = document.getElementById('show-form-btn');
+        const hideFormBtn = document.getElementById('hide-form-btn');
+        const addCategoryForm = document.getElementById('add-category-form');
+
+        // Hiển thị form khi bấm nút "Thêm danh mục"
+        showFormBtn.addEventListener('click', () => {
+            addCategoryForm.style.display = 'block'; // Hiển thị form
+            showFormBtn.style.display = 'none'; // Ẩn nút "Thêm danh mục"
+        });
+
+        // Ẩn form khi bấm nút "Hủy"
+        hideFormBtn.addEventListener('click', () => {
+            addCategoryForm.style.display = 'none'; // Ẩn form
+            showFormBtn.style.display = 'block'; // Hiển thị lại nút "Thêm danh mục"
+        });
+    </script>
+    <script>
+    const fileInput = document.getElementById("image-upload");
+    const urlInput = document.getElementById("image-url");
+
+    fileInput.addEventListener("change", () => {
+        if (fileInput.value) {
+            urlInput.value = "";
+            urlInput.disabled = true;
+        } else {
+            urlInput.disabled = false;
+        }
+    });
+
+    urlInput.addEventListener("input", () => {
+        if (urlInput.value) {
+            fileInput.value = "";
+            fileInput.disabled = true;
+        } else {
+            fileInput.disabled = false;
+        }
+    });
+
+    </script>
 </div>
-<script src="/js/script_order.js"></script>
 </body>
 </html>

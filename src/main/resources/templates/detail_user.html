@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết người dùng</title>
+    <link rel="stylesheet" href="/assets/css/admin_user.css">
+    <link rel="stylesheet" href="/assets/css/detail_user.css">
+</head>
+<body>
+<div class="container">
+    <h2>Thông tin chi tiết người dùng</h2>
+    <div class="user-details">
+        <table>
+            <tr>
+                <th>ID</th>
+                <td th:text="${user.id}"></td>
+            </tr>
+            <tr>
+                <th>Tên người dùng</th>
+                <td th:text="${user.name}"></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td th:text="${user.email}"></td>
+            </tr>
+            <tr>
+                <th>Số điện thoại</th>
+                <td th:text="${user.phoneNumber}"></td>
+            </tr>
+            <tr>
+                <th>Giới tính</th>
+                <td th:text="${user.gender}"></td>
+            </tr>
+            <tr>
+                <th>Địa chỉ</th>
+                <td th:text="${user.address}"></td>
+            </tr>
+            <tr>
+                <th>Ngày sinh</th>
+                <td th:text="${user.dob}"></td>
+            </tr>
+            <tr>
+                <th>Ngày tạo tài khoản</th>
+                <td th:text="${user.createDate}"></td>
+            </tr>
+            <tr>
+                <th>Ngày sửa đổi cuối</th>
+                <td th:text="${user.lastModifiedDate}"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="action-buttons">
+        <button onclick="window.history.back()">Quay lại</button>
+    </div>
+</div>
+</body>
+</html>

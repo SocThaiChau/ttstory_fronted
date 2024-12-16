@@ -101,4 +101,8 @@ import java.util.List;
     public String orders() {
         return "orders"; // Không cần thêm ".html"
     }
+//    @GetMapping("/category")
+//    public String category() {
+//        return "category"; // Không cần thêm ".html"
+//    }
 }
