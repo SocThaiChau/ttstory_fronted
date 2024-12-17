@@ -101,3 +101,28 @@ input[type="file"], input[type="url"] {
 input[type="file"]:hover, input[type="url"]:hover {
     border-color: #007bff;
 }
+.category-table-container {
+    position: relative; /* Đặt vị trí cho phần chứa bảng */
+}
+
+.add-category-btn {
+    position: absolute; /* Đặt nút ở vị trí tuyệt đối */
+    top: -40px; /* Đặt nó cách phía trên một khoảng nhỏ */
+    right: 0; /* Đặt sát phía bên phải */
+    padding: 10px 20px; /* Khoảng cách nội dung trong nút */
+    background-color: #4CAF50; /* Màu nền xanh */
+    color: white; /* Màu chữ trắng */
+    border: none;
+    border-radius: 5px; /* Bo góc */
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.add-category-btn:hover {
+    background-color: #45a049; /* Thay đổi màu nền khi hover */
+}
+.category-table img {
+    width: 50px;   /* Chiều rộng ảnh */
+    height: 50px;  /* Chiều cao ảnh */
+    object-fit: cover; /* Đảm bảo ảnh không bị biến dạng */
+}

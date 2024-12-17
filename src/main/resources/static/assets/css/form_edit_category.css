@@ -1,0 +1,72 @@
+.category-management {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.category-management h2 {
+    margin-bottom: 20px;
+    color:black;
+}
+
+.category-management form div {
+    color: black;
+    margin-bottom: 15px;
+}
+
+.category-management form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.category-management form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.category-management form button {
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.category-management form button:hover {
+    background-color: #2980b9;
+}
+
+.category-management a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #3498db;
+    text-decoration: none;
+}
+
+.category-management a:hover {
+    text-decoration: underline;
+
+/* Avatar & Image display improvements */
+.avatar-img, .logo-img, .navbar-general img, .setting-img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-img {
+    width: 40px;
+    height: 40px;
+}
+
+.setting-img {
+    width: 24px;
+    height: 24px;
+}
+
+.navbar-general img {
+    width: 20px;
+    height: 20px;
+}

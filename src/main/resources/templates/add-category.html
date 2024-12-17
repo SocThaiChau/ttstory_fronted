@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm danh mục mới</title>
+    <link rel="stylesheet" href="/assets/css/admin.css">
+    <link rel="stylesheet" href="/assets/css/category.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .container-right .header-bar h1 {
+           font-size: 24px;
+           color: #007bff;
+           margin-bottom: 20px;
+           text-align: center;
+       }
+
+       .form-group {
+           margin-bottom: 20px;
+
+       }
+
+       label {
+           display: block;
+           font-size: 16px;
+           color: black;
+           margin-bottom: 5px;
+
+       }
+
+       input[type="text"] {
+           width: 100%;
+           padding: 10px;
+           font-size: 16px;
+           border: 1px solid #ccc;
+           border-radius: 4px;
+           box-sizing: border-box;
+       }
+
+       input[type="text"]:focus {
+           border-color: #007bff;
+           outline: none;
+       }
+
+       button {
+           background-color: #007bff;
+           color: white;
+           padding: 10px 20px;
+           font-size: 16px;
+           border: none;
+           border-radius: 4px;
+           cursor: pointer;
+           transition: background-color 0.3s;
+           width: 150px;
+           margin-right: 10px;
+       }
+
+       button:hover {
+           background-color: #0056b3;
+       }
+
+       .message {
+           margin-top: 20px;
+           padding: 10px;
+           font-size: 18px;
+           color: #28a745;
+           background-color: #d4edda;
+           border-radius: 5px;
+       }
+
+       .error-message {
+           margin-top: 20px;
+           padding: 10px;
+           font-size: 18px;
+           color: #721c24;
+           background-color: #f8d7da;
+           border-radius: 5px;
+       }
+
+       /* Media Queries for responsiveness */
+       @media (max-width: 768px) {
+           .container-left {
+               width: 200px;
+           }
+
+           .container-right-main {
+               padding: 20px;
+           }
+
+           button {
+               width: 100%;
+               margin-bottom: 10px;
+           }
+       }
+    </style>
+</head>
+<body>
+<script>
+    function submitCategory() {
+        // Get the form data
+        var name = document.getElementById('name').value;
+        var image = document.getElementById('imageUrl').value;  // Adjusted to match backend field
+
+        // Prepare the data to send
+        var data = {
+            name: name,
+            image: image  // Updated field to match backend field "image"
+        };
+
+        // Send data to the backend via AJAX
+        $.ajax({
+            url: '/admin/categories/add',  // Make sure this is the correct endpoint
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+                // If successful, show a success message and redirect
+                $('#message').show().text('Danh mục đã được thêm thành công!');
+                window.location.href = '/admin/categories';  // Redirect to categories page
+            },
+            error: function(xhr, status, error) {
+                // If error occurs, show an error message
+                $('#errorMessage').show().text('Có lỗi xảy ra khi thêm danh mục.');
+            }
+        });
+    }
+</script>
+<div class="container-main">
+    <!-- Sidebar -->
+    <div class="container-left">
+        <div class="background-left-logo">
+            <div class="logo">
+                <img class="logo-img" src="/images/logo.png" alt="Logo">
+            </div>
+            <div class="background-left">
+                <div class="item-navbar">
+                    <div class="navbar-general hover-bar">
+                        <img class="img" src="/images/home.png" alt="Home">
+                        <a th:href="@{/admin/home}">Trang chủ</a>
+                    </div>
+                    <div class="navbar-general hover-bar">
+                        <img class="img" src="/images/user.png" alt="Users">
+                        <a th:href="@{/admin/users}">Người dùng</a>
+                    </div>
+                    <div class="navbar-general hover-bar">
+                        <img class="img" src="/images/statistics.png" alt="Statistics">
+                        <a th:href="@{/statistics}">Thống kê</a>
+                    </div>
+                    <div class="navbar-general hover-bar">
+                        <img class="img" src="/images/order.png" alt="Orders">
+                        <a th:href="@{/orders}">Quản lí đơn hàng</a>
+                    </div>
+                    <div class="navbar-general hover-bar active">
+                        <img class="img" src="/images/category.png" alt="Categories">
+                        <a th:href="@{/admin/categories}">Quản lí danh mục</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-right-main">
+        <!-- Form thêm danh mục -->
+        <div class="container-right">
+            <div class="header-bar">
+                <h1>Thêm danh mục mới</h1>
+            </div>
+            <form id="addCategoryForm" onsubmit="event.preventDefault(); submitCategory();">
+                <div class="form-group">
+                    <label for="name">Tên danh mục:</label>
+                    <input type="text" id="name" name="name" placeholder="Nhập tên danh mục" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="imageUrl">Hình ảnh (URL):</label>
+                    <input type="text" id="imageUrl" name="image" placeholder="Nhập URL hình ảnh" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Lưu</button>
+                    <button type="button" onclick="window.location.href='/admin/categories'">Hủy</button>
+                </div>
+            </form>
+
+            <!-- Success/Error Messages -->
+            <div id="message" class="message" style="display: none;"></div>
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

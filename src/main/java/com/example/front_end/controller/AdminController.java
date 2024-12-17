@@ -31,37 +31,7 @@ public class AdminController {
     private CategoryService categoryService;
     @Autowired
     private UserService userService;
-    @GetMapping("/categories")
-    public String getCategoryPage(
-            @RequestParam(defaultValue = "0") int page, // Trang hiện tại
-            Model model) {
 
-        int size = 7; // Số lượng phần tử trên mỗi trang
-        PagedResponse<CategoryDTO> pagedCategories = categoryService.findAllWithPagination(page, size);
-
-        if (pagedCategories != null) {
-            model.addAttribute("categories", pagedCategories.getContent());
-            model.addAttribute("currentPage", pagedCategories.getPageNumber());
-            model.addAttribute("totalPages", pagedCategories.getTotalPages());
-        }
-
-        return "categories";
-    }
-    @PostMapping("/categories/add")
-    public String addCategory(@ModelAttribute CategoryDTO categoryDTO, Model model) {
-        try {
-            // Gọi CategoryService để gửi yêu cầu thêm danh mục
-            CategoryDTO createdCategory = categoryService.addCategory(categoryDTO);
-
-            // Nếu thêm thành công, hiển thị thông báo và chuyển hướng đến trang danh mục
-            model.addAttribute("message", "Danh mục đã được thêm thành công!");
-            return "redirect:/admin/categories";
-        } catch (Exception e) {
-            // Nếu có lỗi, hiển thị thông báo lỗi
-            model.addAttribute("errorMessage", "Có lỗi xảy ra khi thêm danh mục.");
-            return "categories";
-        }
-    }
 
     @GetMapping("/users")
     public String getAllUsers(Model model) {
@@ -91,12 +61,6 @@ public class AdminController {
         model.addAttribute("user", user);
         return "form_edit_user";  // Return the edit user form page
     }
-    @GetMapping("/detailUsers/{id}")
-    public String detailUser(@PathVariable Long id, Model model) {
-        UserDTO user = userService.findUserById(id);  // Fetch the user by ID using the service
-        model.addAttribute("user", user);
-        return "detail_user";  // Return the edit user form page
-    }
     @PostMapping("/saveUser/{id}")
     public String saveUser(@PathVariable Long id, @ModelAttribute UserDTO user, Model model) {
         try {
@@ -113,6 +77,50 @@ public class AdminController {
         }
         return "redirect:/admin/users";  // Quay lại trang danh sách người dùng
     }
+    @GetMapping("/detailUsers/{id}")
+    public String detailUser(@PathVariable Long id, Model model) {
+        UserDTO user = userService.findUserById(id);  // Fetch the user by ID using the service
+        model.addAttribute("user", user);
+        return "detail_user";  // Return the edit user form page
+    }
+    @GetMapping("/categories/add")
+    public String showAddCategoryForm(Model model) {
+        model.addAttribute("category", new CategoryDTO());  // Create an empty CategoryDTO for the form
+        return "add-category";  // Return the form to add a category
+    }
+    @PostMapping("/categories/add")
+    public String addCategory(@RequestBody CategoryDTO categoryDTO, Model model) {
+        try {
+            // Gọi CategoryService để gửi yêu cầu thêm danh mục
+            CategoryDTO createdCategory = categoryService.addCategory(categoryDTO);
+
+            // Nếu thêm thành công, hiển thị thông báo và chuyển hướng đến trang danh mục
+            model.addAttribute("message", "Danh mục đã được thêm thành công!");
+            return "redirect:/admin/categories";
+        } catch (Exception e) {
+            // Nếu có lỗi, hiển thị thông báo lỗi
+            model.addAttribute("errorMessage", "Có lỗi xảy ra khi thêm danh mục.");
+            return "add-category";
+        }
+    }
+
+    @GetMapping("/categories")
+    public String getCategoryPage(
+            @RequestParam(defaultValue = "0") int page, // Trang hiện tại
+            Model model) {
+
+        int size = 7; // Số lượng phần tử trên mỗi trang
+        PagedResponse<CategoryDTO> pagedCategories = categoryService.findAllWithPagination(page, size);
+
+        if (pagedCategories != null) {
+            model.addAttribute("categories", pagedCategories.getContent());
+            model.addAttribute("currentPage", pagedCategories.getPageNumber());
+            model.addAttribute("totalPages", pagedCategories.getTotalPages());
+        }
+
+        return "categories";
+    }
+
 
 
 }

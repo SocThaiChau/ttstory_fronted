@@ -1,187 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-
-    <title>Admin TTStore</title>
+    <title>Quản lý danh mục</title>
     <link rel="stylesheet" href="/assets/css/admin.css">
     <link rel="stylesheet" href="/assets/css/category.css">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
-<body  >
+<body>
 <div class="container-main">
+    <!-- Sidebar -->
     <div class="container-left">
         <div class="background-left-logo">
-            <div class="item-logo">
-                <div class="logo">
-                    <img class="logo-img" src="/images/logo.png" alt="">
-                </div>
+            <div class="logo">
+                <img class="logo-img" src="/images/logo.png" alt="Logo">
             </div>
             <div class="background-left">
-                <div class="item-navbar ">
-                    <div class="navbar-general hover-bar"  >
-                        <img class="img" src="/images/home.png" alt="">
-                        <a th:href="@{/admin}">Trang chủ</a>
+                <div class="item-navbar">
+                    <div class="navbar-general hover-bar">
+                        <img class="img" src="/images/home.png" alt="Home">
+                        <a th:href="@{/admin/home}">Trang chủ</a>
                     </div>
-                    <div class="navbar-general hover-bar" id="statistics-nav">
-                        <img class="img" src="/images/user.png" alt="">
+                    <div class="navbar-general hover-bar">
+                        <img class="img" src="/images/user.png" alt="Users">
                         <a th:href="@{/admin/users}">Người dùng</a>
                     </div>
-                    <div class="navbar-general hover-bar" id="user-nav">
-                        <img class="img" src="/images/statistics.png" alt="">
+                    <div class="navbar-general hover-bar">
+                        <img class="img" src="/images/statistics.png" alt="Statistics">
                         <a th:href="@{/statistics}">Thống kê</a>
                     </div>
-                    <div class="navbar-general hover-bar" id="order-nav">
-                        <img class="img" src="/images/order.png" alt="">
+                    <div class="navbar-general hover-bar">
+                        <img class="img" src="/images/order.png" alt="Orders">
                         <a th:href="@{/orders}">Quản lí đơn hàng</a>
                     </div>
-                    <div class="navbar-general hover-bar" id="caegory-nav">
-                        <img class="img" src="/images/order.png" alt="">
+                    <div class="navbar-general hover-bar active">
+                        <img class="img" src="/images/category.png" alt="Categories">
                         <a th:href="@{/admin/categories}">Quản lí danh mục</a>
                     </div>
-
                 </div>
             </div>
-        </div>
-        <div class="background-left-more">
-
         </div>
     </div>
     <div class="container-right-main">
-        <div class="container-right">
-            <div class="container-bar">
-                <img  class="icon"src="/images//back.png" alt="">
-                <img  class="icon"src="/images//next.png" alt="">
-                <div class="bar-general">
-                    <div class="search-container">
-                        <div>
-                            <img class="icon" src="/images/search_4398584.png" alt="">
-                        </div>
-                        <div>
-                            <input class="input" placeholder="Thông tin tìm kiếm....">
-                        </div>
-                    </div>
-                    <div class="information">
-                        <svg  class="information-text"width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17.4966 13.4203V13.6633C17.4966 14.5857 16.7489 15.3333 15.8266 15.3333H4.16658C3.24427 15.3333 2.49658 14.5857 2.49658 13.6633V5.00334C2.49658 4.08103 3.24427 3.33334 4.16658 3.33334H9.99658" stroke="currentColor" stroke-linecap="round"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M14.4979 11.6247C14.4103 11.7021 14.2955 11.7493 14.1696 11.75C14.1687 11.75 14.1678 11.75 14.1668 11.75C14.1659 11.75 14.165 11.75 14.1641 11.75C14.0382 11.7493 13.9233 11.7021 13.8358 11.6247L10.5043 8.70963C10.2964 8.52779 10.2754 8.21191 10.4572 8.00409C10.6391 7.79627 10.9549 7.77521 11.1628 7.95705L13.6668 10.1481V3.33334C13.6668 3.0572 13.8907 2.83334 14.1668 2.83334C14.443 2.83334 14.6668 3.0572 14.6668 3.33334V10.1481L17.1709 7.95705C17.3787 7.77521 17.6946 7.79627 17.8765 8.00409C18.0583 8.21191 18.0372 8.52779 17.8294 8.70963L14.4979 11.6247Z" fill="currentColor"></path><path d="M6 16.8333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
-                        <span class="information-text">Thông báo</span>
-                    </div>
-                    <div class="setting">
-                        <img class="setting-img" src="/images/settings_3524636.png" alt="">
-                    </div>
-                    <div class="avatar">
-                        <img class="avatar-img" src="/images/logout.png" alt="">
-                    </div>
-                </div>
-            </div>
-
-            <div class="category-management">
-                <h1>Quản lý danh mục</h1>
-                <button id="show-form-btn" class="add-category-btn">Thêm danh mục</button>
-<!--                Form thêm danh mục-->
-                <div id="add-category-form" style="display: none;">
-                    <h3>Thêm danh mục mới</h3>
-                    <form th:action="@{/admin/categories/add}" method="post" enctype="multipart/form-data">
-                        <div>
-                            <label for="name">Tên danh mục:</label>
-                            <input type="text" id="name" name="name" placeholder="Tên danh mục" required>
-                        </div>
-                        <div>
-                            <label for="image-upload">Tải lên hình ảnh:</label>
-                            <input type="file" id="image-upload" name="imageFile" accept="image/*">
-                        </div>
-                        <div>
-                            <label for="image-url">Hoặc nhập URL hình ảnh:</label>
-                            <input type="url" id="image-url" name="imageUrl" placeholder="URL hình ảnh">
-                        </div>
-                        <p style="font-size: 12px; color: gray;">(Chỉ cần chọn một trong hai: tải lên hoặc nhập URL)</p>
-                        <button type="submit">Thêm</button>
-                    </form>
-                    <!-- Nút hủy -->
-                    <button id="hide-form-btn" class="cancel-btn">Hủy</button>
-                </div>
-
-                <table class="category-table">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tên danh mục</th>
-                        <th>Hình ảnh</th>
-                        <th>Hành động</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="category : ${categories}">
-                        <td th:text="${category.id}"></td>
-                        <td th:text="${category.name}"></td>
-                        <td><img th:src="${category.image}" alt="Category Image" width="50"></td>
-                        <td>
-                            <button class="edit-btn">Sửa</button>
-                            <button class="delete-btn">Xóa</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <!-- Pagination -->
-                <div id="pagination">
-                    <button th:if="${currentPage > 0}"
-                            th:onclick="'window.location.href=\'?page=' + (${currentPage} - 1) + '\''">
+    <!-- Main Content -->
+         <div class="container-right">
+             <div class="container-bar">
+                 <img  class="icon"src="/images//back.png" alt="">
+                 <img  class="icon"src="/images//next.png" alt="">
+                 <div class="bar-general">
+                     <div class="search-container">
+                         <div>
+                             <img class="icon" src="/images/search_4398584.png" alt="">
+                         </div>
+                         <div>
+                             <input class="input" placeholder="Thông tin tìm kiếm....">
+                         </div>
+                     </div>
+                     <div class="information">
+                         <svg  class="information-text"width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17.4966 13.4203V13.6633C17.4966 14.5857 16.7489 15.3333 15.8266 15.3333H4.16658C3.24427 15.3333 2.49658 14.5857 2.49658 13.6633V5.00334C2.49658 4.08103 3.24427 3.33334 4.16658 3.33334H9.99658" stroke="currentColor" stroke-linecap="round"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M14.4979 11.6247C14.4103 11.7021 14.2955 11.7493 14.1696 11.75C14.1687 11.75 14.1678 11.75 14.1668 11.75C14.1659 11.75 14.165 11.75 14.1641 11.75C14.0382 11.7493 13.9233 11.7021 13.8358 11.6247L10.5043 8.70963C10.2964 8.52779 10.2754 8.21191 10.4572 8.00409C10.6391 7.79627 10.9549 7.77521 11.1628 7.95705L13.6668 10.1481V3.33334C13.6668 3.0572 13.8907 2.83334 14.1668 2.83334C14.443 2.83334 14.6668 3.0572 14.6668 3.33334V10.1481L17.1709 7.95705C17.3787 7.77521 17.6946 7.79627 17.8765 8.00409C18.0583 8.21191 18.0372 8.52779 17.8294 8.70963L14.4979 11.6247Z" fill="currentColor"></path><path d="M6 16.8333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+                         <span class="information-text">Thông báo</span>
+                     </div>
+                     <div class="setting">
+                         <img class="setting-img" src="/images/settings_3524636.png" alt="">
+                     </div>
+                     <div class="avatar">
+                         <img class="avatar-img" src="/images/logout.png" alt="">
+                     </div>
+                 </div>
+             </div>
+             <h1>Quản lý danh mục</h1>
+             <!-- Categories Table -->
+             <div class="category-table-container">
+                 <button id="show-form-btn" class="add-category-btn">
+                     <a href="/admin/categories/add" class="add-category-link">Thêm danh mục</a>
+                 </button>
+                 <table class="category-table">
+                     <thead>
+                     <tr>
+                         <th>ID</th>
+                         <th>Tên danh mục</th>
+                         <th>Hình ảnh</th>
+                         <th>Hành động</th>
+                     </tr>
+                     </thead>
+                     <tbody>
+                     <tr th:each="category : ${categories}">
+                         <td th:text="${category.id}"></td>
+                         <td th:text="${category.name}"></td>
+                         <td>
+                             <img th:src="${category.image}" alt="Category Image" width="50">
+                         </td>
+                         <td>
+                             <button>
+                                 <a th:href="@{/admin/categories/edit/{id}(id=${category.id})}" class="edit-link">Sửa</a>
+                             </button>
+                             <button class="delete-btn">Xóa</button>
+                         </td>
+                     </tr>
+                     </tbody>
+                 </table>
+             </div>
+             <!-- Pagination -->
+             <div class="pagination">
+                    <button th:if="${currentPage > 0}" th:onclick="'window.location.href=\'?page=' + (${currentPage} - 1) + '\''">
                         Trang trước
                     </button>
                     <span>Trang <span th:text="${currentPage + 1}"></span> / <span th:text="${totalPages}"></span></span>
-                    <button th:if="${currentPage < totalPages - 1}"
-                            th:onclick="'window.location.href=\'?page=' + (${currentPage} + 1) + '\''">
-                        Trang tiếp theo
+                    <button th:if="${currentPage < totalPages - 1}" th:onclick="'window.location.href=\'?page=' + (${currentPage} + 1) + '\''">
+                        Trang sau
                     </button>
-                </div>
-            </div>
-
-        </div>
+             </div>
+         </div>
     </div>
-    <script>
-        // Lấy các phần tử từ DOM
-        const showFormBtn = document.getElementById('show-form-btn');
-        const hideFormBtn = document.getElementById('hide-form-btn');
-        const addCategoryForm = document.getElementById('add-category-form');
-
-        // Hiển thị form khi bấm nút "Thêm danh mục"
-        showFormBtn.addEventListener('click', () => {
-            addCategoryForm.style.display = 'block'; // Hiển thị form
-            showFormBtn.style.display = 'none'; // Ẩn nút "Thêm danh mục"
-        });
-
-        // Ẩn form khi bấm nút "Hủy"
-        hideFormBtn.addEventListener('click', () => {
-            addCategoryForm.style.display = 'none'; // Ẩn form
-            showFormBtn.style.display = 'block'; // Hiển thị lại nút "Thêm danh mục"
-        });
-    </script>
-    <script>
-    const fileInput = document.getElementById("image-upload");
-    const urlInput = document.getElementById("image-url");
-
-    fileInput.addEventListener("change", () => {
-        if (fileInput.value) {
-            urlInput.value = "";
-            urlInput.disabled = true;
-        } else {
-            urlInput.disabled = false;
-        }
-    });
-
-    urlInput.addEventListener("input", () => {
-        if (urlInput.value) {
-            fileInput.value = "";
-            fileInput.disabled = true;
-        } else {
-            fileInput.disabled = false;
-        }
-    });
-
-    </script>
 </div>
 </body>
 </html>

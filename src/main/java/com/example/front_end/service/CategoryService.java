@@ -113,32 +113,27 @@ public class CategoryService {
     // Phương thức thêm danh mục
     public CategoryDTO addCategory(CategoryDTO categoryDTO) {
         try {
-            // Nếu có file, tạo một MultipartFile
-            MultipartFile imageFile = categoryDTO.getImageFile();
-
-            // Tạo một MultiValueMap để chứa dữ liệu cần gửi đi
-            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-            body.add("name", categoryDTO.getName());
-            if (imageFile != null && !imageFile.isEmpty()) {
-                body.add("imageFile", imageFile.getResource());
-            }
-            body.add("imageUrl", categoryDTO.getImageUrl());
-
-            // Tạo HttpHeaders
+            // Create an HttpHeaders object and set the necessary headers (e.g., Content-Type)
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+            headers.setContentType(MediaType.APPLICATION_JSON);
 
-            // Tạo HttpEntity với body và headers
-            HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);
+            // Create an HttpEntity with the CategoryDTO as the body and headers
+            HttpEntity<CategoryDTO> requestEntity = new HttpEntity<>(categoryDTO, headers);
 
-            // Gửi yêu cầu POST
+            // Send the POST request
             ResponseEntity<CategoryDTO> response = restTemplate.exchange(
-                    apiAddCategory, HttpMethod.POST, entity, CategoryDTO.class);
+                    apiAddCategory,
+                    HttpMethod.POST,
+                    requestEntity,
+                    CategoryDTO.class
+            );
 
+            // Return the created CategoryDTO from the response body
             return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return null;  // Return null if there's an exception
         }
     }
+
 }

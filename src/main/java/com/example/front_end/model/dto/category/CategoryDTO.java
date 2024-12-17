@@ -15,7 +15,5 @@ import org.springframework.web.multipart.MultipartFile;
 public class CategoryDTO {
     private String id;
     private String name;
-    private MultipartFile imageFile;  // Tệp ảnh tải lên
-    private String imageUrl;  // URL của ảnh nếu có
-    private String image;  // Đường dẫn đến ảnh đã lưu hoặc URL
+    private String image;
 }
