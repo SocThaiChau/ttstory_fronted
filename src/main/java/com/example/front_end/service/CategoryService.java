@@ -26,6 +26,7 @@ public class CategoryService {
 
     private String categorybyId = "http://localhost:8080/admin/category/";
     private String apiAddCategory = "http://localhost:8080/category/addCategory";
+    private String updateCategory ="http://localhost:8080/category/updateCategory/{id}";
 
 
     //     * @param page The page number to fetch (starts from 0).
@@ -135,5 +136,26 @@ public class CategoryService {
             return null;  // Return null if there's an exception
         }
     }
+    public CategoryDTO updateCategory(Long id, CategoryDTO categoryDTO) {
+        try {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(updateCategory)
+                    .uriVariables(Map.of("id", id));
+
+            // Gửi yêu cầu PUT để cập nhật danh mục
+            ResponseEntity<CategoryDTO> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.PUT,
+                    new HttpEntity<>(categoryDTO),  // Chỉ gửi body, không headers
+                    CategoryDTO.class
+            );
+
+            // Trả về đối tượng CategoryDTO đã được cập nhật
+            return responseEntity.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // Trả về null nếu có lỗi xảy ra
+        }
+    }
+
 
 }

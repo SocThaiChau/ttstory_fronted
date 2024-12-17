@@ -14,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class CategoryResponse implements Serializable {
     private Long id;
+
     private String name;
-    private String imageUrl;
-    private List<CategoryResponse> data;
+
     private String image;
 }

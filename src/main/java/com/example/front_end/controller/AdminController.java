@@ -121,6 +121,37 @@ public class AdminController {
         return "categories";
     }
 
+    @GetMapping("categories/edit/{id}")
+    public String editCategory(@PathVariable Long id, Model model) {
+        // Lấy thông tin danh mục cần chỉnh sửa
+        CategoryDTO category = categoryService.categoryById(id);
+
+        // Đưa dữ liệu vào model để truyền sang giao diện
+        model.addAttribute("category", category);
+        return "form-edit-category"; // Tên file HTML
+    }
+    @PostMapping("/categories/update/{id}")
+    public String updateCategory(
+            @PathVariable Long id,
+            @ModelAttribute CategoryDTO categoryDTO,
+            Model model) {
+        try {
+            // Gọi CategoryService để cập nhật danh mục
+            CategoryDTO updatedCategory = categoryService.updateCategory(id, categoryDTO);
+
+            // Kiểm tra nếu cập nhật thành công
+            if (updatedCategory != null) {
+                model.addAttribute("message", "Danh mục đã được cập nhật thành công!");
+            } else {
+                model.addAttribute("errorMessage", "Có lỗi xảy ra khi cập nhật danh mục.");
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Có lỗi xảy ra khi cập nhật danh mục: " + e.getMessage());
+        }
+
+        // Chuyển hướng về trang danh sách danh mục
+        return "redirect:/admin/categories";
+    }
 
 
 }
