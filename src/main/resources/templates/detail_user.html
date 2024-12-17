@@ -1,58 +1,100 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi tiết người dùng</title>
-    <link rel="stylesheet" href="/assets/css/admin_user.css">
+    <link rel="stylesheet" href="/assets/css/admin.css">
     <link rel="stylesheet" href="/assets/css/detail_user.css">
+
+    <title>Chi Tiết Người Dùng</title>
 </head>
 <body>
-<div class="container">
-    <h2>Thông tin chi tiết người dùng</h2>
-    <div class="user-details">
-        <table>
-            <tr>
-                <th>ID</th>
-                <td th:text="${user.id}"></td>
-            </tr>
-            <tr>
-                <th>Tên người dùng</th>
-                <td th:text="${user.name}"></td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td th:text="${user.email}"></td>
-            </tr>
-            <tr>
-                <th>Số điện thoại</th>
-                <td th:text="${user.phoneNumber}"></td>
-            </tr>
-            <tr>
-                <th>Giới tính</th>
-                <td th:text="${user.gender}"></td>
-            </tr>
-            <tr>
-                <th>Địa chỉ</th>
-                <td th:text="${user.address}"></td>
-            </tr>
-            <tr>
-                <th>Ngày sinh</th>
-                <td th:text="${user.dob}"></td>
-            </tr>
-            <tr>
-                <th>Ngày tạo tài khoản</th>
-                <td th:text="${user.createDate}"></td>
-            </tr>
-            <tr>
-                <th>Ngày sửa đổi cuối</th>
-                <td th:text="${user.lastModifiedDate}"></td>
-            </tr>
-        </table>
+<div class="container-main">
+    <div class="container-left">
+        <div class="background-left-logo">
+            <div class="item-logo">
+                <div class="logo">
+                    <img class="logo-img" src="/images/logo.png" alt="">
+                </div>
+            </div>
+            <div class="background-left">
+
+                <div class="item-navbar ">
+                    <div class="navbar-general hover-bar"  >
+                        <img class="img" src="/images/home.png" alt="">
+                        <a th:href="@{/admin/home}">Trang chủ</a>
+                    </div>
+                    <div class="navbar-general hover-bar" id="statistics-nav">
+                        <img class="img" src="/images/user.png" alt="">
+                        <a th:href="@{/admin/users}">Người dùng</a>
+                    </div>
+                    <div class="navbar-general hover-bar" id="user-nav">
+                        <img class="img" src="/images/statistics.png" alt="">
+                        <a th:href="@{/statistics}">Thống kê</a>
+                    </div>
+                    <div class="navbar-general hover-bar" id="order-nav">
+                        <img class="img" src="/images/order.png" alt="">
+                        <a th:href="@{/orders}">Quản lí đơn hàng</a>
+                    </div>
+                    <div class="navbar-general hover-bar" id="caegory-nav">
+                        <img class="img" src="/images/order.png" alt="">
+                        <a th:href="@{/admin/categories}">Quản lí danh mục</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="action-buttons">
-        <button onclick="window.history.back()">Quay lại</button>
+    <div class="container-right-main">
+        <div class="container-right">
+            <div class="container-bar">
+                <img  class="icon"src="/images//back.png" alt="">
+                <img  class="icon"src="/images//next.png" alt="">
+                <div class="bar-general">
+                    <div class="search-container">
+                        <div>
+                            <img class="icon" src="/images/search_4398584.png" alt="">
+                        </div>
+                        <div>
+                            <input class="input" placeholder="Thông tin tìm kiếm....">
+                        </div>
+                    </div>
+                    <div class="information">
+                        <svg  class="information-text"width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17.4966 13.4203V13.6633C17.4966 14.5857 16.7489 15.3333 15.8266 15.3333H4.16658C3.24427 15.3333 2.49658 14.5857 2.49658 13.6633V5.00334C2.49658 4.08103 3.24427 3.33334 4.16658 3.33334H9.99658" stroke="currentColor" stroke-linecap="round"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M14.4979 11.6247C14.4103 11.7021 14.2955 11.7493 14.1696 11.75C14.1687 11.75 14.1678 11.75 14.1668 11.75C14.1659 11.75 14.165 11.75 14.1641 11.75C14.0382 11.7493 13.9233 11.7021 13.8358 11.6247L10.5043 8.70963C10.2964 8.52779 10.2754 8.21191 10.4572 8.00409C10.6391 7.79627 10.9549 7.77521 11.1628 7.95705L13.6668 10.1481V3.33334C13.6668 3.0572 13.8907 2.83334 14.1668 2.83334C14.443 2.83334 14.6668 3.0572 14.6668 3.33334V10.1481L17.1709 7.95705C17.3787 7.77521 17.6946 7.79627 17.8765 8.00409C18.0583 8.21191 18.0372 8.52779 17.8294 8.70963L14.4979 11.6247Z" fill="currentColor"></path><path d="M6 16.8333H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+                        <span class="information-text">Thông báo</span>
+                    </div>
+                    <div class="setting">
+                        <img class="setting-img" src="/images/settings_3524636.png" alt="">
+                    </div>
+                    <div class="avatar">
+                        <img class="avatar-img" src="/images/logout.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <h1>Chi Tiết Người Dùng</h1>
+
+            <div class="form-container">
+                <div class="user-info">
+                    <div class="avatar-container">
+                        <img th:src="${user.avatarUrl}" alt="Avatar">
+                    </div>
+                    <div>
+                        <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
+                        <p><strong>Tên Đăng Nhập:</strong> <span th:text="${user.username}"></span></p>
+                        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+                        <p><strong>Họ Tên:</strong> <span th:text="${user.name}"></span></p>
+                        <p><strong>Số Điện Thoại:</strong> <span th:text="${user.phoneNumber}"></span></p>
+                        <p><strong>Giới Tính:</strong> <span th:text="${user.gender}"></span></p>
+                        <p><strong>Địa Chỉ:</strong> <span th:text="${user.address}"></span></p>
+                        <p><strong>Ngày Sinh:</strong> <span th:text="${user.dob}"></span></p>
+                    </div>
+                </div>
+            </div>
+            <a th:href="@{/admin/users}" class="btn-back">Quay Lại Trang Chính</a>
+        </div>
     </div>
 </div>
+
+
 </body>
 </html>
