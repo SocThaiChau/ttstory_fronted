@@ -74,11 +74,28 @@ public class AdminController {
         }
         return "admin_user";  // Trả về view hiển thị người dùng
     }
+    @GetMapping("/home")
+    public String getAllUsersSorted(Model model) {
+        try {
+            // Lấy danh sách người dùng sắp xếp từ mới nhất
+            List<UserResponse> users = userService.getAllUsersSortedByRegistrationTime();
+            model.addAttribute("users", users);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Có lỗi xảy ra khi lấy danh sách người dùng.");
+        }
+        return "admin";  // Trả về giao diện quản lý người dùng
+    }
     @GetMapping("/editUser/{id}")
     public String editUser(@PathVariable Long id, Model model) {
         UserDTO user = userService.findUserById(id);  // Fetch the user by ID using the service
         model.addAttribute("user", user);
         return "form_edit_user";  // Return the edit user form page
+    }
+    @GetMapping("/detailUsers/{id}")
+    public String detailUser(@PathVariable Long id, Model model) {
+        UserDTO user = userService.findUserById(id);  // Fetch the user by ID using the service
+        model.addAttribute("user", user);
+        return "detail_user";  // Return the edit user form page
     }
     @PostMapping("/saveUser/{id}")
     public String saveUser(@PathVariable Long id, @ModelAttribute UserDTO user, Model model) {

@@ -40,6 +40,7 @@ public class UserService {
 
     private String getProductByDate = "http://localhost:8080/api/vp/getProductByDate";
     private String getProductBySold = "http://localhost:8080/api/vp/getProductBySold";
+    private String getUseSorted ="http://localhost:8080/admin/users/sorted";
 
     private String productFavorite = "http://localhost:8080/users/favorite";
 
@@ -143,6 +144,20 @@ public class UserService {
         }
         return "";
     }
+    public List<UserResponse> getAllUsersSortedByRegistrationTime() {
+        try {
+            ResponseEntity<List<UserResponse>> response = restTemplate.exchange(
+                    getUseSorted,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<>() {}
+            );
+            return response.getBody();
+        } catch (Exception ex) {
+            return Collections.emptyList();
+        }
+    }
+
 
     public void logout(){
         jwtFilter.setAccessToken(null);

@@ -26,7 +26,7 @@
                     <div class="item-navbar ">
                         <div class="navbar-general hover-bar"  >
                             <img class="img" src="/images/home.png" alt="">
-                            <a th:href="@{/admin}">Trang chủ</a>
+                            <a th:href="@{/admin/home}">Trang chủ</a>
                         </div>
                         <div class="navbar-general hover-bar" id="statistics-nav">
                             <img class="img" src="/images/user.png" alt="">
@@ -97,11 +97,10 @@
                             <td th:text="${user.gender}"></td>
                             <td>
                                 <!-- Thêm các hành động như chỉnh sửa, xóa -->
-                                <a th:href="@{/admin/userDetail/{id}(id=${user.id})}" class="details-link">Xem chi tiết</a>
+                                <a th:href="@{/admin/detailUsers/{id}(id=${user.id})}">Xem Chi Tiết</a>
                                 <button >
                                     <a th:href="@{/admin/editUser/{id}(id=${user.id})}" class="edit-link">Edit</a>
                                 </button>
-                                <button>Delete</button>
                             </td>
                         </tr>
                         <!-- Thông báo nếu không có dữ liệu người dùng -->
