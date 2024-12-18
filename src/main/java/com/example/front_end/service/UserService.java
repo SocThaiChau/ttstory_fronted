@@ -7,7 +7,6 @@ import com.example.front_end.model.UI.*;
 import com.example.front_end.model.dto.user.UserDTO;
 import com.example.front_end.model.request.*;
 import com.example.front_end.model.response.*;
-import jdk.jshell.spi.ExecutionControl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -44,12 +40,14 @@ public class UserService {
 
     private String getProductByDate = "http://localhost:8080/api/vp/getProductByDate";
     private String getProductBySold = "http://localhost:8080/api/vp/getProductBySold";
+    private String getUseSorted ="http://localhost:8080/admin/users/sorted";
 
     private String productFavorite = "http://localhost:8080/users/favorite";
 
     private String productDetail = "http://localhost:8080/api/vp/product/detail/";
 
     private String updateUser = "http://localhost:8080/users/profile";
+    private String AdminUpdateUser= "http://localhost:8080/admin/users/{id}/update";
 
     private String findUserById = "http://localhost:8080/users/getUser/";
     private String cartDetail = "http://localhost:8080/cart/cartDetail";
@@ -65,7 +63,7 @@ public class UserService {
 
     private String addOrder = "http://localhost:8080/order/addOrder";
 
-
+    private final String allUser = "http://localhost:8080/admin/users";
 
 
 
@@ -146,6 +144,20 @@ public class UserService {
         }
         return "";
     }
+    public List<UserResponse> getAllUsersSortedByRegistrationTime() {
+        try {
+            ResponseEntity<List<UserResponse>> response = restTemplate.exchange(
+                    getUseSorted,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<>() {}
+            );
+            return response.getBody();
+        } catch (Exception ex) {
+            return Collections.emptyList();
+        }
+    }
+
 
     public void logout(){
         jwtFilter.setAccessToken(null);
@@ -367,6 +379,27 @@ public class UserService {
             return null;
         }
     }
+    public UserResponse AdminUpdateUser(Long userId, UserDTO updateRequest) {
+        try {
+            // Tạo URI với biến đường dẫn userId
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(AdminUpdateUser)
+                    .uriVariables(Map.of("id", userId));
+
+            // Gửi PUT request đến API mà không có headers
+            ResponseEntity<UserResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.PUT,
+                    new HttpEntity<>(updateRequest),  // Chỉ gửi body, không headers
+                    UserResponse.class
+            );
+
+            return responseEntity.getBody();  // Trả về phản hồi
+        } catch (Exception ex) {
+            // Xử lý ngoại lệ nếu có
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
     public String updateUser(UserRequest userRequestUI, Integer id, MultipartFile avatarUrlFile) {
         try {
@@ -453,7 +486,6 @@ public class UserService {
             return null;
         }
     }
-
     public CartResponse cartDetail() {
         try {
             Map<String, String> params = new HashMap<>();
@@ -757,6 +789,27 @@ public class UserService {
             ex.printStackTrace();
             return null;
 
+        }
+    }
+    public List<UserResponse> getAllUsers() {
+        try {
+            // Gọi API và nhận kết quả dưới dạng List<UserResponse>
+            List<UserResponse> response = restTemplate.exchange(
+                    allUser,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<UserResponse>>() {}
+            ).getBody();
+
+            if (response != null) {
+                return response;
+            } else {
+                throw new RuntimeException("Dữ liệu người dùng không có");
+            }
+        } catch (Exception e) {
+            // In ra log lỗi nếu có vấn đề
+            System.err.println("Lỗi khi gọi API: " + e.getMessage());
+            return null;
         }
     }
 

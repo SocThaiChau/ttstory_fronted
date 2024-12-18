@@ -22,7 +22,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/address")
-public class AddressController {
+public class
+AddressController {
 
     @Autowired
     private JwtFilter jwtFilter;

@@ -15,32 +15,36 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponse implements Serializable {
-    private Long id;
-    private String name;
-    private String email;
-    private String phoneNumber;
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date dob;
+        private Long id;
 
-    private String gender;
-    private RoleResponse userRoleResponse;
-    private RoleResponse role;
-//    private boolean status;
-//    private UserResponse createdBy;
+        private String username;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createdDate;
+        private String email;
 
-    private UserResponse modifiedBy;
+        private String name;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date modifiedDate;
+        private String password;
 
-    private String password;
-    private String address;
-    private String avatarUrl;
+        private String phoneNumber;
+
+        private String gender;
+
+        private String address;
+
+        private String avatarUrl;
+
+        private Date dob;
+
+        private String otp;
+
+        private String lastModyfiedBy;
+
+        private Date otpCreateTime;
+
+        private Date createDate;
+
+        private Date lastModifiedDate;
+
+        private Boolean checkPassword;
 
 }

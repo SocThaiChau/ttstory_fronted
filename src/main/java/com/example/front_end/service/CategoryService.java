@@ -5,25 +5,58 @@ import com.example.front_end.model.response.CategoryResponse;
 import com.example.front_end.model.response.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.example.front_end.model.response.PagedResponse;
 
 @Service
 public class CategoryService {
     @Autowired
     private RestTemplate restTemplate;
-
     private String apiCategory = "http://localhost:8080/category/getAll";
 
     private String categorybyId = "http://localhost:8080/admin/category/";
+    private String apiAddCategory = "http://localhost:8080/category/addCategory";
+    private String updateCategory ="http://localhost:8080/category/updateCategory/{id}";
 
+
+    //     * @param page The page number to fetch (starts from 0).
+//            * @param size The number of items per page.
+//     * @return PagedResponse containing the categories and pagination info.
+//     */
+    public PagedResponse<CategoryDTO> findAllWithPagination(int page, int size) {
+        try {
+            // Build the URL with query parameters
+            String url = UriComponentsBuilder.fromHttpUrl(apiCategory)
+                    .queryParam("page", page)
+                    .queryParam("size", size)
+                    .toUriString();
+
+            // Make the API call
+            ResponseEntity<PagedResponse<CategoryDTO>> responseEntity = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            // Return the response body
+            return responseEntity.getBody();
+        } catch (Exception ex) {
+            System.err.println("Error fetching paginated categories: " + ex.getMessage());
+            ex.printStackTrace();
+            return null;
+        }
+    }
     public List<CategoryDTO> findAll() {
         try {
             Map<String, String> params = new HashMap<>();
@@ -51,6 +84,7 @@ public class CategoryService {
         }
     }
 
+
     public CategoryDTO categoryById(Long id) {
         try {
             Map<String, String> params = new HashMap<>();
@@ -77,5 +111,51 @@ public class CategoryService {
             return null;
         }
     }
+    // Phương thức thêm danh mục
+    public CategoryDTO addCategory(CategoryDTO categoryDTO) {
+        try {
+            // Create an HttpHeaders object and set the necessary headers (e.g., Content-Type)
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            // Create an HttpEntity with the CategoryDTO as the body and headers
+            HttpEntity<CategoryDTO> requestEntity = new HttpEntity<>(categoryDTO, headers);
+
+            // Send the POST request
+            ResponseEntity<CategoryDTO> response = restTemplate.exchange(
+                    apiAddCategory,
+                    HttpMethod.POST,
+                    requestEntity,
+                    CategoryDTO.class
+            );
+
+            // Return the created CategoryDTO from the response body
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;  // Return null if there's an exception
+        }
+    }
+    public CategoryDTO updateCategory(Long id, CategoryDTO categoryDTO) {
+        try {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(updateCategory)
+                    .uriVariables(Map.of("id", id));
+
+            // Gửi yêu cầu PUT để cập nhật danh mục
+            ResponseEntity<CategoryDTO> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.PUT,
+                    new HttpEntity<>(categoryDTO),  // Chỉ gửi body, không headers
+                    CategoryDTO.class
+            );
+
+            // Trả về đối tượng CategoryDTO đã được cập nhật
+            return responseEntity.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // Trả về null nếu có lỗi xảy ra
+        }
+    }
+
 
 }

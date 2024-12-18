@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    overflow-x: auto; /* Đảm bảo bảng có thể cuộn khi chiều rộng quá lớn */
+    margin-bottom: 20px;
+    border-radius: 20px;
+}
+
+
+/* Kiểu cho các ô trong bảng */
+.order-table th,
+.order-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Đổi màu nền khi hover qua các hàng trong bảng */
+.order-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Kiểu cho các tiêu đề của bảng */
+.order-table th {
+    background-color: #413e3e;
+    font-weight: 600;
+}
+
+/* Kiểu cho các ô của bảng */
+.order-table td {
+    font-size: 1rem;
+    color: #008dff;
+}
+
+/* Các màu sắc cho trạng thái */
+.order-table td:nth-child(4) {
+    font-weight: bold;
+}
+
+/* Kiểu cho cột "Thời gian đăng ký" */
+.order-table td:nth-child(4) {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Kiểu cho các cột tên người dùng và email */
+.order-table td:nth-child(2),
+.order-table td:nth-child(3) {
+    color: #333;
+    font-weight: normal;
+}
+
+
+/* Cải thiện responsive bảng cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .order-table th, .order-table td {
+        padding: 10px;
+    }
+
+    .order-table td {
+        font-size: 0.9rem;
+    }
+
+    /* Hiển thị các cột theo hàng ngang khi màn hình nhỏ */
+    .order-table th, .order-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .order-table td {
+        border: none;
+        border-bottom: 1px solid #ddd;
+    }
+}
+
+.action-btn {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.action-btn:hover {
+    background-color: #45a049;
+}
+.carrier-btn {
+    margin: 5px;
+    padding: 10px 15px;
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.carrier-btn:hover {
+    background-color: #0056b3;
+}
+
+.carrier-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    z-index: 1000;
+}
+.page-info {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.page-info span {
+    color: #333;
+}
+

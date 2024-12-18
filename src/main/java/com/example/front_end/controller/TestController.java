@@ -110,24 +110,24 @@ import java.util.List;
         return "admin_user";
     }
 
-    @GetMapping("/admin/home")
-    public String getAdminHome(Model model){
-        if (jwtFilter.getAccessToken() != null){
-
-            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
-            UserDTO userDTO = userService.findUserById(id);
-            model.addAttribute("user", userDTO);
-
-            model.addAttribute("name", userDTO.getName());
-            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
-
-            CartResponse cartResponse = userService.cartDetail();
-            Integer total = cartResponse.getTotalItem();
-            model.addAttribute("total", total);
-
-        }
-
-
-        return "admin";
-    }
+//    @GetMapping("/admin/home")
+//    public String getAdminHome(Model model){
+//        if (jwtFilter.getAccessToken() != null){
+//
+//            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+//            UserDTO userDTO = userService.findUserById(id);
+//            model.addAttribute("user", userDTO);
+//
+//            model.addAttribute("name", userDTO.getName());
+//            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
+//
+//            CartResponse cartResponse = userService.cartDetail();
+//            Integer total = cartResponse.getTotalItem();
+//            model.addAttribute("total", total);
+//
+//        }
+//
+//
+//        return "admin";
+//    }
 }

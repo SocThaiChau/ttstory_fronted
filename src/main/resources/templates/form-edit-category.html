@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa thông tin danh mục</title>
+    <link rel="stylesheet" href="/assets/css/admin.css">
+    <link rel="stylesheet" href="/assets/css/form_edit_category.css">
+</head>
+<body>
+<div class="container-main">
+    <div class="container-left">
+        <div class="background-left-logo">
+            <div class="item-logo">
+                <div class="logo">
+                    <img class="logo-img" src="/images/logo.png" alt="">
+                </div>
+            </div>
+            <div class="background-left">
+                <div class="item-navbar">
+                    <div class="navbar-general">
+                        <img class="img" src="/images/home.png" alt="">
+                        <span>Trang chủ</span>
+                    </div>
+                    <div class="navbar-general">
+                        <img class="img" src="/images/user.png" alt="">
+                        <span>Người dùng</span>
+                    </div>
+                    <div class="navbar-general">
+                        <img class="img" src="/images/statistics.png" alt="">
+                        <span>Thống kê</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-right-main">
+        <div class="container-right">
+            <div class="form-container">
+                <h1>Chỉnh sửa danh mục</h1>
+                <form th:action="@{/admin/categories/update/{id}(id=${category.id})}" th:object="${category}" method="post">
+                    <label for="name">Tên danh mục:</label>
+                    <input type="text" id="name" name="name" th:value="${category.name}" required>
+                    <br>
+                    <label for="image">Hình ảnh:</label>
+                    <input type="text" id="image" name="image" th:value="${category.image}" required>
+                    <br>
+                    <button type="submit">Cập nhật</button>
+                    <button type="button" onclick="window.location.href='/admin/categories'">Hủy</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

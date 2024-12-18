@@ -17,18 +17,26 @@
                     </div>
                 </div>
                 <div class="background-left">
-                    <div class="item-navbar">
-                        <div class="navbar-general">
-                            <img  href="/admin/home" class="img" src="/images/home.png" alt="">
-                            <span>Trang chủ</span>
+                    <div class="item-navbar ">
+                        <div class="navbar-general hover-bar"  >
+                            <img class="img" src="/images/home.png" alt="">
+                            <a th:href="@{/admin/home}">Trang chủ</a>
                         </div>
-                        <div class="navbar-general">
-                            <img  href="/admin/user" class="img" src="/images/user.png" alt="">
-                            <span>Người dùng</span>
+                        <div class="navbar-general hover-bar" id="statistics-nav">
+                            <img class="img" src="/images/user.png" alt="">
+                            <a th:href="@{/admin/users}">Người dùng</a>
                         </div>
-                        <div class="navbar-general active">
-                            <img  href="/admin/statistics" class="img" src="/images/statistics.png" alt="">
-                            <span>Thống kê</span>
+                        <div class="navbar-general hover-bar" id="user-nav">
+                            <img class="img" src="/images/statistics.png" alt="">
+                            <a th:href="@{/admin/statistics}">Thống kê</a>
+                        </div>
+                        <div class="navbar-general hover-bar" id="order-nav">
+                            <img class="img" src="/images/order.png" alt="">
+                            <a th:href="@{/admin/orders}">Quản lí đơn hàng</a>
+                        </div>
+                        <div class="navbar-general hover-bar" id="caegory-nav">
+                            <img class="img" src="/images/order.png" alt="">
+                            <a th:href="@{/admin/categories}">Quản lí danh mục</a>
                         </div>
                     </div>
                 </div>

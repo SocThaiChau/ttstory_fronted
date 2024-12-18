@@ -71,6 +71,22 @@ body{
     font-size: 14px;
     justify-content: center;
     row-gap: 40px;
+    overflow: hidden;
+}
+.item-navbar a {
+   float: left; /* Đặt liên kết vào một hàng ngang */
+   display: block; /* Hiển thị là khối để có thể định dạng */
+   color: #fff; /* Màu chữ */
+   text-align: center; /* Canh giữa văn bản */
+   padding: 14px 16px; /* Khoảng cách giữa các liên kết */
+   text-decoration: none; /* Loại bỏ gạch dưới liên kết */
+}
+.navbar a:hover {
+   background-color: #555; /* Màu nền khi rê chuột qua */
+}
+.navbar a.active {
+   background-color: #4CAF50; /* Màu nền khi được chọn */
+   color: white; /* Màu chữ khi được chọn */
 }
 .navbar-general{
     display: flex;
@@ -118,7 +134,7 @@ body{
     justify-content: center;
     align-items: center;
     column-gap: 10px;
-
+    
 }
 .navbar-general.active {
     color: #007bff;
@@ -228,7 +244,7 @@ body{
     column-gap: 30px;
     margin-top: 10px;
 
-
+    
 }
 .statistics{
     display: flex;
@@ -254,6 +270,7 @@ body{
     align-items: center;
     height: 177.719x;
     width: 200px;
+    color: black;
     border-radius: 20px;
 }
 .gallary-img{
@@ -424,7 +441,7 @@ body{
 }
 h1 {
     text-align: center;
-    color: #333;
+    color: #white;
 }
 
 .filter {
@@ -441,7 +458,7 @@ h1 {
 .filter-section{
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
+    row-gap: 10pxpx;
     width: 230px;
 }
 
@@ -552,3 +569,16 @@ h1 {
         border-bottom: 1px solid #ddd;
     }
 }
+.hidden {
+    display: none;
+}
+.hover-bar {
+  color: #042d65; /* Màu cam nhạt (text-orange-400) */
+  transition: all 0.3s ease; /* Thêm hiệu ứng chuyển đổi */
+}
+
+.hover-bar:hover {
+  color: #ea580c; /* Màu cam đậm (text-orange-600) */
+  background-color: #042d65; /* Màu đỏ nhạt (bg-red-400) */
+}
+

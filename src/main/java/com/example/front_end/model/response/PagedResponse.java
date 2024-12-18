@@ -5,17 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.util.List;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryResponse implements Serializable {
-    private Long id;
+public class PagedResponse<T> {
+    private List<T> content;
+    private int pageNumber;
+    private int totalPages;
+    private long totalElements;
 
-    private String name;
 
-    private String image;
 }

@@ -1,0 +1,128 @@
+table.category-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+table.category-table th, table.category-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    word-wrap: break-word;
+}
+table.category-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+table.category-table td {
+    height: 50px; /* Đặt chiều cao cố định để bảng không bị co lại */
+}
+table.category-table tbody tr.empty-row td {
+    color: #aaa;
+    font-style: italic;
+}
+tr{
+    color: black;
+}
+.action-btn {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.view-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.edit-btn {
+    background-color: #008CBA;
+    color: white;
+}
+tbody {
+    background color: #C0C0C0;
+}
+.add-category-form {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 50%;
+}
+
+.add-category-form div {
+    margin-bottom: 10px;
+}
+
+.add-category-form label {
+    display: block;
+    font-weight: bold;
+}
+
+.add-category-form input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.add-category-form button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.add-category-form button:hover {
+    background-color: #0056b3;
+}
+
+.success-message {
+    color: green;
+    margin-top: 10px;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+input[type="file"], input[type="url"] {
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+input[type="file"]:hover, input[type="url"]:hover {
+    border-color: #007bff;
+}
+.category-table-container {
+    position: relative; /* Đặt vị trí cho phần chứa bảng */
+}
+
+.add-category-btn {
+    position: absolute; /* Đặt nút ở vị trí tuyệt đối */
+    top: -40px; /* Đặt nó cách phía trên một khoảng nhỏ */
+    right: 0; /* Đặt sát phía bên phải */
+    padding: 10px 20px; /* Khoảng cách nội dung trong nút */
+    background-color: #4CAF50; /* Màu nền xanh */
+    color: white; /* Màu chữ trắng */
+    border: none;
+    border-radius: 5px; /* Bo góc */
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.add-category-btn:hover {
+    background-color: #45a049; /* Thay đổi màu nền khi hover */
+}
+.category-table img {
+    width: 50px;   /* Chiều rộng ảnh */
+    height: 50px;  /* Chiều cao ảnh */
+    object-fit: cover; /* Đảm bảo ảnh không bị biến dạng */
+}

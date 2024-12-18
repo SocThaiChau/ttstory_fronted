@@ -104,3 +104,36 @@ const users = [
  document.addEventListener("DOMContentLoaded", () => {
      renderUsers();
  });
+
+// Hiển thị danh sách người dùng mới nhất
+function renderNewestUsers() {
+  const userList = document.getElementById("user-list");
+  userList.innerHTML = ""; // Xóa dữ liệu cũ
+
+  // Sắp xếp người dùng theo ngày đăng ký giảm dần
+  const sortedUsers = [...users].sort((a, b) => {
+    const dateA = new Date(a.registerDate.split(" ")[0].split("/").reverse().join("-"));
+    const dateB = new Date(b.registerDate.split(" ")[0].split("/").reverse().join("-"));
+    return dateB - dateA;
+  });
+
+  // Lấy 5 người dùng mới nhất
+  const newestUsers = sortedUsers.slice(0, 5);
+
+  // Tạo các hàng dữ liệu
+  newestUsers.forEach(user => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${user.id}</td>
+      <td>${user.name}</td>
+      <td>${user.email}</td>
+      <td>${user.registerDate}</td>
+      <td>${user.status === "active" ? "Active" : "Blocked"}</td>
+    `;
+    userList.appendChild(row);
+  });
+}
+
+// Gọi hàm khi tải trang để hiển thị danh sách người dùng mới nhất
+document.addEventListener("DOMContentLoaded", renderNewestUsers);
+
