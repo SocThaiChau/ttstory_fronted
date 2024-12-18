@@ -140,4 +140,21 @@ public class ProductController {
 
         return "favorite_product";
     }
+    @GetMapping("/search")
+    public String searchProducts(@RequestParam("keyword") String keyword, Model model) {
+        // Hiển thị thông báo lỗi nếu có
+        if (errorMassage != null) {
+            System.out.println(errorMassage);
+            model.addAttribute("errorMessage", errorMassage);
+            errorMassage = null;
+        }
+
+        // Gọi service để tìm kiếm sản phẩm
+        List<ProductResponse> products = productService.searchProducts(keyword);
+        model.addAttribute("product", products);
+        model.addAttribute("keyword", keyword);
+
+        return "product_search"; // Trả về trang hiển thị kết quả tìm kiếm
+    }
+
 }

@@ -33,7 +33,7 @@ import java.util.List;
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/home")
+    @GetMapping("/homee")
     public String getHome(Model model){
         if (errorMassage != null){
             System.out.println(errorMassage);

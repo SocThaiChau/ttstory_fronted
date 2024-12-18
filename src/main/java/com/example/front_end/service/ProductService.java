@@ -278,4 +278,28 @@ public class ProductService {
             throw new RuntimeException("Image upload failed", io);
         }
     }
+    public List<ProductResponse> searchProducts(String keyword) {
+        try {
+            String searchApi = "http://localhost:8080/api/vp/product/search"; // URL API tìm kiếm
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(searchApi)
+                    .queryParam("keyword", keyword);
+
+            ResponseEntity<ProducListResponse> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    null, // Không cần headers trong trường hợp này
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            ProducListResponse productListResponse = responseEntity.getBody();
+            if (productListResponse != null) {
+                return productListResponse.getData();
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+
 }
