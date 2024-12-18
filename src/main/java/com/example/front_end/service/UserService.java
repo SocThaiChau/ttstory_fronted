@@ -140,7 +140,8 @@ public class UserService {
                 return "Xac thuc thanh cong";
             }
         } catch (Exception ex) {
-            return "";
+            ex.printStackTrace(); // Log chi tiết lỗi
+            return "Lỗi khi xác thực: " + ex.getMessage();
         }
         return "";
     }
@@ -167,7 +168,6 @@ public class UserService {
         try {
             Map<String, String> params = new HashMap<>();
 
-            System.out.println("email: " + email);
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(forgotPasswordUrl);
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 builder.queryParam(entry.getKey(), entry.getValue());

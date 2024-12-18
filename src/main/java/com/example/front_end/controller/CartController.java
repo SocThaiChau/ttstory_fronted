@@ -39,7 +39,7 @@ public class CartController {
             massage = null;
         }
         if (jwtFilter.getAccessToken() != null){
-            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+            Long id = jwtFilter.getAuthenticaResponse().getUserDTO().getId();
             UserDTO userDTO = userService.findUserById(id);
             model.addAttribute("user", userDTO);
 

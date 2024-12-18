@@ -1,5 +1,6 @@
 package com.example.front_end.model.response;
 
+import com.example.front_end.model.dto.user.UserDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticaResponse implements Serializable {
-    private String accessToken;
     private String token;
     private Long id;
     private String name;
@@ -26,7 +26,7 @@ public class AuthenticaResponse implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date dob;
 
-    private UserResponse userResponse;
     private Date createdDate;
     private RoleResponse role;
+    private UserDTO userDTO;
 }

@@ -36,12 +36,13 @@ public class ProductController {
             errorMassage = null;
         }
         if (jwtFilter.getAccessToken() != null){
-            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+            Long id = jwtFilter.getAuthenticaResponse().getUserDTO().getId();
+
             UserDTO userDTO = userService.findUserById(id);
             model.addAttribute("user", userDTO);
 
             model.addAttribute("name", userDTO.getName());
-//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
 
             CartResponse cartResponse = userService.cartDetail();
             Integer total = cartResponse.getTotalItem();
@@ -60,12 +61,13 @@ public class ProductController {
             errorMassage = null;
         }
         if (jwtFilter.getAccessToken() != null){
-            Long idUser = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+            Long idUser = jwtFilter.getAuthenticaResponse().getUserDTO().getId();
+
             UserDTO userDTO = userService.findUserById(idUser);
             model.addAttribute("user", userDTO);
 
             model.addAttribute("name", userDTO.getName());
-//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
         }
         ProductResponse products = productService.findProductById(id);
         if(products != null){
@@ -123,12 +125,13 @@ public class ProductController {
             errorMassage = null;
         }
         if (jwtFilter.getAccessToken() != null){
-            Long idUser = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+            Long idUser = jwtFilter.getAuthenticaResponse().getUserDTO().getId();
+
             UserDTO userDTO = userService.findUserById(idUser);
             model.addAttribute("user", userDTO);
 
             model.addAttribute("name", userDTO.getName());
-//            model.addAttribute("role", userResponse.getUserRoleResponse().getRoles());
+            model.addAttribute("role", jwtFilter.getAuthenticaResponse().getRole().getRoles());
         }
         List<ProductResponse> products = userService.productFavorite();
         if(products != null){

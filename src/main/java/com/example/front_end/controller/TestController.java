@@ -42,8 +42,9 @@ import java.util.List;
         }
         if (jwtFilter.getAccessToken() != null){
 
-            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+            Long id = jwtFilter.getAuthenticaResponse().getUserDTO().getId();
             UserDTO userDTO = userService.findUserById(id);
+
             model.addAttribute("user", userDTO);
 
             model.addAttribute("name", userDTO.getName());
@@ -54,6 +55,7 @@ import java.util.List;
             model.addAttribute("total", total);
 
         }
+        System.out.println("acctoken: " + jwtFilter.getAccessToken());
 
         List<CategoryDTO> categoryDTOS = categoryService.findAll();
         model.addAttribute("categoryDTOS", categoryDTOS);
@@ -72,7 +74,8 @@ import java.util.List;
     public String statistics(Model model){
         if (jwtFilter.getAccessToken() != null){
 
-            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+            Long id = jwtFilter.getAuthenticaResponse().getUserDTO().getId();
+
             UserDTO userDTO = userService.findUserById(id);
             model.addAttribute("user", userDTO);
 
@@ -93,7 +96,8 @@ import java.util.List;
     public String getUser(Model model){
         if (jwtFilter.getAccessToken() != null){
 
-            Long id = jwtFilter.getAuthenticaResponse().getUserResponse().getId();
+            Long id = jwtFilter.getAuthenticaResponse().getUserDTO().getId();
+
             UserDTO userDTO = userService.findUserById(id);
             model.addAttribute("user", userDTO);
 
