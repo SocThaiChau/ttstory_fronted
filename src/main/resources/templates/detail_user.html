@@ -4,9 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/css/admin.css">
-    <link rel="stylesheet" href="/assets/css/detail_user.css">
+    <link th:rel="stylesheet" href="@{/assets/css/admin.css}">
+    <link th:rel="stylesheet" href="@{/assets/css/detail_user.css}">
+    <style>
+    .form-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
+    .user-info {
+      display: flex;
+      align-items: flex-start; /* Căn chỉnh avatar và thông tin người dùng theo chiều ngang */
+    }
+
+    .avatar-container {
+      margin-right: 20px; /* Khoảng cách giữa avatar và thông tin người dùng */
+    }
+    .img{
+     width: 30px;  /* Kích thước avatar */
+      height: 30px;
+      border-radius: 50%; /* Avatar sẽ có hình tròn */
+      object-fit: cover; /* Đảm bảo ảnh avatar không bị méo */
+    }
+
+
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-details p {
+      margin: 10px 0;
+    }
+
+    .user-details strong {
+      font-weight: bold;
+    }
+
+    .btn-back {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .btn-back:hover {
+      background-color: #0056b3;
+    }
+
+    </style>
     <title>Chi Tiết Người Dùng</title>
 </head>
 <body>
@@ -75,10 +126,12 @@
 
             <div class="form-container">
                 <div class="user-info">
+                    <!-- Avatar container ở góc trái -->
                     <div class="avatar-container">
-                        <img th:src="${user.avatarUrl}" alt="Avatar">
+                        <img th:src="${user.avatarUrl}" alt="Avatar" class="avatar">
                     </div>
-                    <div>
+                    <!-- Thông tin người dùng -->
+                    <div class="user-details">
                         <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
                         <p><strong>Tên Đăng Nhập:</strong> <span th:text="${user.username}"></span></p>
                         <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
@@ -90,6 +143,7 @@
                     </div>
                 </div>
             </div>
+
             <a th:href="@{/admin/users}" class="btn-back">Quay Lại Trang Chính</a>
         </div>
     </div>

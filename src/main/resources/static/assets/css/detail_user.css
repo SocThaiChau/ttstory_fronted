@@ -1,93 +1,55 @@
-/* Tổng thể */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    color: #333;
+.form-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  color:black;
 }
 
-/* Container chính */
-.container {
-    max-width: 800px;
-    margin: 50px auto;
-    background: #fff;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    padding: 20px;
+.form-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-/* Tiêu đề */
-.container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #2c3e50;
-    font-size: 24px;
-    font-weight: bold;
+.avatar {
+  width: 100px;  /* Thay đổi kích thước chiều rộng của avatar */
+  height: 100px; /* Thay đổi kích thước chiều cao của avatar */
+  border-radius: 5%;  /* Giữ ảnh tròn */
+  margin-right: 20px;  /* Khoảng cách giữa avatar và tiêu đề */
 }
 
-/* Bảng chi tiết người dùng */
-.user-details table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+.form-title {
+  font-size: 24px;
+  margin: 0;
 }
 
-.user-details table th,
-.user-details table td {
-    text-align: left;
-    padding: 10px 15px;
-    border-bottom: 1px solid #ddd;
+.form-group {
+  margin-bottom: 15px;
 }
 
-.user-details table th {
-    background-color: #f8f9fa;
-    color: #2c3e50;
-    font-weight: bold;
-    width: 30%;
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-.user-details table td {
-    background-color: #fff;
-    color: #34495e;
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
 }
 
-/* Hành động */
-.action-buttons {
-    text-align: center;
-    margin-top: 20px;
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
-.action-buttons button {
-    padding: 10px 20px;
-    margin: 0 10px;
-    font-size: 14px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.action-buttons button:hover {
-    background-color: #2980b9;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-
-    .user-details table th,
-    .user-details table td {
-        font-size: 14px;
-    }
-
-    .action-buttons button {
-        margin: 5px 0;
-        width: 100%;
-    }
+button:hover {
+  background-color: #45a049;
 }
