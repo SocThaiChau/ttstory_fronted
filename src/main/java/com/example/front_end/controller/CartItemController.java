@@ -46,8 +46,6 @@ public class CartItemController {
     @PostMapping("/update")
     public String updateCartItem(@RequestParam("id") int id, @RequestParam("quantity") int quantity, Model model) {
         // Call the service to update the cart item quantity
-        System.out.println("id1: " + id + "quantity: " + quantity);
-
         String result = userService.updateCartItem(id, quantity);
 
         if (result == null) {

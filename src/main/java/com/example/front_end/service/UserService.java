@@ -594,7 +594,6 @@ public class UserService {
                 builder.queryParam(entry.getKey(), entry.getValue());
             }
 
-            System.out.println("id: " + id + "quantity: " + quantity);
             String accessToken = jwtFilter.getAccessToken();
             HttpHeaders headers = new HttpHeaders();
             headers.set("AUTHORIZATION", accessToken);

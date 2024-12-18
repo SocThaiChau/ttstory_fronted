@@ -63,7 +63,6 @@ public class UserController {
                                 @RequestParam("password") String password,
                                 Model model){
         String accessToken =  userService.authenticate(username, password);
-        System.out.println("accessToken: " + accessToken);
         if(accessToken.equals("")){
             errorMessage = "Xác thực không thành công";
             model.addAttribute("errorMessage", errorMessage);

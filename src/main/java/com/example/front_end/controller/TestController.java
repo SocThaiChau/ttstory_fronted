@@ -55,7 +55,6 @@ import java.util.List;
             model.addAttribute("total", total);
 
         }
-        System.out.println("acctoken: " + jwtFilter.getAccessToken());
 
         List<CategoryDTO> categoryDTOS = categoryService.findAll();
         model.addAttribute("categoryDTOS", categoryDTOS);

@@ -24,6 +24,8 @@ public class CategoryService {
     private RestTemplate restTemplate;
     private String apiCategory = "http://localhost:8080/category/getAll";
 
+    private String getAllAdmin = "http://localhost:8080/category/getAllAdmin";
+
     private String categorybyId = "http://localhost:8080/admin/category/";
     private String apiAddCategory = "http://localhost:8080/category/addCategory";
     private String updateCategory ="http://localhost:8080/category/updateCategory/{id}";
@@ -36,7 +38,7 @@ public class CategoryService {
     public PagedResponse<CategoryDTO> findAllWithPagination(int page, int size) {
         try {
             // Build the URL with query parameters
-            String url = UriComponentsBuilder.fromHttpUrl(apiCategory)
+            String url = UriComponentsBuilder.fromHttpUrl(getAllAdmin)
                     .queryParam("page", page)
                     .queryParam("size", size)
                     .toUriString();

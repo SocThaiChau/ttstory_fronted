@@ -67,7 +67,6 @@ public class OrderController {
             // Lấy danh sách địa chỉ
             List<AddressResponse> addressResponses = addressService.listAddress();
             model.addAttribute("addressResponses", addressResponses);
-            System.out.println("addressResponses: " + addressResponses);
 
             // Lấy địa chỉ mặc định
             for (AddressResponse address : addressResponses){

@@ -105,6 +105,8 @@ public class ProductService {
             }
             return null;
         } catch (Exception ex) {
+            ex.printStackTrace(); // Log chi tiết lỗi
+            System.out.println("Lỗi khi xác thực: " + ex.getMessage());
             return null;
         }
     }

@@ -70,7 +70,7 @@ AddressController {
         if (jwtFilter.getAccessToken() == null) {
             return "redirect:/home";
         }
-        System.out.println("id: " + addressRequestUI.getId());
+
         String result = addressService.updateAddress(addressRequestUI);
         if(result == null){
             redirectAttributes.addFlashAttribute("errorMessage", "Cập nhật địa chỉ thất bại");

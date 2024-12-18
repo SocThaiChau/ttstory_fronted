@@ -58,9 +58,7 @@ public class AdminController {
     public String authenticate (@RequestParam("username") String username,
                                 @RequestParam("password") String password,
                                 Model model){
-        System.out.println("da vao dang nhap");
         userService.authenticate(username, password);
-        System.out.println("username: " + username + "pasword: "  + password);
         return "redirect:/admin/";
     }
 
