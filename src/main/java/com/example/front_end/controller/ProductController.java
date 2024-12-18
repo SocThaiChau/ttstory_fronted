@@ -1,12 +1,16 @@
 package com.example.front_end.controller;
 
 import com.example.front_end.config.JwtFilter;
+import com.example.front_end.model.UI.AddToCartRequestUI;
 import com.example.front_end.model.UI.ProductRequestUI;
 import com.example.front_end.model.dto.user.UserDTO;
 import com.example.front_end.model.response.*;
 import com.example.front_end.service.ProductService;
 import com.example.front_end.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -155,6 +159,25 @@ public class ProductController {
         model.addAttribute("keyword", keyword);
 
         return "product_search"; // Trả về trang hiển thị kết quả tìm kiếm
+    }
+    @PostMapping("/addToFavorites/{productId}")
+    public ResponseEntity<ResponseObject> addToFavorites(HttpServletRequest request, @PathVariable("productId") Long productId) {
+        try {
+            Long userId = jwtFilter.getAuthenticaResponse().getUserDTO().getId();
+
+            // Gọi service để thêm sản phẩm vào danh sách yêu thích
+            boolean isAdded = productService.addProductToFavorites(userId, productId);
+            System.out.println("Dâta" + isAdded);
+            if (isAdded) {
+                return ResponseEntity.ok(new ResponseObject("SUCCESS", "Product added to favorites successfully!"));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new ResponseObject("ERROR", "Product could not be added to favorites."));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseObject("ERROR", "An error occurred: " + e.getMessage()));
+        }
     }
 
 }

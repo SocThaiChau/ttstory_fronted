@@ -129,6 +129,9 @@
         .btn:hover {
             background-color: #45a049;
         }
+        .liked {
+            color: red;  /* Đổi màu trái tim khi đã thêm vào yêu thích */
+        }
 
     </style>
 
@@ -354,9 +357,10 @@
             <form method="post" th:action="@{/cart/addToCart}">
                 <input type="hidden" name="productId" th:value="${products.getId()}" />
                 <input type="hidden" name="quantity" value="1" />
-                <div class="like-container">
-                    <i class="fa fa-heart like-button"></i>
+                <div class="like-container" data-product-id="${product.id}">
+                    <i class="fa fa-heart like-button" onclick="addToFavorites(${product.id})"></i>
                 </div>
+
                 <img th:src="${products.getUrl()}" alt="Product Image">
                 <h3 class="product-name" th:text="${products.getName()}"></h3>
                 <p class="product-price">
@@ -407,6 +411,42 @@
     <div id="pagination" class="pagination"></div>
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        function addToFavorites(button) {
+        var productId = button.closest('.like-container').getAttribute('data-product-id'); // Lấy ID sản phẩm
+        var token = localStorage.getItem('access_token'); // Lấy token từ localStorage (hoặc cookie)
+
+        if (!token) {
+            alert("Bạn cần đăng nhập để thêm vào danh sách yêu thích.");
+            return;
+        }
+
+        // Gửi yêu cầu POST đến API trên Controller frontend
+        fetch(`/product/addToFavorites/${productId}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())  // Giả sử API trả về dữ liệu JSON
+        .then(data => {
+            if (data.status === "SUCCESS") {
+                alert("Sản phẩm đã được thêm vào danh sách yêu thích!");
+                button.classList.add('liked');  // Thêm class để thay đổi màu icon trái tim
+            } else {
+                alert(data.message || "Đã có lỗi xảy ra.");
+            }
+        })
+        .catch(error => {
+            console.error("Có lỗi xảy ra:", error);
+            alert("Không thể thêm sản phẩm vào danh sách yêu thích.");
+        });
+    }
+
+    </script>
+
+
 
     <!--End: Content-->
     <div class="overlay" id="formOverlay">

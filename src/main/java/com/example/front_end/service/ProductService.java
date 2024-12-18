@@ -3,21 +3,23 @@ package com.example.front_end.service;
 import com.cloudinary.Cloudinary;
 import com.example.front_end.config.JwtFilter;
 import com.example.front_end.exception.UserException;
+import com.example.front_end.model.UI.AddToCartRequestUI;
 import com.example.front_end.model.UI.ProductRequestUI;
+import com.example.front_end.model.request.AddToCartRequest;
 import com.example.front_end.model.request.ProductRequest;
 import com.example.front_end.model.response.ProducListResponse;
 import com.example.front_end.model.response.ProductResponse;
+import com.example.front_end.model.response.ResponseObject;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -50,6 +52,7 @@ public class ProductService {
     private String productDetail = "http://localhost:8080/api/vp/product/detail/";
     private String addProduct = "http://localhost:8080//api/vp/product/create";
     private String getAllMyProducts = "http://localhost:8080/api/vp/getAllMyProducts";
+    private String favoriteApiUrl = "http://localhost:8080/users/favorite";
 
     public List<ProductResponse> findAllProduct() {
         try {
@@ -301,5 +304,28 @@ public class ProductService {
         }
     }
 
+    public boolean addProductToFavorites(Long userId, Long productId) {
+        try {
+            // Tạo URL để thêm sản phẩm vào danh sách yêu thích
+            String url = String.format("%s/%d", favoriteApiUrl, productId);
 
+            // Tạo headers và thêm token vào
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + getAccessToken()); // Lấy access token
+
+            // Gửi yêu cầu POST tới API
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+            ResponseEntity<ResponseObject> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, ResponseObject.class);
+
+            return response.getStatusCode() == HttpStatus.OK;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private String getAccessToken() {
+        // Lấy token từ JwtFilter hoặc từ nguồn lưu trữ token (localStorage, cookie...)
+        return jwtFilter.getAccessToken();
+    }
 }
